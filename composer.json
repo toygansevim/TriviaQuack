@@ -1,0 +1,16 @@
+{
+  "name":"mhernand/328/TriviaQuack",
+  "authors": [
+    {
+      "name": "Mason Hernandez",
+      "email": "mhernandez58@mail.greenriver.edu"
+    },
+    {
+      "name": "Toygan Sevim",
+      "email": "tsevim@mail.greenriver.edu"
+    }
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
