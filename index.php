@@ -17,8 +17,21 @@ require_once("vendor/autoload.php");
 $f3 = Base::instance();
 
 //Define a default route
-$f3->route('GET /', function ()
+$f3->route('GET /test', function ($f3)
 {
+
+    echo "<h1>Toygan</h1>";
+
+    //instantiate object
+
+    $toygan = new Member();
+
+    //we can get it from post data
+    $userProfileName->setProfileName("Toygan");
+
+    $toygan->sayHi($userProfileName);
+
+
     echo Template::instance()->render('pages/home.html');
 });
 
