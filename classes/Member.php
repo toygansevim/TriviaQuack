@@ -11,25 +11,30 @@
  */
 
 
-class Member
+class Member extends Player
 {
     protected $userName, $profileName, $loginStreak, $points;
     protected $friends = array();
 
-    public static $AIcreated = 0;
-
-
-    public function __construct($username = "AI")
+    /**
+     * Member constructor.
+     * @param string $username
+     */
+    public function __construct($profileName, $userName, $loginStreak = 0, $points
+    = 0)
     {
-
+        parent::__construct($profileName, $userName);
         $this->userName = "AI - " . self::getAIcreated();
 
         //if default user created, assign computer name and
-        if ($username == "AI")
+        if (strtolower($profileName) == "comp")
         {
             self::setAIcreated(self::getAIcreated() + 1);
         }
+        $this->loginStreak = $loginStreak;
+        $this->points = $points;
     }
+
 
 
     //********************************************
@@ -38,7 +43,7 @@ class Member
     //*********************************************
     //*********************************************
 
-    function sayHi($profileName)
+    function sayHi($userName)
     {
         echo "<p class='text-primary'>" . $this->userName . " HEllO THERE HI...";
     }
@@ -129,22 +134,6 @@ class Member
     public function setFriends($friends)
     {
         $this->friends = $friends;
-    }
-
-    /**
-     * @return int
-     */
-    public static function getAIcreated()
-    {
-        return self::$AIcreated;
-    }
-
-    /**
-     * @param int $AIcreated
-     */
-    public static function setAIcreated($AIcreated)
-    {
-        self::$AIcreated = $AIcreated;
     }
 
 
