@@ -25,6 +25,15 @@ $f3->set('DEBUG',3);
 //Define a default route
 $f3->route('GET /', function ($f3)
 {
+    $f3->set('title','Home Page');
+
+    $color = "";
+    $guest = new Guest();
+    $guest->sayHi("toygan");
+
+    $f3->set('colorBG','warning');
+
+
     echo Template::instance()->render('pages/home.html');
 });
 
