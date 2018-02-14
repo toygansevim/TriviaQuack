@@ -16,23 +16,24 @@ class Member extends Player
     protected $userName, $profileName, $loginStreak, $points;
     protected $friends = array();
 
-    /**
-     * Member constructor.
-     * @param string $username
-     */
+
     public function __construct($profileName, $userName, $loginStreak = 0, $points
     = 0)
     {
+        parent::__construct($profileName, $userName);
+        $this->loginStreak = $loginStreak;
+        $this->points = $points;
+        /*
         parent::__construct($profileName, $userName);
         $this->userName = "AI - " . self::getAIcreated();
 
         //if default user created, assign computer name and
         if (strtolower($profileName) == "comp")
         {
-            self::setAIcreated(self::getAIcreated() + 1);
+           self::setAIcreated(self::getAIcreated() + 1);
         }
         $this->loginStreak = $loginStreak;
-        $this->points = $points;
+        $this->points = $points;*/
     }
 
 

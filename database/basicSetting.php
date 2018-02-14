@@ -97,7 +97,6 @@ try
     $id = 3;
     $statement->bindParam(':id', $id, PDO::PARAM_INT);
 
-
     //execute
     $statement->execute();
 
@@ -119,6 +118,7 @@ try
 {
     echo "Connection failed<br>";
     echo $ex->getMessage();
+    return;
 }
 
 ?>

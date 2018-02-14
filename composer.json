@@ -1,5 +1,5 @@
 {
-  "name":"mhernand/328/TriviaQuack",
+  "name": "mhernand/328/TriviaQuack",
   "authors": [
     {
       "name": "Mason Hernandez",
@@ -13,7 +13,9 @@
   "require": {
     "bcosca/fatfree-core": "dev-master"
   },
-  "autoload":{
-    "classmap":["classes/"]
+  "autoload": {
+    "classmap": [
+      "classes/"
+    ]
   }
 }

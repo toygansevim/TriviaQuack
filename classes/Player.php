@@ -16,20 +16,16 @@ abstract class Player
 
     //undefined players can be defined
     private static $_AIcreated = 0;
-
-
     /**
      * Player constructor.
      * @param $_profileName
      * @param $_userName
      */
-    public function __construct($_profileName = "COMP", $_userName = "AI")
+    public function __construct($profileName, $userName)
     {
-        $this->_profileName = $_profileName;
-        $this->_userName = $_userName;
+        $this->_profileName = $profileName;
+        $this->_userName = $userName;
     }
-
-
 
     //********************************************
     //*********************************************
