@@ -16,15 +16,21 @@ abstract class Player
 
     //undefined players can be defined
     private static $_AIcreated = 0;
+
     /**
      * Player constructor.
      * @param $_profileName
      * @param $_userName
      */
-    public function __construct($profileName, $userName)
+    public function __construct($profileName = "COMPUTER", $userName = "AI ")
     {
         $this->_profileName = $profileName;
-        $this->_userName = $userName;
+
+        if ($this->_profileName == 'COMPUTER')
+        {
+            self::$_AIcreated++;
+        }
+        $this->_userName = $userName . " - " . self::getAIcreated();
     }
 
     //********************************************
@@ -37,7 +43,6 @@ abstract class Player
      * @param $profileName
      */
     abstract function sayHi($profileName);
-
 
     //********************************************
     //*********************************************
@@ -61,7 +66,6 @@ abstract class Player
     {
         self::$_AIcreated = $AIcreated;
     }
-
 
     /**
      * @return mixed

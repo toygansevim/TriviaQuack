@@ -49,7 +49,6 @@ class Member extends Player
         echo "<p class='text-primary'>" . $this->userName . " HEllO THERE HI...";
     }
 
-
     //********************************************
     //*********************************************
     //           GETTERS        SETTERS

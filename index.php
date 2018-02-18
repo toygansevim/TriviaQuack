@@ -27,10 +27,21 @@ $f3->route('GET /', function ($f3)
 {
     $f3->set('title','Home Page');
 
-
     $f3->set('colorBG','primary');
 
     echo Template::instance()->render('pages/home.html');
+});
+
+$f3->route('GET|POST /users', function ($f3){
+
+    require_once 'database/basicSetting.php';
+
+   // echo print_r($fieldsArray);
+    echo "TOYGAN";
+
+    $f3->set('pageTitle','TESTING DATABASE');
+
+    echo Template::instance()->render('database/displayDatabase.html');
 });
 
 
