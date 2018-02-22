@@ -1,11 +1,34 @@
+body, html {
+    height: 100%;
+}
+.bg {
+    /* The image used */
+    /*background-image: url("../images/wood_background.jpg");*/
+    /* Full height */
+    height: 100%;
 
+    /* Center and scale the image nicely */
+    background: linear-gradient(to top left, #2097FE, #05FFA4) no-repeat center;
+    background-size: cover;
+}
 
+.user-login-box {
+    opacity: .5;
+}
 
-nav#navbarHome{
-    background-color: green;
-    position: sticky;
-    left: 3rem;
-    top: 5rem;
-    z-index: 11;
+#head {
+    background: inherit;
+    background: rgba(255, 255, 255, 0.16);
+}
+#logo {
+    height: 100px;
+}
 
+.navbar {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+#foot {
+    background: inherit;
+    background: rgba(255, 255, 255, 0.16);
 }
