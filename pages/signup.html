@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>{{@title}}</title>
+
+    <!--link css-->
+    <link rel="stylesheet" href="styles/home_styles.css">
+</head>
+<body class="bg">
+
+<!--NAVBAR-->
+<nav class="navbar navbar-expand-lg navbar-light text-white">
+    <a class="navbar-brand" href="#">Trivia Quack</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<!--<div class="bg"></div>-->
+
+<div class="container main-content">
+    <!--NAVBAR-->
+    <div class="row pt-5 login-row">
+
+        <div class="col-3 container">
+            <div class="row justify-content-center pt-3 pb-4" id="head">
+                <div class="col-3 logo-sm px-0">
+                    <img src="images/logo.png" class="img" alt="Trivia Quack">
+                </div>
+
+                <div class="col-7">
+                    <h5 class="text-white text-center my-2 py-auto">Sign up</h5>
+                </div>
+            </div>
+            <div class="row text-white pt-3" id="body">
+                <form action="#" method="post">
+
+                    <!--Username input-->
+                    <div class="form-group py-0 mb-1">
+                        <h6 class="mb-0"><label class="mb-0" for="username">Username</label></h6>
+                        <input type="text" class="form-control border-0" id="username" name="username">
+                    </div>
+
+                    <!--Email input-->
+                    <div class="form-group py-0 mb-1">
+                        <h6 class="mb-0"><label class="mb-0" for="username">Email</label></h6>
+                        <input type="text" class="form-control border-0" id="email" name="email">
+                    </div>
+
+                    <!--Password input-->
+                    <div class="form-group py-0 mb-1">
+                        <h6 class="mb-0"><label class="mb-0" for="pass">Password</label></h6>
+                        <input type="password" class="form-control border-0" id="pass" name="pass">
+                    </div>
+
+                    <!--Repeat Password input-->
+                    <div class="form-group py-0 mb-1">
+                        <h6 class="mb-0"><label class="mb-0" for="pass">Repeat Password</label></h6>
+                        <input type="password" class="form-control border-0" id="repeat-pass" name="repeat-pass">
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="row text-center justify-content-center py-2 mt-3" id="foot">
+                <div class="col-6 text-white border-right">
+                    <a href="." class="text-white">return</a>
+                </div>
+
+                <div class="col-6 text-white">
+                    <a href="./login" class="text-white">login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+END CONTAINER
+-->
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>

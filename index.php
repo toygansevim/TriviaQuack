@@ -44,6 +44,16 @@ $f3->route('GET|POST /users', function ($f3){
     echo Template::instance()->render('database/displayDatabase.html');
 });
 
+$f3->route('GET|POST /login', function ($f3){
+
+    echo Template::instance()->render('pages/login.html');
+});
+
+$f3->route('GET|POST /signup', function ($f3){
+
+    echo Template::instance()->render('pages/signup.html');
+});
+
 
 //run fat free
 $f3->run();
