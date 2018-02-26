@@ -54,6 +54,13 @@ $f3->route('GET|POST /signup', function ($f3){
     echo Template::instance()->render('pages/signup.html');
 });
 
+$f3->route('GET|POST /home', function ($f3)
+{
+    $f3->set('title','Home Page');
+    echo Template::instance()->render('pages/game.html');
+
+});
+
 
 //run fat free
 $f3->run();
