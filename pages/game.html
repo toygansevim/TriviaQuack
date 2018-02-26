@@ -1,21 +1,20 @@
+<!doctype html>
 <!--
 Toygan Sevim
 Base page of the game
 This is where the user will interact with the page most to choose their
 category to play the game
 -->
-<!doctype html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>{{@title}}</title>
+
 
     <!--link css-->
     <link rel="stylesheet" href="styles/home_styles.css">
@@ -53,12 +52,22 @@ category to play the game
 
             <!--SCINCE CARD-->
             <div class="card-deck">
-                <div class="card text-white shadow  bg-primary mb-3 mt-3 ml-3 float-left ">
+                <div class="card text-white shadow bg-primary mb-3 mt-3 ml-3 float-left ">
                     <div class="card-header text-center text-uppercase font-weight-bold">Science</div>
-                    <div class="card-body shadow-nohover mx-auto">
+                    <div class="card-body shadow-nohover mx-auto" id="science-body">
                         <h5 class="card-title text-center"><i class="fas fa-flask h-75 w-75"></i></h5>
                     </div>
                 </div>
+                <script>"use strict";
+
+                var science = $("#science-body");
+                science.click = pop;
+
+                function pop() {
+                    this.addClass("bg-danger");
+                }
+
+                </script>
 
                 <div class="card text-white shadow bg-secondary mb-3 mt-3 ml-3 float-left">
                     <div class="card-header text-center text-uppercase font-weight-bold">Code</div>
@@ -113,12 +122,73 @@ category to play the game
                         <h5 class="card-title text-center"><i class="fas  h-75 w-75  fa-globe"></i></h5>
                     </div>
                 </div>
-                <div class="card text-white shadow bg-pink mb-3 mt-3 ml-3 float-left">
+
+
+                <!--TEST BEGINS FOR MODALS-->
+
+
+                <div class="card text-white shadow bg-pink mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Celebrities</div>
                     <div class="card-body shadow-nohover">
-                        <h5 class="card-title text-center"><i class="fas h-75 w-75  fa-trophy"></i></h5>
+                        <h5 class="card-title text-center"><i class="fas h-75 w-75 fa-trophy"></i></h5>
                     </div>
                 </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="celebritiesModal" tabindex="-1" role="dialog"
+                     aria-labelledby="celebritiesModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="celebritiesModalLabel">Question #1:When did Justin Bieber
+                                    became famous?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                CELEB
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button class="btn btn-dark btn-block mb-3 text-left" name="answer1"
+                                                id="answer1">Value 1
+                                        </button>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-dark btn-block mb-3 text-left" id="answer2">Value 1
+                                        </button>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-dark btn-block mb-3 text-left" id="answer3">Value 1
+                                        </button>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-dark btn-block mb-3 text-left" id="answer4">Value 1
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>"use strict";
+
+                            var answer = $('#answer1');
+                            answer.click = findAnswer;
+
+                            function findAnswer() {
+                                answer.removeClass('btn-dark');
+                                answer.addClass('btn-success');
+                                alert("FUCK");
+                            }
+                            </script>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
         </div>
@@ -133,10 +203,7 @@ END CONTAINER
 -->
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
