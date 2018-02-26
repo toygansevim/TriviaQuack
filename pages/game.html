@@ -15,7 +15,6 @@ category to play the game
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
-
     <!--link css-->
     <link rel="stylesheet" href="styles/home_styles.css">
     <link rel="stylesheet" href="styles/game_styles.css">
@@ -195,6 +194,37 @@ category to play the game
         <!--Leaderboard-->
         <div class="col-3 bg-primary ">
             <p class="text-white">LEADERBOARD</p>
+            <check if="{{@members}}">
+
+                <!--  <ol>
+                      <repeat group="{{ @members }}" value="{{ @member }}">
+                          <li><a href="{{@BASE}}/summary/{{@member['sid']}}">{{ @member['id'] }}, {{ @member['username'] }}</a></li>
+                      </repeat>
+                  </ol>
+  -->
+
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">GENDER</th>
+                        <th scope="col">LAST</th>
+                        <th scope="col">USERNAME</th>
+                    </tr>
+                    </thead>
+                    <repeat group="{{ @members }}" value="{{ @member }}">
+                        <tbody>
+                        <tr>
+                            <th scope="row">{{ @member['id'] }}</th>
+                            <td>{{@member['gender']}}</td>
+                            <td>{{ @member['username'] }}</td>
+                            <td>{{ @member['username'] }}</td>
+                        </tr>
+                        </tbody>
+                    </repeat>
+                </table>
+
+            </check>
         </div>
     </div>
 </div>

@@ -64,6 +64,11 @@ $f3->route('GET|POST /signup', function ($f3)
 
 $f3->route('GET|POST /home', function ($f3)
 {
+    require_once 'database/db-functions.php';
+
+    $members = getLeaders();
+
+    $f3->set('members', $members);
     $f3->set('title', 'Home Page');
     echo Template::instance()->render('pages/game.html');
 

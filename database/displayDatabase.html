@@ -23,6 +23,27 @@
     </ol>
 
 
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">GENDER</th>
+            <th scope="col">LAST</th>
+            <th scope="col">USERNAME</th>
+        </tr>
+        </thead>
+        <repeat group="{{ @members }}" value="{{ @member }}">
+        <tbody>
+        <tr>
+            <th scope="row">{{ @member['id'] }}</th>
+            <td>{{@member['gender']}}</td>
+            <td>{{ @member['username'] }}</td>
+            <td>{{ @member['username'] }}</td>
+        </tr>
+        </tbody>
+        </repeat>
+    </table>
+
 </check>
 <!--Bootstrap cdn's-->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
