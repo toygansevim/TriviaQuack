@@ -13,27 +13,17 @@
     <title>{{@pageTitle}}</title>
 </head>
 <body>
+<h1>TOYGAN</h1>
+<check if="{{@members}}">
 
-<table>
-
-    <h1>Toyganasdsad</h1>
-
-  <!--  <?php
-
-    foreach ($result as $row)
-    {
-        echo "<tr class='border'>";
-    echo "<td class='border'>" . $row['name'] . "</td><td> " . $row['type'] . "</td><td> " . $row['color'] . "</td><br>";
-    echo "  </tr>";
-    }
-    ?>
+    <ol>
+        <repeat group="{{ @members }}" value="{{ @member }}">
+            <li><a href="{{@BASE}}/summary/{{@member['sid']}}">{{ @member['id'] }}, {{ @member['username'] }}</a></li>
+        </repeat>
+    </ol>
 
 
-
--->
-    <repeat group=""></repeat>
-</table>
-
+</check>
 <!--Bootstrap cdn's-->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

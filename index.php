@@ -13,53 +13,73 @@ error_reporting(E_ALL);
 ini_set("display_errors", TRUE);
 
 require_once("vendor/autoload.php");
-
-session_start();
-
+require_once("database/db-functions.php");
 
 //create an instance sof the Base class
 $f3 = Base::instance();
 
-$f3->set('DEBUG',3);
+session_start();
+
+//connect to database
+$conn = connect();
+
+
+$f3->set('DEBUG', 3);
 
 //Define a default route
 $f3->route('GET /', function ($f3)
 {
-    $f3->set('title','Home Page');
+    $f3->set('title', 'Home Page');
 
-    $f3->set('colorBG','primary');
+    $f3->set('colorBG', 'primary');
 
     echo Template::instance()->render('pages/home.html');
 });
 
-$f3->route('GET|POST /users', function ($f3){
+$f3->route('GET|POST /users', function ($f3)
+{
 
-    require_once 'database/basicSetting.php';
+    require_once 'database/db-functions.php';
 
-   // echo print_r($fieldsArray);
-    echo "TOYGAN";
+    $members = getLeaders();
 
-    $f3->set('pageTitle','TESTING DATABASE');
+    $f3->set('members', $members);
+
+    $f3->set('pageTitle', 'DB');
 
     echo Template::instance()->render('database/displayDatabase.html');
 });
 
-$f3->route('GET|POST /login', function ($f3){
+$f3->route('GET|POST /login', function ($f3)
+{
 
     echo Template::instance()->render('pages/login.html');
 });
 
-$f3->route('GET|POST /signup', function ($f3){
+$f3->route('GET|POST /signup', function ($f3)
+{
 
     echo Template::instance()->render('pages/signup.html');
 });
 
 $f3->route('GET|POST /home', function ($f3)
 {
-    $f3->set('title','Home Page');
+    $f3->set('title', 'Home Page');
     echo Template::instance()->render('pages/game.html');
 
 });
+/*
+//this route will be displaying the player with the id
+$f3->route('GET|POST /profiles/@id', function ($f3,$params){
+
+    $id = $params['id'];
+
+    $member = getMember($id);
+    $f3->set('member',$member);
+
+
+
+});*/
 
 
 //run fat free
