@@ -12,7 +12,7 @@
 
 abstract class Player
 {
-    private $_profileName, $_userName, $_score, $_userPassword;
+    private $_profileName, $_userName, $_score, $_userPassword, $_totalScore, $_email;
 
     //undefined players can be defined
     private static $_AIcreated = 0;
