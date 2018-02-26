@@ -1,0 +1,19 @@
+/**
+Toygan Sevim
+game_styles.css
+This is the css sheet for the game page.
+/home route
+
+ */
+
+.bg-purple{
+    background-color: rebeccapurple;
+}
+
+.bg-pink{
+    background-color: hotpink;
+}
+
+.bg-orange{
+    background-color: darkorange;
+}

@@ -17,11 +17,9 @@ category to play the game
 
     <title>{{@title}}</title>
 
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
-
     <!--link css-->
     <link rel="stylesheet" href="styles/home_styles.css">
+    <link rel="stylesheet" href="styles/game_styles.css">
 </head>
 <body class="bg">
 
@@ -54,28 +52,42 @@ category to play the game
 
             <!--FIRST ROW OF QUESTIONS-->
             <div class="card-deck">
-                <div class="card text-white   bg-primary mb-3 mt-3 ml-3 float-left mt-3 ml-3 float-left">
-                    <div class="card-header text-center text-upper">Science</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Primary card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
+                <div class="card text-white shadow  bg-primary mb-3 mt-3 ml-3 float-left mt-3 ml-3 float-left">
+                    <div class="card-header  text-center text-upper">Science</div>
+                    <div class="card-body shadow-nohover shadow-nohover">
+                        <h5 class="card-title">Flask image here</h5>
+                        <i class="fas fa-flask"></i>
                     </div>
                 </div>
-                <div class="card text-white   bg-secondary mb-3 mt-3 ml-3 float-left">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Secondary card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
+
+                <style>
+                    .shadow-nohover {
+                        box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+                        transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+
+                    .shadow {
+                        box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+                        transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);}
+                    .shadow:hover {
+                        box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+                    }
+
+                    }
+                </style>
+
+
+                <div class="card text-white shadow bg-secondary mb-3 mt-3 ml-3 float-left">
+                    <div class="card-header">Code</div>
+                    <div class="card-body shadow-nohover">
+                        <h5 class="card-title shadow-nohover">Secondary card title</h5><i class="far fa-file-code"></i>
+
                     </div>
                 </div>
-                <div class="card text-white   bg-success mb-3 mt-3 ml-3 float-left">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Success card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
+                <div class="card text-white shadow bg-success mb-3 mt-3 ml-3 float-left">
+                    <div class="card-header">Sports</div>
+                    <div class="card-body shadow-nohover">
+                        <h5 class="card-title">Success card title</h5><i class="fas fa-basketball-ball"></i>
                     </div>
                 </div>
 
@@ -83,25 +95,21 @@ category to play the game
 
             <!--Second ROW OF QUESTIONS-->
             <div class="card-deck">
-                <div class="card text-white   bg-danger mb-3 mt-3 ml-3 float-left">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Danger card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
+                <div class="card text-white shadow bg-danger mb-3 mt-3 ml-3 float-left">
+                    <div class="card-header">Art</div>
+                    <div class="card-body shadow-nohover">
+                        <h5 class="card-title">Danger card title</h5><i class="fas fa-paint-brush"></i>
                     </div>
                 </div>
-                <div class="card text-white   bg-warning mb-3 mt-3 ml-3 float-left">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Warning card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
+                <div class="card text-white shadow bg-warning mb-3 mt-3 ml-3 float-left">
+                    <div class="card-header">History</div>
+                    <div class="card-body shadow-nohover">
+                        <h5 class="card-title">History card title</h5><i class="fas fa-chess-rook"></i>
                     </div>
                 </div>
-                <div class="card text-white   bg-info mb-3 mt-3 ml-3 float-left">
+                <div class="card text-white shadow bg-info mb-3 mt-3 ml-3 float-left">
                     <div class="card-header">Header</div>
-                    <div class="card-body">
+                    <div class="card-body shadow-nohover">
                         <h5 class="card-title">Info card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of
                             the card's content.</p>
@@ -112,32 +120,38 @@ category to play the game
 
             <!--Third ROW OF QUESTIONS-->
             <div class="card-deck">
-                <div class="card bg-light   mb-3 mt-3 ml-3 float-left">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
+                <div class="card text-warning shadow bg-purple mb-3 mt-3 ml-3 float-left">
+                    <div class="card-header">Geography</div>
+                    <div class="card-body shadow-nohover">
                         <h5 class="card-title">Light card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of
                             the card's content.</p>
                     </div>
                 </div>
-                <div class="card text-white   bg-dark mb-3 mt-3 ml-3 float-left">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Dark card title</h5>
+                <div class="card text-white shadow   bg-dark mb-3 mt-3 ml-3 float-left">
+                    <div class="card-header">General Culture</div>
+                    <div class="card-body shadow-nohover">
+                        <h5 class="card-title">General Culture</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of
                             the card's content.</p>
+                    </div>
+                </div>
+                <div class="card text-white shadow bg-pink mb-3 mt-3 ml-3 float-left">
+                    <div class="card-header">Celebrities</div>
+                    <div class="card-body shadow-nohover">
+                        <h5 class="card-title">Celebretties card title</h5>
                     </div>
                 </div>
             </div>
 
         </div>
-        <div class="col-3 bg-primary"><h1>Leaderborad</h1></div>
+        <div class="col-3 bg-primary"><h1>Leaderboard</h1></div>
     </div>
 </div>
 <!--
 END CONTAINER
 -->
-
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
