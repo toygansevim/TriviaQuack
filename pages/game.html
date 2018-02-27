@@ -57,16 +57,7 @@ category to play the game
                         <h5 class="card-title text-center"><i class="fas fa-flask h-75 w-75"></i></h5>
                     </div>
                 </div>
-                <script>"use strict";
 
-                var science = $("#science-body");
-                science.click = pop;
-
-                function pop() {
-                    this.addClass("bg-danger");
-                }
-
-                </script>
 
                 <div class="card text-white shadow bg-secondary mb-3 mt-3 ml-3 float-left">
                     <div class="card-header text-center text-uppercase font-weight-bold">Code</div>
@@ -168,17 +159,7 @@ category to play the game
                                     </div>
                                 </div>
                             </div>
-                            <script>"use strict";
 
-                            var answer = $('#answer1');
-                            answer.click = findAnswer;
-
-                            function findAnswer() {
-                                answer.removeClass('btn-dark');
-                                answer.addClass('btn-success');
-                                alert("FUCK");
-                            }
-                            </script>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="button" class="btn btn-primary">Save changes</button>
@@ -240,5 +221,23 @@ END CONTAINER
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
+
+<script>"use strict";
+
+var answer = $('#answer1');
+answer.click(findAnswer);
+
+function findAnswer() {
+    answer.removeClass('btn-dark');
+    answer.addClass('btn-warning');
+    // answer.delay('slow');
+    // answer.removeClass('btn-warning');w
+    // answer.addClass('btn-success');
+    //alert("FUCK");
+}
+</script>
+
+
 </body>
 </html>

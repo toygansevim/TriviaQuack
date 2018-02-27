@@ -21,11 +21,12 @@ class Question
      * @param $point
      * @param $category
      */
-    public function __construct($question, $answer, $difficulty, $point, $category, $answersArray)
+    public function __construct($question, $answer, $difficulty = " ", $point, $category,
+                                $answersArray)
     {
         $this->_question = $question;
         $this->_answer = $answer;
-        $this->_difficulty = $difficulty;
+        $this->_difficulty = $this->pickDifficulty();
         $this->_point = $point;
         $this->_category = $category;
         $this->_answersArray = $answersArray;
@@ -49,6 +50,8 @@ class Question
 
         echo Question::getDifficulty();
         echo $random;
+
+        return $this->getDifficulty();
     }
 
     /**
