@@ -188,18 +188,32 @@ category to play the game
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">GENDER</th>
-                        <th scope="col">LAST</th>
-                        <th scope="col">USERNAME</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Score</th>
                     </tr>
                     </thead>
                     <repeat group="{{ @members }}" value="{{ @member }}">
                         <tbody>
                         <tr>
-                            <th scope="row">{{ @member['id'] }}</th>
-                            <td>{{@member['gender']}}</td>
+                            <th scope="row">
+                                <check if="{{ @member['id'] == '1'}}">
+                                    <true><img src="././images/gold-medal.png"  id="gold-medal" alt="gold medal" class ="medal" ></true>
+
+                                </check>
+                                <check if="{{ @member['id'] == '2'}}">
+                                    <true><img src="././images/silver-medal.png" id="silver-medal" alt="silver medal" class ="medal" >
+                                    </true>
+
+                                </check>
+                                <check if="{{ @member['id'] == '3'}}">
+                                    <true><img src="././images/bronze-medal.png" id="bronze-medal" alt="bronze medal" class ="medal" >
+                                    </true>
+                                </check>
+
+
+                            </th>
                             <td>{{ @member['username'] }}</td>
-                            <td>{{ @member['username'] }}</td>
+                            <td>{{ @member['totalScore'] }}</td>
                         </tr>
                         </tbody>
                     </repeat>

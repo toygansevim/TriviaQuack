@@ -40,7 +40,7 @@ function getLeaders()
     global $conn;
 
     //define
-    $sql = "SELECT id,username,gender FROM members ORDER BY username";
+    $sql = "SELECT id,username,totalScore FROM triviaMembers ORDER BY id";
 
     //prepare
 
@@ -50,5 +50,21 @@ function getLeaders()
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     return $result;
+
+}
+
+
+function addMember($username, $PASSWORD, $emailAddress,
+                   $firstName, $lastName, $totalScore,
+                   $joinDate, $gender, $quackMember)
+{
+
+    global $conn;
+
+    //define
+    $sql = "INSERT INTO triviaMembers (username, PASSWORD, emailAddress, firstName, lastName, totalScore,
+joinDate, gender, quackMember) VALUES(:username, :PASSWORD, :emailAddress, :firstname, :lastName,
+ :ttalScoreo,:joinDate,:gender,:quackMember)";
+
 
 }
