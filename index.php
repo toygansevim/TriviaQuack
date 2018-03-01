@@ -85,6 +85,20 @@ $f3->route('GET|POST /profiles/@id', function ($f3,$params){
 
 
 });*/
+//this route will be displaying the player with the id
+$f3->route('GET|POST /profile', function ($f3,$params){
+//
+//    $id = $params['id'];
+//
+//    $member = getMember($id);
+//    $f3->set('member',$member);
+
+
+
+    echo Template::instance()->render('pages/profile.html');
+
+
+});
 
 
 //run fat free
