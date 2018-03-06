@@ -14,6 +14,11 @@
     display: inline;
 }
 
+.duck{
+    height: auto;
+    width: 3rem;
+}
+
 .col-lg-9.mx-auto.bg-light {
     opacity: 0.8;
     text-align: center;
@@ -31,6 +36,20 @@ Every card on the deck
  */
 .card.text-white.shadow.bg-secondary.mb-3.mt-3.ml-3.float-left {
 
+}
+
+.categoriesList:hover:nth-child(2n) {
+    letter-spacing: 2px;
+    color: black;
+    text-shadow: red 1px -1px 8px;
+}
+
+
+.categoriesList:hover:nth-child(2n+1) {
+    letter-spacing: 2px;
+    color: yellow;
+    text-shadow: blueviolet 1px -1px 8px;
+    cursor: url("../images/greenTick.png");
 }
 
 /*

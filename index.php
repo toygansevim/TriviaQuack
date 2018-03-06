@@ -93,6 +93,7 @@ $f3->route('GET|POST /profile', function ($f3,$params){
 //    $member = getMember($id);
 //    $f3->set('member',$member);
 
+    $f3->set("scored","1500");
 
 
     echo Template::instance()->render('pages/profile.html');
