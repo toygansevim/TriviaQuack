@@ -101,5 +101,25 @@ $f3->route('GET|POST /profile', function ($f3,$params){
 });
 
 
+//LOGOUT ROUTE
+$f3->route('GET|POST /pages/logout', function ($f3){
+
+
+    //kill the session,
+
+    //logout the user
+
+
+    //reroute to another location
+
+
+    //maybe the login page
+
+    echo Template::instance()->render('pages/logout.html');
+});
+
+
+
+
 //run fat free
 $f3->run();

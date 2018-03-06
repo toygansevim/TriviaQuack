@@ -1,0 +1,46 @@
+/******
+ *  Toygan Sevim
+ *  profile.css
+    This file will support the profile pages of the users
+ */
+
+/*Settings button adjustments*/
+.settings:hover {
+    color: white;
+    background-color: darkgray;
+}
+
+.collapse {
+    display: inline;
+}
+
+.col-lg-9.mx-auto.bg-light {
+    opacity: 0.8;
+    text-align: center;
+    color: red;
+    letter-spacing: 0.36rem;
+    text-shadow: black 2px -2px 5px;
+}
+
+.col-lg-9:hover {
+    border-radius: 20px;
+}
+
+/**
+Every card on the deck
+ */
+.card.text-white.shadow.bg-secondary.mb-3.mt-3.ml-3.float-left {
+
+}
+
+/*
+Dropdown settings gear will be alligned in the smallest view
+Padding throws of fixed here
+ */
+@media (max-width: 550px) {
+
+    .dropdown-toggle-split {
+        margin: 8px 8px 8px 0px;
+    }
+
+}
