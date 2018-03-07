@@ -51,7 +51,8 @@ category to play the game
 
             <!--SCINCE CARD-->
             <div class="card-deck">
-                <div class="card text-white shadow bg-primary mb-3 mt-3 ml-3 float-left ">
+                <div class="card text-white shadow bg-primary mb-3 mt-3 ml-3 float-left " data-toggle="modal"
+                     data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Science</div>
                     <div class="card-body shadow-nohover mx-auto" id="science-body">
                         <h3 class="card-title text-center"><i class="fas fa-flask h-25 w-25"></i></h3>
@@ -59,14 +60,16 @@ category to play the game
                 </div>
 
 
-                <div class="card text-white shadow bg-secondary mb-3 mt-3 ml-3 float-left">
+                <div class="card text-white shadow bg-secondary mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Code</div>
                     <div class="card-body shadow-nohover">
                         <h3 class="card-title text-center"><i class="fas fa-file-code h-25 w-25"></i></h3>
 
                     </div>
                 </div>
-                <div class="card text-white shadow bg-success mb-3 mt-3 ml-3 float-left">
+                <div class="card text-white shadow bg-success mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Sports</div>
                     <div class="card-body shadow-nohover">
                         <h3 class="card-title text-center"><i class="fas h-25 w-25 fa-basketball-ball"></i></h3>
@@ -77,36 +80,42 @@ category to play the game
 
             <!--Second ROW OF QUESTIONS-->
             <div class="card-deck">
-                <div class="card text-white shadow bg-danger mb-3 mt-3 ml-3 float-left">
+                <div class="card text-white shadow bg-danger mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Art</div>
                     <div class="card-body shadow-nohover">
                         <h3 class="card-title text-center"><i class="fas h-25 w-25 fa-paint-brush"></i></h3>
                     </div>
                 </div>
-                <div class="card text-white shadow bg-warning mb-3 mt-3 ml-3 float-left">
-                    <div class="card-header text-center text-uppercase font-weight-bold">History</div>
-                    <div class="card-body shadow-nohover">
-                        <h3 class="card-title text-center"><i class="fas h-25 w-25 fa-chess-rook"></i></h3>
-                    </div>
-                </div>
-                <div class="card text-white shadow bg-info mb-3 mt-3 ml-3 float-left">
+                <div class="card text-white shadow bg-warning mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Random</div>
                     <div class="card-body shadow-nohover">
                         <h3 class="card-title text-center"><i class="far h-25 w-25 fa-question-circle"></i></h3>
                     </div>
                 </div>
+                <div class="card text-white shadow bg-info mb-3 mt-3 ml-3 float-left " data-toggle="modal"
+                     data-target="#celebritiesModal">
+                    <div class="card-header text-center text-uppercase font-weight-bold">History</div>
+                    <div class="card-body shadow-nohover">
+                        <h3 class="card-title text-center"><i class="fas h-25 w-25 fa-chess-rook"></i></h3>
+                    </div>
+                </div>
+
 
             </div>
 
             <!--Third ROW OF QUESTIONS-->
             <div class="card-deck">
-                <div class="card text-warning shadow bg-purple mb-3 mt-3 ml-3 float-left">
+                <div class="card text-warning shadow bg-purple mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Geography</div>
                     <div class="card-body shadow-nohover">
                         <h3 class="card-title text-center"><i class="fas h-25 w-25 fa-tree"></i></h3>
                     </div>
                 </div>
-                <div class="card text-white shadow   bg-dark mb-3 mt-3 ml-3 float-left">
+                <div class="card text-white shadow   bg-dark mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">General Culture</div>
                     <div class="card-body shadow-nohover">
                         <h3 class="card-title text-center"><i class="fas  h-25 w-25  fa-globe"></i></h3>
@@ -131,43 +140,39 @@ category to play the game
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h3 class="modal-title" id="celebritiesModalLabel">Question #1:When did Justin Bieber
-                                    became famous?</h3>
+                                <h3 class="modal-title question" id="celebritiesModalLabel"></h3>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                CELEB
+                            <div class="modal-body d-none answersBody" id="">
                                 <div class="row">
                                     <div class="col-12">
                                         <button class="btn btn-dark btn-block mb-3 text-left" name="answer1"
-                                                id="answer1">Value 1
+                                                id="answer1">
                                         </button>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-dark btn-block mb-3 text-left" id="answer2">Value 1
+                                        <button class="btn btn-dark btn-block mb-3 text-left" id="answer2">
                                         </button>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-dark btn-block mb-3 text-left" id="answer3">Value 1
+                                        <button class="btn btn-dark btn-block mb-3 text-left" id="answer3">
                                         </button>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-dark btn-block mb-3 text-left" id="answer4">Value 1
-                                        </button>
+                                        <button class="btn btn-dark btn-block mb-3 text-left" id="answer4"></button>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-primary" id="nextQuestion">Next Question</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
 
             </div>
 
@@ -197,16 +202,19 @@ category to play the game
                         <tr>
                             <th scope="row">
                                 <check if="{{ @member['id'] == '1'}}">
-                                    <true><img src="././images/gold-medal.png"  id="gold-medal" alt="gold medal" class ="medal" ></true>
+                                    <true><img src="././images/gold-medal.png" id="gold-medal" alt="gold medal"
+                                               class="medal"></true>
 
                                 </check>
                                 <check if="{{ @member['id'] == '2'}}">
-                                    <true><img src="././images/silver-medal.png" id="silver-medal" alt="silver medal" class ="medal" >
+                                    <true><img src="././images/silver-medal.png" id="silver-medal" alt="silver medal"
+                                               class="medal">
                                     </true>
 
                                 </check>
                                 <check if="{{ @member['id'] == '3'}}">
-                                    <true><img src="././images/bronze-medal.png" id="bronze-medal" alt="bronze medal" class ="medal" >
+                                    <true><img src="././images/bronze-medal.png" id="bronze-medal" alt="bronze medal"
+                                               class="medal">
                                     </true>
                                 </check>
 
@@ -238,6 +246,114 @@ END CONTAINER
 
 
 <script>"use strict";
+
+
+var generalCultureQuestion = 9;
+var sportsQuestion = 21;
+var playAGame = 1;
+var codeQuestion, scienceQuestion, artQuestion, historyQuestion, geographyQuestion, celebQuestion;
+
+function createQuestion(amount, category) {
+
+    // global difficulty;
+
+    var params = {
+        "amount": amount,
+        "category": category,
+        //Show this to mason
+        // "difficulty": !isSet(amount) ? "easy" : amount,
+        "difficulty": "easy",
+        "type": "multiple"
+    };
+
+    var url = 'https://opentdb.com/api.php/';
+
+    //Get the data
+    $.getJSON(url, params, function (result) {
+        var items = result.results;
+
+
+        //choose all options and arrange them
+        $.each(items, function (index, item) {
+
+            //get the elements and set to variables
+            var questionName = $("#celebritiesModalLabel");
+            var answer1 = $("#answer1");
+            var answer2 = $("#answer2");
+            var answer3 = $("#answer3");
+            var answer4 = $("#answer4");
+
+            //get a random number between 1 - 4
+            // var random = Math.floor(Math.random() * 4 + 1);
+
+            //get the data
+            var questionData = item.question;
+            var answersDataArray = [item.correct_answer, item.incorrect_answers[0], item.incorrect_answers[1], item.incorrect_answers[2]];
+
+            var randomCreatedArray = [];
+
+            //set the question H3 to the data from file
+            questionName.text(questionData);
+
+            //load the buttons
+            for (var i = 1; i <= answersDataArray.length; i++) {
+
+                //in this line hopefully I will create What I want
+                randomCreatedArray.push($("#answer" + i).text(answersDataArray[i - 1]));
+            }
+
+//TESTING TO CONSOLE
+            for (var i = 1; i <= randomCreatedArray.length; i++) {
+
+                console.log(randomCreatedArray[i]);
+            }
+
+
+        });
+    });
+}
+
+$(".card").click(function () {
+
+    //Where question gets displayed
+    var modalBody = $(".answersBody");
+
+    //If it is not showing, THIS IS THE TIME TO SHOW
+    if (modalBody.hasClass("d-none")) {
+        //remove BS4 class to show
+        $(".answersBody").removeClass("d-none");
+
+    } else {
+        $(".answersBody").addClass("d-block");
+    }
+
+    var cardName1 = $(this).text().trim();
+
+    switch (cardName1) {
+
+        case ("Code"):
+            codeQuestion = 10;
+            createQuestion(1, codeQuestion);
+            break;
+        case ("Sports"):
+
+            createQuestion(1, sportsQuestion);
+            break;
+        case "Science":
+            break;
+        case "Art":
+            break;
+        case"History":
+            break;
+
+        case "General Culture":
+            alert("goog");
+            break;
+        default:
+            break;
+    }
+
+});
 
 var answer = $('#answer1');
 answer.click(findAnswer);
