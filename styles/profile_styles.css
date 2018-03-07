@@ -14,7 +14,7 @@
     display: inline;
 }
 
-.duck{
+.duck {
     height: auto;
     width: 3rem;
 }
@@ -42,21 +42,21 @@ Every card on the deck
     letter-spacing: 2px;
     color: black;
     text-shadow: red 1px -1px 8px;
+    cursor: crosshair;
 }
-
 
 .categoriesList:hover:nth-child(2n+1) {
     letter-spacing: 2px;
     color: yellow;
     text-shadow: blueviolet 1px -1px 8px;
-    cursor: url("../images/greenTick.png");
+    cursor: url("../images/greenTick.png"), auto;
 }
 
 /*
 Dropdown settings gear will be alligned in the smallest view
 Padding throws of fixed here
  */
-@media (max-width: 550px) {
+@media (max-width: 580px) {
 
     .dropdown-toggle-split {
         margin: 8px 8px 8px 0px;

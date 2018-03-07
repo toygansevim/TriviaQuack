@@ -9,7 +9,7 @@
  *
  */
 
-require '/home/tsevimgr/config.php';
+include '/home/tsevimgr/config.php';
 
 try
 {

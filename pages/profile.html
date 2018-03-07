@@ -75,7 +75,7 @@
                         10200 Points
 
                         <check if="{{@scored >= '1500'}}">
-                            <img src="./images/wood_background.jpg" alt="logo">
+                            <img src="./images/duck.png" alt="logo">
                         </check>
                     </h5>
                 </div>
@@ -90,7 +90,7 @@
                 <div class="card-header text-center text-uppercase font-weight-bold">Category Results</div>
                 <div class="card-body shadow-nohover">
                     <ul class="list-group">
-                        <li class="list-group item border-left-0 border-right-0 categoriesList">Science:</li>
+                        <li class="list-group item border-left-0 border-right-0 categoriesList" id="scienceList">Science:</li>
                         <li class="list-group item border-left-0 border-right-0 categoriesList">History:</li>
                         <li class="list-group item border-left-0 border-right-0 categoriesList">Art:</li>
                         <li class="list-group item border-left-0 border-right-0 categoriesList">Sports:</li>
@@ -108,6 +108,7 @@
                                 $(this).removeClass("text-white").addClass("text-success").attr("darker");
                             });
 
+                        $("#scienceList").append().text("DUCK");
 
                         </script>
 

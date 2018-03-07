@@ -28,3 +28,7 @@ INSERT INTO triviaMembers (username, PASSWORD, emailAddress, firstName, lastName
 joinDate, gender, quackMember)
  VALUES('memo', sha1('password02'), 'alican@mail.com',
 'mehmet', 'Can','10','2018-02-27','f','N');
+
+insert into datingMembers(fname,lname,gender,seeking,email,age,phone,interests,bio,premium,state,
+image) values(:fname,:lname,:gender,:seeking,:email,:age,:phone,:interests,:bio,:premium,:state,
+:image);

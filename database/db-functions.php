@@ -8,7 +8,7 @@
 
 
 //needed config file
-require("/home/tsevimgr/config.php");
+include("/home/tsevimgr/config.php");
 
 //connection method
 function connect()
@@ -19,7 +19,7 @@ function connect()
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $conn->setAttribute(PDO::ATTR_PERSISTENT, true);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        //echo "Connected to database for Trivia quack!";
+       // echo "Connected to database for Trivia quack!";
         //return connection
         return $conn;
 

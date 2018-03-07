@@ -86,14 +86,21 @@ $f3->route('GET|POST /profiles/@id', function ($f3,$params){
 
 });*/
 //this route will be displaying the player with the id
-$f3->route('GET|POST /profile', function ($f3,$params){
-//
-//    $id = $params['id'];
-//
-//    $member = getMember($id);
-//    $f3->set('member',$member);
+$f3->route('GET|POST /profile', function ($f3, $params)
+{
+    //
+    //    $id = $params['id'];
+    //
+    //    $member = getMember($id);
+    //    $f3->set('member',$member);
 
-    $f3->set("scored","1500");
+    include "classes/databaseObject.php";
+    $f3->set("scored", "1500");
+//
+    $database = new databaseObject();
+//
+   $database->connect();
+
 
 
     echo Template::instance()->render('pages/profile.html');
@@ -103,7 +110,8 @@ $f3->route('GET|POST /profile', function ($f3,$params){
 
 
 //LOGOUT ROUTE
-$f3->route('GET|POST /pages/logout', function ($f3){
+$f3->route('GET|POST /pages/logout', function ($f3)
+{
 
 
     //kill the session,
@@ -118,8 +126,6 @@ $f3->route('GET|POST /pages/logout', function ($f3){
 
     echo Template::instance()->render('pages/logout.html');
 });
-
-
 
 
 //run fat free
