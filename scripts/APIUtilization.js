@@ -8,7 +8,7 @@
  * @version 1.0
  */
 
-//to play the game with 1 question, amount can be set as default final 1, since in every click new question is pulled
+//to play the game with 1 question, amount can be set as default final 1, since in every click new question
 var playAGame = 1;
 
 //CATEGORIES FROM THE API
@@ -16,6 +16,16 @@ var codeQuestion = 18, scienceQuestion = 17, artQuestion = 25, historyQuestion =
     celebQuestion = 26;
 var generalCultureQuestion = 9;
 var sportsQuestion = 21;
+
+function shuffle(arrayList) {
+    var j, x, i;
+    for (i = arrayList.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = arrayList[i];
+        arrayList[i] = arrayList[j];
+        arrayList[j] = x;
+    }
+}
 
 /**
  * This function is used to pull Json API data from the internet with a given url and parameters.
@@ -58,7 +68,9 @@ function createQuestion(amount, category) {
 
             //get the data
             var questionData = item.question;
-            var answersDataArray = [item.incorrect_answers[0], item.incorrect_answers[1], item.incorrect_answers[2], item.correct_answer];
+            var answersDataArray = [[item.incorrect_answers[0], 0], [item.incorrect_answers[1], 0], [item.incorrect_answers[2], 0], [item.correct_answer], 1];
+
+            shuffle(answersDataArray);
 
             var randomCreatedArray = [];
 
@@ -83,8 +95,10 @@ function createQuestion(amount, category) {
 
             }
 
+
 //TESTING TO CONSOLE
-            for (var i = 1; i <= randomCreatedArray.length; i++) {
+            shuffle(randomCreatedArray);
+            for (var i = 0; i <= randomCreatedArray.length; i++) {
 
                 console.log(randomCreatedArray[i]);
             }
@@ -140,7 +154,7 @@ $(".card").click(function () {
             createQuestion(playAGame, geographyQuestion);
             break;
         case "Random":
-            var random = Math.floor((Math.random() * 25 + 1));
+            var random = Math.floor((Math.random() * 22 + 1));
             createQuestion(playAGame, random); //Generate from an random api number
             break;
         default:

@@ -2,6 +2,7 @@
 
 /**
  * Toygan Sevim
+ * Mason Hernandez
  *
  * index.php
  *
@@ -23,7 +24,7 @@ session_start();
 //connect to database
 $conn = connect();
 
-
+//Debigging on
 $f3->set('DEBUG', 3);
 
 //Define a default route
@@ -96,11 +97,10 @@ $f3->route('GET|POST /profile', function ($f3, $params)
 
     include "classes/databaseObject.php";
     $f3->set("scored", "1500");
-//
+    //
     $database = new databaseObject();
-//
-   $database->connect();
-
+    //
+    $database->connect();
 
 
     echo Template::instance()->render('pages/profile.html');

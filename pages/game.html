@@ -148,20 +148,22 @@ category to play the game
                             <div class="modal-body d-none answersBody" id="">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button class="btn btn-dark btn-block mb-3 text-left" name="answer1"
+                                        <button class="btn btn-dark btn-block mb-3 answerOption text-left"
+                                                name="answer1"
                                                 id="answer1">
                                         </button>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-dark btn-block mb-3 text-left" id="answer2">
+                                        <button class="btn btn-dark btn-block mb-3 answerOption text-left" id="answer2">
                                         </button>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-dark btn-block mb-3 text-left" id="answer3">
+                                        <button class="btn btn-dark btn-block mb-3 answerOption text-left" id="answer3">
                                         </button>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-dark btn-block mb-3 text-left" id="answer4"></button>
+                                        <button class="btn btn-dark btn-block mb-3 answerOption text-left"
+                                                id="answer4"></button>
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +233,7 @@ category to play the game
         </div>
     </div>
 </div>
-<!--
+<!--w
 END CONTAINER
 -->
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
@@ -244,22 +246,39 @@ END CONTAINER
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
+<!--API USAGE QUESTION LOAD-->
+<script src="./scripts/APIUtilization.js"></script>
 
 <script>"use strict";
 
-var answer = $('#answer1');
-answer.click(findAnswer);
 
-function findAnswer() {
-    answer.removeClass('btn-dark');
-    answer.addClass('btn-warning');
-    // answer.delay('slow');
-    // answer.removeClass('btn-warning');w
-    // answer.addClass('btn-success');
-    //alert("FUCK");
+// //I should grab the buttons, check their class.
+// $(".btn-dark").click(function () {
+//
+//     var button = document.getElementsByClassName("successful");
+//
+//     var btn = $(".successful");
+//     // button.css("color", "red");
+//     console.log("This is " + button);
+//
+//     console.log("This is " + btn);
+//
+//
+// });
+
+
+$(".answerOption").click(selectedButton());
+
+function selectedButton() {
+
+    //Button that is selected will light up
+    $(".answerOption").addClass("bg-warning").removeClass("bg-secondary");
+
+    var button = document.getElementsByClassName("successful");
+
+    alert(button.id);
 }
 </script>
-
 
 </body>
 </html>
