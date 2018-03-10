@@ -68,40 +68,50 @@ function createQuestion(amount, category) {
 
             //get the data
             var questionData = item.question;
-            var answersDataArray = [[item.incorrect_answers[0], 0], [item.incorrect_answers[1], 0], [item.incorrect_answers[2], 0], [item.correct_answer], 1];
+
+            var correctAnswer = item.correct_answer;
+            var answersDataArray = [item.incorrect_answers[0], item.incorrect_answers[1], item.incorrect_answers[2], correctAnswer];
 
             shuffle(answersDataArray);
 
             var randomCreatedArray = [];
 
             //set the question H3 to the data from file
-            questionName.text(questionData);
+            questionName.html(questionData);
 
             //load the buttons
             for (var i = 1; i <= answersDataArray.length; i++) {
-
                 //in this line hopefully I will create What I want
                 //To the random selection occurance array will take the values with .push
                 //we will push in every element that has an Answer ID !! will increment the position with the loop
                 //also will change the text value of the button to the array position
-                if (i <= item.incorrect_answers.length) {//first 3 are incorrect
-                    randomCreatedArray.push($("#answer" + i).text(answersDataArray[i - 1]).addClass("failed"));
-                } else
-                //last one is the correct answer
-                {
+                randomCreatedArray.push($("#answer" + i).html(answersDataArray[i - 1]));
 
-                    randomCreatedArray.push($("#answer" + i).text(answersDataArray[i - 1]).addClass("successful"));
+            }
+            var item
+            console.log(correctAnswer);
+
+            for (var i = 0; i < answersDataArray.length; i++) {
+                item = randomCreatedArray[i].text();
+
+                console.log("Item" + i + item);
+
+                if (item == correctAnswer) {
+                    // alert("FOUND");
+                    console.log("found");
+                } else {
+                    console.log("not found");
                 }
-
             }
 
 
 //TESTING TO CONSOLE
             shuffle(randomCreatedArray);
-            for (var i = 0; i <= randomCreatedArray.length; i++) {
 
-                console.log(randomCreatedArray[i]);
-            }
+            // for (var i = 0; i <= randomCreatedArray.length; i++) {
+            //
+            //     console.log(randomCreatedArray[i]);
+            // }
 
 
         });
