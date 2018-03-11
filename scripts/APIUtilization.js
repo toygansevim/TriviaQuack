@@ -11,12 +11,20 @@
 //to play the game with 1 question, amount can be set as default final 1, since in every click new question
 var playAGame = 1;
 
+
 //CATEGORIES FROM THE API
 var codeQuestion = 18, scienceQuestion = 17, artQuestion = 25, historyQuestion = 23, geographyQuestion = 22,
     celebQuestion = 26;
 var generalCultureQuestion = 9;
 var sportsQuestion = 21;
 
+var correctAnswer;
+var selected;
+
+/**
+ * This function will shuffle the given array elements and will return a shuffled array
+ * @param arrayList the array that user would like to shuffle
+ */
 function shuffle(arrayList) {
     var j, x, i;
     for (i = arrayList.length - 1; i > 0; i--) {
@@ -69,11 +77,10 @@ function createQuestion(amount, category) {
             //get the data
             var questionData = item.question;
 
-            var correctAnswer = item.correct_answer;
+            correctAnswer = item.correct_answer;
             var answersDataArray = [item.incorrect_answers[0], item.incorrect_answers[1], item.incorrect_answers[2], correctAnswer];
 
             shuffle(answersDataArray);
-
             var randomCreatedArray = [];
 
             //set the question H3 to the data from file
@@ -88,7 +95,7 @@ function createQuestion(amount, category) {
                 randomCreatedArray.push($("#answer" + i).html(answersDataArray[i - 1]));
 
             }
-            var item
+            var item;
             console.log(correctAnswer);
 
             for (var i = 0; i < answersDataArray.length; i++) {
@@ -136,6 +143,8 @@ $(".card").click(function () {
 
     var cardName1 = $(this).text().trim();
 
+    // COUNT THE AMOUNT OF QUESTION'S CREATED AND WILL CHECK WITH CORRECT ANSWER
+
     //Depending on the Name of the Tile, pull the JSON file from API
     switch (cardName1) {
 
@@ -172,3 +181,71 @@ $(".card").click(function () {
     }
 
 });
+
+//Answer option on selection Is corresponding color depending on the correct answer + user
+$(".answerOption").click(
+    function () {
+        selected = $(this);
+        selected.addClass("bg-warning").delay(1000).removeClass("bg-dark");
+
+        setTimeout(
+            function () {
+                //check if the selected one is the correct answer
+                if (selected.text() === correctAnswer) {
+
+                    selected.addClass("bg-success").removeClass("bg-warning");
+                    console.log(selected.siblings());
+
+
+                    selected.siblings().addClass("bg-danger");
+                    //Next question should be displayed automatically
+
+                    //increment the counter of the player object here
+
+
+                    //increment the amount of played question's here
+
+
+                }
+                else {
+                    selected.addClass("bg-danger").removeClass("bg-warning");
+                    console.log(selected.siblings());
+                    for (var i = 1; i < selected.siblings().length + 1; i++) {
+                        if ($("#answer" + i).text() === correctAnswer) {
+                            // alert(correctAnswer);
+                            // console.log(i);
+                            $("#answer" + i).addClass("bg-success");
+                        } else {
+                            console.log(i + " was that.");
+                            $("#answer" + i).addClass("bg-danger");
+                        }
+                    }
+                    //Add green to the correct answer
+
+
+                }
+
+                // alert(correctAnswer);
+                // alert(selected.id);
+            },
+            2000);
+
+        setTimeout(resetButtonColors, 5000);
+
+        //move to the next question
+
+
+
+    });
+
+function resetButtonColors() {
+    $(".answerOption").addClass("bg-dark");
+
+    if ($(".btn").hasClass("bg-success")) {
+        $(".btn").removeClass("bg-success");
+    } else if ($(".btn").hasClass("bg-danger")) {
+        $(".btn").removeClass("bg-danger");
+    }
+
+
+}
