@@ -35,6 +35,7 @@
 
 <!--<div class="bg"></div>-->
 
+<form action="#" method="post">
 <div class="container main-content">
     <!--NAVBAR-->
     <div class="row pt-5 login-row">
@@ -50,47 +51,46 @@
                 </div>
             </div>
             <div class="row text-white pt-3" id="body">
-                <form action="#" method="post">
+                <!--Username input-->
+                <div class="form-group py-0 mb-1 w-100">
+                    <h6 class="mb-0 float-left"><label class="mb-0" for="username">Username</label></h6>
+                    <span class='text-danger float-right'>{{@username_err}}</span>
+                    <input type="text" class="form-control border-0" id="username" name="username">
+                </div>
 
-                    <!--Username input-->
-                    <div class="form-group py-0 mb-1">
-                        <h6 class="mb-0"><label class="mb-0" for="username">Username</label></h6>
-                        <input type="text" class="form-control border-0" id="username" name="username">
-                    </div>
+                <!--Email input-->
+                <div class="form-group py-0 mb-1 w-100">
+                    <h6 class="mb-0 float-left"><label class="mb-0" for="email">Email</label></h6>
+                    <span class='text-danger float-right'>{{@email_err}}</span>
+                    <input type="text" class="form-control border-0" id="email" name="email">
+                </div>
 
-                    <!--Email input-->
-                    <div class="form-group py-0 mb-1">
-                        <h6 class="mb-0"><label class="mb-0" for="username">Email</label></h6>
-                        <input type="text" class="form-control border-0" id="email" name="email">
-                    </div>
+                <!--Password input-->
+                <div class="form-group py-0 mb-1 w-100">
+                    <h6 class="mb-0"><label class="mb-0" for="pass">Password</label></h6>
+                    <input type="password" class="form-control border-0" id="pass" name="pass">
+                </div>
 
-                    <!--Password input-->
-                    <div class="form-group py-0 mb-1">
-                        <h6 class="mb-0"><label class="mb-0" for="pass">Password</label></h6>
-                        <input type="password" class="form-control border-0" id="pass" name="pass">
-                    </div>
-
-                    <!--Repeat Password input-->
-                    <div class="form-group py-0 mb-1">
-                        <h6 class="mb-0"><label class="mb-0" for="pass">Repeat Password</label></h6>
-                        <input type="password" class="form-control border-0" id="repeat-pass" name="repeat-pass">
-                    </div>
-
-                </form>
+                <!--Repeat Password input-->
+                <div class="form-group py-0 mb-1 w-100">
+                    <h6 class="mb-0"><label class="mb-0" for="repeat-pass">Repeat Password</label></h6>
+                    <input type="password" class="form-control border-0" id="repeat-pass" name="repeat-pass">
+                </div>
             </div>
 
-            <div class="row text-center justify-content-center py-2 mt-3" id="foot">
+            <div class="row text-center justify-content-center py-0 mt-3" id="foot">
                 <div class="col-6 text-white border-right">
-                    <a href="." class="text-white">return</a>
+                    <a href="." class="btn text-white" id="return">return</a>
                 </div>
 
                 <div class="col-6 text-white">
-                    <a href="./login" class="text-white">login</a>
+                    <input type="submit" name="submit" value="signup" id="signup" class="btn text-white">
                 </div>
             </div>
         </div>
     </div>
 </div>
+</form>
 <!--
 END CONTAINER
 -->
