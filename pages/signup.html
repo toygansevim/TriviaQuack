@@ -1,9 +1,3 @@
-<!--Authors: Toygan Sevim
-             Mason Hernandez
-
-    signup.html
-    This page allows us to create a User and insert into page
--->
 <!doctype html>
 <html lang="en">
 <head>
@@ -61,26 +55,28 @@
                 <div class="form-group py-0 mb-1 w-100">
                     <h6 class="mb-0 float-left"><label class="mb-0" for="username">Username</label></h6>
                     <span class='text-danger float-right'>{{@username_err}}</span>
-                    <input type="text" class="form-control border-0" id="username" name="username">
+                    <input type="text" class="form-control border-0" id="username" name="username" value="{{@username}}">
                 </div>
 
                 <!--Email input-->
                 <div class="form-group py-0 mb-1 w-100">
                     <h6 class="mb-0 float-left"><label class="mb-0" for="email">Email</label></h6>
                     <span class='text-danger float-right'>{{@email_err}}</span>
-                    <input type="text" class="form-control border-0" id="email" name="email">
+                    <input type="text" class="form-control border-0" id="email" name="email" value="{{@email}}">
                 </div>
 
                 <!--Password input-->
                 <div class="form-group py-0 mb-1 w-100">
-                    <h6 class="mb-0"><label class="mb-0" for="pass">Password</label></h6>
-                    <input type="password" class="form-control border-0" id="pass" name="pass">
+                    <h6 class="mb-0 float-left"><label class="mb-0" for="pass">Password</label></h6>
+                    <span class='text-danger float-right'>{{@pass_err}}</span>
+                    <input type="password" class="form-control border-0" id="pass" name="pass" value="{{@pass}}">
                 </div>
 
                 <!--Repeat Password input-->
                 <div class="form-group py-0 mb-1 w-100">
-                    <h6 class="mb-0"><label class="mb-0" for="repeat-pass">Repeat Password</label></h6>
-                    <input type="password" class="form-control border-0" id="repeat-pass" name="repeat-pass">
+                    <h6 class="mb-0 float-left"><label class="mb-0" for="repeat-pass">Repeat Password</label></h6>
+                    <span class='text-danger float-right'>{{@repeat_pass_err}}</span>
+                    <input type="password" class="form-control border-0" id="repeat-pass" name="repeat-pass" value="{{@repeat_pass}}">
                 </div>
             </div>
 

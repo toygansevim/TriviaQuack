@@ -1,13 +1,19 @@
 <?php
-
+/**
+ * @author Mason Hernnadez
+ * filename: validateNewUser.php
+ *
+ * This file validates a user trying to signup fo TriviaQuack
+ */
 $errors = [];
-$username;
-$password;
-$repeatPassword;
-$email;
+$username = "";
+$password = "";
+$repeatPassword = "";
+$email = "";
 
 if(isset($_POST['submit'])) {
-    global $errors, $f3;
+    global $errors, $f3, $username,
+           $password, $repeatPassword, $email;
     validateUsername();
     validateEmail();
     validatePass();
@@ -17,8 +23,17 @@ if(isset($_POST['submit'])) {
         //$f3->reroute('/home');
         echo "no errors!?";
     } else {
-        echo "we got errors";
+        //store past entries in fat free hive for sticky forms
+        $f3->set('username', $username);
+        $f3->set('email', $email);
+        $f3->set('pass', $password);
+        $f3->set('repeat_pass', $repeatPassword);
+
+        //store errors in fat free hive for later use
         $f3->set('username_err', $errors['username_err']);
+        $f3->set('email_err', $errors['email_err']);
+        $f3->set('pass_err', $errors['pass_err']);
+        $f3->set('repeat_pass_err', $errors['repeat_pass_err']);
     }
 }
 
@@ -28,8 +43,10 @@ if(isset($_POST['submit'])) {
  */
 function validateUsername() {
     global $errors, $username;
+
     if (!empty($_POST['username'])) {
         $username = htmlspecialchars($_POST['username']);
+        //does the user already exist
         if(doesUserExist($username))
             $errors['username_err'] = "Username already in use";
 
@@ -38,6 +55,14 @@ function validateUsername() {
     }
 }
 
+/**
+ * Finds out whether or not the username
+ * being used to sign up already exists
+ * in the database
+ *
+ * @param $username
+ * @return boolean does the username exist
+ */
 function doesUserExist($username) {
     require '/home/mhernand/tqConfig.php';
 
@@ -50,12 +75,15 @@ function doesUserExist($username) {
         return;
     }
 
+    //Grab any rows with that username
     $sql = "SELECT * FROM triviaMembers WHERE username = :username";
     $statement = $dbh->prepare($sql);
     $statement->bindParam(':username', $username, PDO::PARAM_STR);
     $statement->execute();
     $row = $statement->fetch(PDO::FETCH_ASSOC);
 
+    //if the row is empty user was not found, does not exist
+    //empty, if empty return false
     return !empty($row);
 }
 
@@ -82,8 +110,16 @@ function validateEmail() {
     }
 }
 
+/**
+ * Finds out whether or not the email
+ * being used to sign up already exists
+ * in the database
+ *
+ * @param $email
+ * @return boolean does the email exist
+ */
 function doesEmailExist($email) {
-    require '/home/mhernand/config.php';
+    require '/home/mhernand/tqConfig.php';
 
     try {
         //Instantiate a database object
@@ -94,12 +130,14 @@ function doesEmailExist($email) {
         return;
     }
 
-    $sql = "SELECT * FROM Members WHERE email = :email";
+    //Grab any rows holding that email
+    $sql = "SELECT * FROM triviaMembers WHERE emailAddress = :email";
     $statement = $dbh->prepare($sql);
     $statement->bindParam(':email', $email, PDO::PARAM_STR);
     $statement->execute();
     $row = $statement->fetch(PDO::FETCH_ASSOC);
 
+    //Does not exist (no rows with that email were retreived)
     return !empty($row);
 }
 
@@ -117,8 +155,8 @@ function validatePass() {
 function validateRepeatPass() {
     global $errors, $password, $repeatPassword;
 
-    if (!empty($_POST['repeatPass'])) {
-        $repeatPassword = htmlspecialchars($_POST['repeatPass']);
+    if (!empty($_POST['repeat-pass'])) {
+        $repeatPassword = htmlspecialchars($_POST['repeat-pass']);
 
         if($password!=$repeatPassword)
             $errors['repeat_pass_err'] = "Passwords do not match";
