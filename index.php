@@ -2,7 +2,6 @@
 
 /**
  * Toygan Sevim
- * Mason Hernandez
  *
  * index.php
  *
@@ -24,7 +23,7 @@ session_start();
 //connect to database
 $conn = connect();
 
-//Debigging on
+
 $f3->set('DEBUG', 3);
 
 //Define a default route
@@ -53,13 +52,13 @@ $f3->route('GET|POST /users', function ($f3)
 
 $f3->route('GET|POST /login', function ($f3)
 {
-
     echo Template::instance()->render('pages/login.html');
 });
 
 $f3->route('GET|POST /signup', function ($f3)
 {
-
+    require 'model/validateNewUser.php';
+    //var_dump($GLOBALS['errors']);
     echo Template::instance()->render('pages/signup.html');
 });
 
@@ -87,44 +86,18 @@ $f3->route('GET|POST /profiles/@id', function ($f3,$params){
 
 });*/
 //this route will be displaying the player with the id
-$f3->route('GET|POST /profile', function ($f3, $params)
-{
-    //
-    //    $id = $params['id'];
-    //
-    //    $member = getMember($id);
-    //    $f3->set('member',$member);
+$f3->route('GET|POST /profile', function ($f3,$params){
+//
+//    $id = $params['id'];
+//
+//    $member = getMember($id);
+//    $f3->set('member',$member);
 
-    include "classes/databaseObject.php";
-    $f3->set("scored", "1500");
-    //
-    $database = new databaseObject();
-    //
-    $database->connect();
 
 
     echo Template::instance()->render('pages/profile.html');
 
 
-});
-
-
-//LOGOUT ROUTE
-$f3->route('GET|POST /pages/logout', function ($f3)
-{
-
-
-    //kill the session,
-
-    //logout the user
-
-
-    //reroute to another location
-
-
-    //maybe the login page
-
-    echo Template::instance()->render('pages/logout.html');
 });
 
 
