@@ -36,9 +36,11 @@ $f3->route('GET /', function ($f3)
     echo Template::instance()->render('pages/home.html');
 });
 
+/**
+ * Routes to a simple table of users
+ */
 $f3->route('GET|POST /users', function ($f3)
 {
-
     require_once 'database/db-functions.php';
 
     $members = getLeaders();
@@ -50,15 +52,80 @@ $f3->route('GET|POST /users', function ($f3)
     echo Template::instance()->render('database/displayDatabase.html');
 });
 
+/**
+ * Routes to a login page
+ */
 $f3->route('GET|POST /login', function ($f3)
 {
+    require 'model/validateNewUser.php';
+
+    //They submitted
+    if(isset($_POST['submit'])) {
+
+        //no errors were developed from validateNewUser.php
+        if(empty($errors)) {
+
+            //add member to database using db-functions.addMember()
+            addMember($username, $password, $email);
+
+            //stores the added member in a Member object in a session variable
+            $_SESSION['user'] = retrieveUser($username);
+
+            //reroute to home page of game
+            $f3->reroute("./home");
+
+        } else {
+
+            //store past entries in fat free hive for sticky forms
+            $f3->set('username', $username);
+            $f3->set('pass', $password);
+
+            //store errors in fat free hive for later use
+            $f3->set('username_err', $errors['username_err']);
+            $f3->set('pass_err', $errors['pass_err']);
+        }
+    }
+
     echo Template::instance()->render('pages/login.html');
 });
 
-$f3->route('GET|POST /signup', function ($f3)
+/**
+ * Routes to a signup page
+ */
+$f3->route('GET|POST /signup', function ($f3, $conn)
 {
     require 'model/validateNewUser.php';
-    //var_dump($GLOBALS['errors']);
+
+    //They submitted
+    if(isset($_POST['submit'])) {
+
+        //no errors were developed from validateNewUser.php
+        if(empty($errors)) {
+
+            //add member to database using db-functions.addMember()
+            addMember($username, $password, $email);
+
+            $_SESSION['user'] = retrieveUser($username);
+
+            //reroute to home page of game
+            $f3->reroute("./home");
+
+        } else {
+
+            //store past entries in fat free hive for sticky forms
+            $f3->set('username', $username);
+            $f3->set('email', $email);
+            $f3->set('pass', $password);
+            $f3->set('repeat_pass', $repeatPassword);
+
+            //store errors in fat free hive for later use
+            $f3->set('username_err', $errors['username_err']);
+            $f3->set('email_err', $errors['email_err']);
+            $f3->set('pass_err', $errors['pass_err']);
+            $f3->set('repeat_pass_err', $errors['repeat_pass_err']);
+        }
+    }
+
     echo Template::instance()->render('pages/signup.html');
 });
 
@@ -96,8 +163,6 @@ $f3->route('GET|POST /profile', function ($f3,$params){
 
 
     echo Template::instance()->render('pages/profile.html');
-
-
 });
 
 
