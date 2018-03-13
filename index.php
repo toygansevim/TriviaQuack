@@ -23,7 +23,6 @@ session_start();
 //connect to database
 $conn = connect();
 
-
 $f3->set('DEBUG', 3);
 
 //Define a default route
@@ -57,25 +56,19 @@ $f3->route('GET|POST /users', function ($f3)
  */
 $f3->route('GET|POST /login', function ($f3)
 {
-    require 'model/validateNewUser.php';
+    require 'model/validateReturningUser.php';
 
     //They submitted
     if(isset($_POST['submit'])) {
 
         //no errors were developed from validateNewUser.php
         if(empty($errors)) {
-
-            //add member to database using db-functions.addMember()
-            addMember($username, $password, $email);
-
-            //stores the added member in a Member object in a session variable
             $_SESSION['user'] = retrieveUser($username);
 
             //reroute to home page of game
-            $f3->reroute("./home");
+            //$f3->reroute("./home");
 
         } else {
-
             //store past entries in fat free hive for sticky forms
             $f3->set('username', $username);
             $f3->set('pass', $password);
@@ -92,12 +85,14 @@ $f3->route('GET|POST /login', function ($f3)
 /**
  * Routes to a signup page
  */
-$f3->route('GET|POST /signup', function ($f3, $conn)
+$f3->route('GET|POST /signup', function ($f3)
 {
     require 'model/validateNewUser.php';
 
     //They submitted
     if(isset($_POST['submit'])) {
+
+        //var_dump($GLOBALS);
 
         //no errors were developed from validateNewUser.php
         if(empty($errors)) {
