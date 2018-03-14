@@ -66,7 +66,7 @@ $f3->route('GET|POST /login', function ($f3)
             $_SESSION['user'] = retrieveUser($username);
 
             //reroute to home page of game
-            //$f3->reroute("./home");
+            $f3->reroute("./home");
 
         } else {
             //store past entries in fat free hive for sticky forms
@@ -78,7 +78,6 @@ $f3->route('GET|POST /login', function ($f3)
             $f3->set('pass_err', $errors['pass_err']);
         }
     }
-
     echo Template::instance()->render('pages/login.html');
 });
 
@@ -100,6 +99,7 @@ $f3->route('GET|POST /signup', function ($f3)
             //add member to database using db-functions.addMember()
             addMember($username, $password, $email);
 
+            //store the user in the session (logged in)
             $_SESSION['user'] = retrieveUser($username);
 
             //reroute to home page of game
@@ -154,8 +154,6 @@ $f3->route('GET|POST /profile', function ($f3,$params){
 //
 //    $member = getMember($id);
 //    $f3->set('member',$member);
-
-
 
     echo Template::instance()->render('pages/profile.html');
 });
