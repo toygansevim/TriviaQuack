@@ -9,7 +9,7 @@
   CREATE TABLE triviaMembers (
         id int PRIMARY KEY AUTO_INCREMENT,
         username varchar(30) NOT NULL,
-        password varchar(25) NOT NULL,
+        password char(40) NOT NULL,
         email varchar(50) NOT NULL,
         totalScore int(11) DEFAULT NULL,
         joinDate date DEFAULT NULL,
