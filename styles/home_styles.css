@@ -61,6 +61,11 @@ input#signup {
     background: none !important;
 }
 
+input#login {
+    border: none !important;
+    background: none !important;
+}
+
 a#return:hover {
     text-decoration: none !important;
 }
