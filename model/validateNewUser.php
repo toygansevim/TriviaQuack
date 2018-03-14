@@ -5,48 +5,77 @@
  *
  * This file validates a user trying to signup fo TriviaQuack
  */
-$errors = [];
-$username = "";
-$password = "";
-$repeatPassword = "";
-$email = "";
 
-if(isset($_POST['submit'])) {
-    global $errors, $f3, $username, $password, $email, $repeatPassword;
-    validateUsername();
-    validateEmail();
-    validatePass();
-    validateRepeatPass();
+//initialize necessary variables
+$errors = [];
+$username;
+$email;
+$password;
+$repeatPassword;
+
+//call validation fucntions
+validateUsername($username, $errors);
+validateEmail($email, $errors);
+validatePass($password, $errors);
+validateRepeatPass($password, $repeatPassword, $errors);
+
+//no errors were developed
+if (empty($errors)) {
+
+    //add member to database using db-functions.addMember()
+    addMember($username, $password, $email);
+
+    //store the user in the session (logged in)
+    $_SESSION['user'] = retrieveUser($username);
+
+    //reroute to home page of game
+    $f3->reroute("./home");
+
+//They had errors, record the errors and past entries
+} else {
+
+    //store past entries in fat free hive for sticky forms
+    $f3->set('username', $username);
+    $f3->set('email', $email);
+    $f3->set('pass', $password);
+    $f3->set('repeat_pass', $repeatPassword);
+
+    //store errors in fat free hive for later use
+    $f3->set('username_err', $errors['username_err']);
+    $f3->set('email_err', $errors['email_err']);
+    $f3->set('pass_err', $errors['pass_err']);
+    $f3->set('repeat_pass_err', $errors['repeat_pass_err']);
 }
 
 /**
- * Checks for pre-existing username in database
- * and clears the username of possible sql insertion
+ * Checks username is entered and not taken
+ *
+ * @param &$username, &$errors
  */
-function validateUsername() {
-    global $errors, $username;
-
+function validateUsername(&$username, &$errors)
+{
+    //they entered their username
     if (!empty($_POST['username'])) {
         $username = htmlspecialchars($_POST['username']);
 
         //does the user already exist
-        if(doesUserExist($username))
+        if (doesUserExist($username))
             $errors['username_err'] = "Username already in use";
 
+    //They never entered their username
     } else {
         $errors['username_err'] = "Required field";
     }
 }
 
 /**
- * Finds out whether or not the username
- * being used to sign up already exists
- * in the database
+ * Check that username is in database
  *
- * @param $username
+ * @param &$username
  * @return boolean does the username exist
  */
-function doesUserExist($username) {
+function doesUserExist($username)
+{
     global $conn;
 
     //Grab any rows with that username
@@ -65,20 +94,21 @@ function doesUserExist($username) {
  * Checks for valid format of email, does
  * not check whether or not the email exists
  */
-function validateEmail() {
-    global $errors, $email;
-
+function validateEmail(&$email, &$errors)
+{
+    //they entered their email
     if (!empty($_POST['email'])) {
         $email = htmlspecialchars($_POST['email']);
 
         //invalid email format
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
             $errors['email_err'] = "example@email.com";
 
-        if(doesEmailExist($email))
-            $errors['email_err'] =
-                "Email already in use";
+        //does email exist already
+        if (doesEmailExist($email))
+            $errors['email_err'] = "Email already in use";
 
+    //they have not entered their email
     } else {
         $errors['email_err'] = "Required field";
     }
@@ -92,7 +122,8 @@ function validateEmail() {
  * @param $email
  * @return boolean does the email exist
  */
-function doesEmailExist($email) {
+function doesEmailExist($email)
+{
     global $conn;
 
     //Grab any rows holding that email
@@ -106,26 +137,39 @@ function doesEmailExist($email) {
     return !empty($row);
 }
 
-function validatePass() {
-    global $errors, $password;
-
+/**
+ * Validates password was entered and "clean"
+ *
+ * @param $password
+ * @param $errors
+ */
+function validatePass(&$password, &$errors)
+{
+    //they entered their password
     if (!empty($_POST['pass'])) {
         $password = htmlspecialchars($_POST['pass']);
 
+    //they have not entered their password
     } else {
         $errors['pass_err'] = "Required field";
     }
 }
 
-function validateRepeatPass() {
-    global $errors, $password, $repeatPassword;
-
+/**
+ * Validates that repeat password was entered, clean,
+ * and matches the entered password
+ */
+function validateRepeatPass(&$password, &$repeatPassword, &$errors)
+{
+    //they entered their repeat password
     if (!empty($_POST['repeat-pass'])) {
         $repeatPassword = htmlspecialchars($_POST['repeat-pass']);
 
-        if($password!=$repeatPassword)
+        //do the passwords match
+        if ($password != $repeatPassword)
             $errors['repeat_pass_err'] = "Passwords do not match";
 
+    //they did not enter their password
     } else {
         $errors['repeat_pass_err'] = "Required field";
     }

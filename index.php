@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Toygan Sevim
  *
@@ -56,27 +55,11 @@ $f3->route('GET|POST /users', function ($f3)
  */
 $f3->route('GET|POST /login', function ($f3)
 {
-    require 'model/validateReturningUser.php';
-
     //They submitted
     if(isset($_POST['submit'])) {
 
-        //no errors were developed from validateNewUser.php
-        if(empty($errors)) {
-            $_SESSION['user'] = retrieveUser($username);
-
-            //reroute to home page of game
-            $f3->reroute("./home");
-
-        } else {
-            //store past entries in fat free hive for sticky forms
-            $f3->set('username', $username);
-            $f3->set('pass', $password);
-
-            //store errors in fat free hive for later use
-            $f3->set('username_err', $errors['username_err']);
-            $f3->set('pass_err', $errors['pass_err']);
-        }
+        //validate it
+        require 'model/validateReturningUser.php';
     }
     echo Template::instance()->render('pages/login.html');
 });
@@ -86,41 +69,14 @@ $f3->route('GET|POST /login', function ($f3)
  */
 $f3->route('GET|POST /signup', function ($f3)
 {
-    require 'model/validateNewUser.php';
-
     //They submitted
     if(isset($_POST['submit'])) {
 
-        //var_dump($GLOBALS);
-
-        //no errors were developed from validateNewUser.php
-        if(empty($errors)) {
-
-            //add member to database using db-functions.addMember()
-            addMember($username, $password, $email);
-
-            //store the user in the session (logged in)
-            $_SESSION['user'] = retrieveUser($username);
-
-            //reroute to home page of game
-            $f3->reroute("./home");
-
-        } else {
-
-            //store past entries in fat free hive for sticky forms
-            $f3->set('username', $username);
-            $f3->set('email', $email);
-            $f3->set('pass', $password);
-            $f3->set('repeat_pass', $repeatPassword);
-
-            //store errors in fat free hive for later use
-            $f3->set('username_err', $errors['username_err']);
-            $f3->set('email_err', $errors['email_err']);
-            $f3->set('pass_err', $errors['pass_err']);
-            $f3->set('repeat_pass_err', $errors['repeat_pass_err']);
-        }
+        //validate the input
+        require 'model/validateNewUser.php';
     }
 
+    //route
     echo Template::instance()->render('pages/signup.html');
 });
 
