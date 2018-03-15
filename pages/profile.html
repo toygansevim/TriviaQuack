@@ -18,9 +18,9 @@
     <title>Profile page</title>
 
     <!--link css-->
-    <link rel="stylesheet" href="styles/home_styles.css">
-    <link rel="stylesheet" href="styles/game_styles.css">
-    <link rel="stylesheet" href="styles/profile_styles.css">
+    <link rel="stylesheet" href="../styles/home_styles.css">
+    <link rel="stylesheet" href="../styles/game_styles.css">
+    <link rel="stylesheet" href="../styles/profile_styles.css">
 </head>
 <body class="bg">
 
@@ -32,18 +32,16 @@
     <!--IMAGE AND THE PROFILE NAME-->
     <div class="col-lg-8 col-md-8 col-sm-6">
         <img src="http://via.placeholder.com/140x100" alt="logo image" class="float-left">
-        <h4 class="ml-2">THIS IS PROFILE NAME</h4>
+        <h4 class="ml-2"></h4>
         <br>
     </div>
 
     <!--SETTINGS BUTTON-->
-    <div class="collapse " id="navbarSupportedContent">
+    <div class="collapse" id="navbarSupportedContent">
 
         <!-- Split dropright button -->
         <div class="btn-group">
-            <button class="btn btn-outline-secondary my-2 my-sm-0 text-right" type="dropdown">SETTINGS
-                <i class="fas fa-wrench"></i></button>
-
+            <button class="btn btn-outline-secondary my-2 my-sm-0 text-right" type="dropdown">SETTINGS<i class="fas fa-wrench"></i></button>
 
             <!--GEAR  BUTTON THAT DROPSDOWN-->
             <button type="button"
@@ -59,7 +57,6 @@
                 <!--<a class="dropdown-item settings" href="#">Something else here</a>-->
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item settings" href="pages/logout">Logout</a>
-
 
             </div>
         </div>
@@ -96,7 +93,9 @@
                 <div class="card-header text-center text-uppercase font-weight-bold">Category Results</div>
                 <div class="card-body shadow-nohover">
                     <ul class="list-group">
-                        <li class="list-group item border-left-0 border-right-0 categoriesList" id="scienceList">Science:</li>
+                        <li class="list-group item border-left-0 border-right-0 categoriesList" id="scienceList">
+                            Science:
+                        </li>
                         <li class="list-group item border-left-0 border-right-0 categoriesList">History:</li>
                         <li class="list-group item border-left-0 border-right-0 categoriesList">Art:</li>
                         <li class="list-group item border-left-0 border-right-0 categoriesList">Sports:</li>
@@ -117,7 +116,6 @@
                         $("#scienceList").append().text("DUCK");
 
                         </script>
-
                     </ul>
                 </div>
             </div>
@@ -134,7 +132,6 @@
 <!--
 END CONTAINER
 -->
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 

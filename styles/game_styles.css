@@ -64,6 +64,12 @@ th {
     text-align: center;
 }
 
+td a{
+    color: white !important;
+    text-decoration: none !important;
+
+}
+
 .medal{
     height: 30px;
     width: 30px;

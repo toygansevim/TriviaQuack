@@ -1,3 +1,4 @@
+"use strict";
 /**
  *
  * APIUtilization.js
@@ -10,16 +11,17 @@
 
 //to play the game with 1 question, amount can be set as default final 1, since in every click new question
 var playAGame = 1;
-
-
 //CATEGORIES FROM THE API
 var codeQuestion = 18, scienceQuestion = 17, artQuestion = 25, historyQuestion = 23, geographyQuestion = 22,
     celebQuestion = 26;
-var generalCultureQuestion = 9;
-var sportsQuestion = 21;
-
+var codeQuestionCount, scienceQuestionCount, artQuestionCount, historyQuestionCount, geographyQuestionCount,
+    celebQuestionCount;
+var generalCultureQuestion = 9, generalCultureQuestionCount;
+var sportsQuestion = 21, sportsQuestionCount;
+var randomQuestionCount;
 var correctAnswer;
 var selected;
+var waitAseconds = 1000;
 
 /**
  * This function will shuffle the given array elements and will return a shuffled array
@@ -65,6 +67,8 @@ function createQuestion(amount, category) {
         $.each(items, function (index, item) {
 
             //get the elements and set to variables
+            var randomCreatedArray;
+            var answersDataArray;
             var questionName = $("#celebritiesModalLabel");
             var answer1 = $("#answer1");
             var answer2 = $("#answer2");
@@ -78,10 +82,11 @@ function createQuestion(amount, category) {
             var questionData = item.question;
 
             correctAnswer = item.correct_answer;
-            var answersDataArray = [item.incorrect_answers[0], item.incorrect_answers[1], item.incorrect_answers[2], correctAnswer];
+            answersDataArray = [item.incorrect_answers[0], item.incorrect_answers[1], item.incorrect_answers[2], correctAnswer];
 
             shuffle(answersDataArray);
-            var randomCreatedArray = [];
+
+            randomCreatedArray = [];
 
             //set the question H3 to the data from file
             questionName.html(questionData);
@@ -95,31 +100,6 @@ function createQuestion(amount, category) {
                 randomCreatedArray.push($("#answer" + i).html(answersDataArray[i - 1]));
 
             }
-            var item;
-            console.log(correctAnswer);
-
-            for (var i = 0; i < answersDataArray.length; i++) {
-                item = randomCreatedArray[i].text();
-
-                console.log("Item" + i + item);
-
-                if (item == correctAnswer) {
-                    // alert("FOUND");
-                    console.log("found");
-                } else {
-                    console.log("not found");
-                }
-            }
-
-
-//TESTING TO CONSOLE
-            shuffle(randomCreatedArray);
-
-            // for (var i = 0; i <= randomCreatedArray.length; i++) {
-            //
-            //     console.log(randomCreatedArray[i]);
-            // }
-
 
         });
     });
@@ -130,6 +110,7 @@ function createQuestion(amount, category) {
 $(".card").click(function () {
 
     //Where question gets displayed
+    var random;
     var modalBody = $(".answersBody");
 
     //If it is not showing, THIS IS THE TIME TO SHOW
@@ -150,31 +131,41 @@ $(".card").click(function () {
 
         case ("Code"):
             createQuestion(playAGame, codeQuestion);
+            codeQuestionCount++;
             break;
         case ("Sports"):
             createQuestion(playAGame, sportsQuestion);
+            sportsQuestionCount++;
             break;
         case "Science":
             createQuestion(playAGame, scienceQuestion);
+            scienceQuestionCount++;
             break;
         case "Art":
             createQuestion(playAGame, artQuestion);
+            artQuestionCount++;
             break;
         case"History":
             createQuestion(playAGame, historyQuestion);
+            historyQuestionCount++;
             break;
         case "General Culture":
             createQuestion(playAGame, generalCultureQuestion);
+            generalCultureQuestionCount++;
             break;
         case "Celebrities":
             createQuestion(playAGame, celebQuestion);
+            celebQuestion++;
             break;
         case "Geography":
             createQuestion(playAGame, geographyQuestion);
+            geographyQuestionCount++;
+
             break;
         case "Random":
-            var random = Math.floor((Math.random() * 22 + 1));
+            random = Math.floor((Math.random() * 21) + 1);
             createQuestion(playAGame, random); //Generate from an random api number
+            randomQuestionCount++;
             break;
         default:
             break;
@@ -183,61 +174,71 @@ $(".card").click(function () {
 });
 
 //Answer option on selection Is corresponding color depending on the correct answer + user
-$(".answerOption").click(
-    function () {
-        selected = $(this);
-        selected.addClass("bg-warning").delay(1000).removeClass("bg-dark");
+$(".answerOption").click(function () {
+    selected = $(this);
+    selected.addClass("bg-warning").delay(1000).removeClass("bg-dark");
 
-        setTimeout(
-            function () {
-                //check if the selected one is the correct answer
-                if (selected.text() === correctAnswer) {
+    setTimeout(
+        function () {
+            //check if the selected one is the correct answer
+            if (selected.text() === correctAnswer) {
 
-                    selected.addClass("bg-success").removeClass("bg-warning");
-                    console.log(selected.siblings());
-
-
-                    selected.siblings().addClass("bg-danger");
-                    //Next question should be displayed automatically
-
-                    //increment the counter of the player object here
+                selected.addClass("bg-success").removeClass("bg-warning");
+                console.log(selected.siblings());
 
 
-                    //increment the amount of played question's here
+                selected.siblings().addClass("bg-danger");
+                //Next question should be displayed automatically
+
+                //increment the counter of the player object here
 
 
-                }
-                else {
-                    selected.addClass("bg-danger").removeClass("bg-warning");
-                    console.log(selected.siblings());
-                    for (var i = 1; i < selected.siblings().length + 1; i++) {
-                        if ($("#answer" + i).text() === correctAnswer) {
-                            // alert(correctAnswer);
-                            // console.log(i);
-                            $("#answer" + i).addClass("bg-success");
-                        } else {
-                            console.log(i + " was that.");
-                            $("#answer" + i).addClass("bg-danger");
-                        }
+                //increment the amount of played question's here
+
+
+            }
+            else {
+
+                //THIS ELSE PART IS OPEN TO CHANGE / I CAN JUST HIGHLIGHT THE CORRECT ANSWER AND BE DONE
+
+                selected.addClass("bg-danger").removeClass("bg-warning");
+
+                console.log("selected" + selected.siblings());
+
+                for (var i = 1; i < selected.siblings().length + 1; i++) {
+
+                    if ($("#answer" + i).text() === correctAnswer) {
+                        $("#answer" + i).addClass("bg-success");
+                        $("#answer" + i).siblings().addClass("bg-danger");
                     }
-                    //Add green to the correct answer
 
+                    else {
+                        console.log(i + " was that.");
 
+                        $("#answer" + i).addClass("bg-danger");
+                    }
                 }
-
-                // alert(correctAnswer);
-                // alert(selected.id);
-            },
-            2000);
-
-        setTimeout(resetButtonColors, 5000);
-
-        //move to the next question
+                //Add green to the correct answer
 
 
+            }
 
-    });
+            // alert(correctAnswer);
+            // alert(selected.id);
+        },
+        2000);
 
+
+    setTimeout(resetButtonColors, 5000);
+
+    //move to the next question
+
+
+});
+
+/**
+ * This function will reset the button's for the next question
+ */
 function resetButtonColors() {
     $(".answerOption").addClass("bg-dark");
 
@@ -247,5 +248,9 @@ function resetButtonColors() {
         $(".btn").removeClass("bg-danger");
     }
 
+
+}
+
+function correctAnswer() {
 
 }

@@ -189,13 +189,14 @@ category to play the game
                 <table class="table">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">Rank</th>
                         <th scope="col">Username</th>
                         <th scope="col">Score</th>
                     </tr>
                     </thead>
+                    <tbody>
                     <repeat group="{{ @members }}" value="{{ @member }}">
-                        <tbody>
+
                         <tr>
                             <th scope="row">
                                 <check if="{{ @member['id'] == '1'}}">
@@ -217,11 +218,12 @@ category to play the game
 
 
                             </th>
-                            <td>{{ @member['username'] }}</td>
+                            <td><a href="{{@BASE}}/profile/{{@member['username']}}">{{ @member['username'] }}</a></td>
                             <td>{{ @member['totalScore'] }}</td>
                         </tr>
-                        </tbody>
+
                     </repeat>
+                    </tbody>
                 </table>
 
             </check>
