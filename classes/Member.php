@@ -13,40 +13,15 @@
 
 class Member extends Player
 {
-    protected $userName, $profileName, $loginStreak, $points;
+    protected $userName, $email, $dateJoined, $score, $id;
     protected $friends = array();
 
-
-    public function __construct($profileName, $userName, $loginStreak = 0, $points
-    = 0)
+    public function __construct($id, $userName, $email, $dateJoined, $score)
     {
-        parent::__construct($profileName, $userName);
-        $this->loginStreak = $loginStreak;
-        $this->points = $points;
-        /*
-        parent::__construct($profileName, $userName);
-        $this->userName = "AI - " . self::getAIcreated();
-
-        //if default user created, assign computer name and
-        if (strtolower($profileName) == "comp")
-        {
-           self::setAIcreated(self::getAIcreated() + 1);
-        }
-        $this->loginStreak = $loginStreak;
-        $this->points = $points;*/
-    }
-
-
-
-    //********************************************
-    //*********************************************
-    //           METHODS     FUNCTIONS
-    //*********************************************
-    //*********************************************
-
-    function sayHi($userName)
-    {
-        echo "<p class='text-primary'>" . $this->userName . " HEllO THERE HI...";
+        parent::__construct($userName, $score);
+        $this->dateJoined = $dateJoined;
+        $this->email = $email;
+        $this->id = $id;
     }
 
     //********************************************
@@ -59,65 +34,49 @@ class Member extends Player
     /**
      * @return mixed
      */
-    public function getUserName()
+    public function getEmail()
     {
-        return $this->userName;
+        return $this->email;
     }
 
     /**
-     * @param mixed $userName
+     * @param mixed $email
      */
-    public function setUserName($userName)
+    public function setEmail($email)
     {
-        $this->userName = $userName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProfileName()
-    {
-        return $this->profileName;
-    }
-
-    /**
-     * @param mixed $profileName
-     */
-    public function setProfileName($profileName)
-    {
-        $this->profileName = $profileName;
+        $this->email = $email;
     }
 
     /**
      * @return mixed
      */
-    public function getLoginStreak()
+    public function getDateJoined()
     {
-        return $this->loginStreak;
+        return $this->dateJoined;
     }
 
     /**
-     * @param mixed $loginStreak
+     * @param mixed $dateJoined
      */
-    public function setLoginStreak($loginStreak)
+    public function setDateJoined($dateJoined)
     {
-        $this->loginStreak = $loginStreak;
+        $this->dateJoined = $dateJoined;
     }
 
     /**
      * @return mixed
      */
-    public function getPoints()
+    public function getId()
     {
-        return $this->points;
+        return $this->id;
     }
 
     /**
-     * @param mixed $points
+     * @param mixed $id
      */
-    public function setPoints($points)
+    public function setId($id)
     {
-        $this->points = $points;
+        $this->id = $id;
     }
 
     /**
@@ -135,6 +94,5 @@ class Member extends Player
     {
         $this->friends = $friends;
     }
-
 
 }

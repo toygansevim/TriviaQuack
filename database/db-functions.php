@@ -110,15 +110,13 @@ function retrieveUser($username)
     $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-
-
     ///////////////////////////////////////////////////////////////
     /////   All of this can happen after finalizing Member class
     //////////////////////////////////////////////////////////////
 
     /*//store a new member object in session
-    $member = new Member($result['id'], $result['username'],
-                         $result['email'], $result['totalScore']);
+    $member = new Member($result['id'], $result['username'], $result['email'],
+                         $result['dateJoined'], $result['totalScore']);
 
     //grab friends list
     $sql = "SELECT * FROM TriviaFriendsList WHERE id = :id";

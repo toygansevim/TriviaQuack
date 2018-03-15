@@ -12,76 +12,24 @@
 
 abstract class Player
 {
-    private $_profileName, $_userName, $_score, $_userPassword, $_totalScore, $_email;
-
-    //undefined players can be defined
-    private static $_AIcreated = 0;
+    private $_userName, $_score;
 
     /**
      * Player constructor.
      * @param $_profileName
      * @param $_userName
      */
-    public function __construct($profileName = "COMPUTER", $userName = "AI ")
+    public function __construct($userName, $score)
     {
-        $this->_profileName = $profileName;
-
-        if ($this->_profileName == 'COMPUTER')
-        {
-            self::$_AIcreated++;
-        }
-        $this->_userName = $userName . " - " . self::getAIcreated();
+        $this->_userName = $userName;
+        $this->_score = $score;
     }
-
-    //********************************************
-    //*********************************************
-    //           METHODS     FUNCTIONS
-    //*********************************************
-    //*********************************************
-
-    /**
-     * @param $profileName
-     */
-    abstract function sayHi($profileName);
 
     //********************************************
     //*********************************************
     //           GETTERS        SETTERS
     //*********************************************
     //*********************************************
-
-
-    /**
-     * @return int
-     */
-    public static function getAIcreated()
-    {
-        return self::$_AIcreated;
-    }
-
-    /**
-     * @param int $AIcreated
-     */
-    public static function setAIcreated($AIcreated)
-    {
-        self::$_AIcreated = $AIcreated;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProfileName()
-    {
-        return $this->_profileName;
-    }
-
-    /**
-     * @param mixed $profileName
-     */
-    public function setProfileName($profileName)
-    {
-        $this->_profileName = $profileName;
-    }
 
     /**
      * @return mixed
@@ -97,6 +45,22 @@ abstract class Player
     public function setUserName($userName)
     {
         $this->_userName = $userName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getScore()
+    {
+        return $this->_score;
+    }
+
+    /**
+     * @param mixed $score
+     */
+    public function setScore($score)
+    {
+        $this->_score = $score;
     }
 
 

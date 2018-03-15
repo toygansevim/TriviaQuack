@@ -10,26 +10,12 @@
  *
  */
 
-
 class Guest extends Player
 {
-
-    //undefined players can be defined
-    protected $AIcreated = 0;
-
-    public function __construct($_profileName, $_userName)
+    public function __construct($_userName)
     {
-        parent::__construct($_profileName, $_userName);
+        parent::__construct("Guest", 0);
         //work on this
         //self::setAIcreated(self::getAIcreated() + 1);
-    }
-
-    /**
-     * @param $profileName
-     */
-    function sayHi($profileName)
-    {
-        echo "<div class='text-danger'>" . $this->getProfileName() . "</div>";
-
     }
 }
