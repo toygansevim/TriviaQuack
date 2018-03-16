@@ -12,10 +12,8 @@
 
 class Guest extends Player
 {
-    public function __construct($_userName)
+    public function __construct()
     {
         parent::__construct("Guest", 0);
-        //work on this
-        //self::setAIcreated(self::getAIcreated() + 1);
     }
 }

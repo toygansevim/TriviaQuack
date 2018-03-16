@@ -8,8 +8,6 @@
  * This is the Player class that creates
  * a user to play the game
  */
-
-
 abstract class Player
 {
     private $_userName, $_score;
@@ -19,7 +17,7 @@ abstract class Player
      * @param $_profileName
      * @param $_userName
      */
-    public function __construct($userName, $score)
+    public function __construct($userName, $score = 0)
     {
         $this->_userName = $userName;
         $this->_score = $score;
@@ -62,6 +60,4 @@ abstract class Player
     {
         $this->_score = $score;
     }
-
-
 }

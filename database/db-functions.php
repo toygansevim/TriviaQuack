@@ -103,6 +103,10 @@ function retrieveUser($username)
 {
     global $conn;
 
+    if ($username=="guestAccessKey") {
+        return new Guest();
+    }
+
     //grabbing user based on username
     $sql = "SELECT * FROM triviaMembers WHERE username = :username";
     $statement = $conn->prepare($sql);
@@ -114,7 +118,7 @@ function retrieveUser($username)
     /////   All of this can happen after finalizing Member class
     //////////////////////////////////////////////////////////////
 
-    /*//store a new member object in session
+    //store a new member object in session
     $member = new Member($result['id'], $result['username'], $result['email'],
                          $result['dateJoined'], $result['totalScore']);
 
@@ -128,13 +132,89 @@ function retrieveUser($username)
     /*
      * add each friend from the friend index
      * to the members friend array
-     *
+     */
     $friends = [];
     foreach ($results as $result) {
         $frends[] = $result['fid'];
-    }
+    } $member->setFriends($friends);
 
-    $member->setFriends($friends);*/
+    return $member;
+}
 
-    return $result['id'];
+/**
+ * @param $username The user that will be retrieved from the database
+ * @return user name to be viewed in the profile page
+ */
+function retrieveUserProfile($username)
+{
+    global $conn;
+
+    //grabbing user based on username
+    $sql = "SELECT * FROM triviaMembers WHERE username = :username";
+    $statement = $conn->prepare($sql);
+    $statement->bindParam(':username', $username, PDO::PARAM_STR);
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+    return $result['username'];
+}
+
+/**
+ * This function will grab the current logged in user and update their score in the database
+ *
+ *
+ * @param $username the user that is playing the game with email - password
+ * @param $totalScore Total score they have gained from the rounds
+ */
+function updateUserScore($username, $totalScore)
+{
+    global $conn;
+
+    //define sql
+    $sql = "UPDATE triviaMembers SET totalScore = :totalScore WHERE username = :username";
+
+    //prepare
+    $statement = $conn->prepare($sql);
+
+    //bind Param
+    $statement->bindParam(':username', $username, PDO::PARAM_STR);
+    $statement->bindParam(':totalScore', $totalScore, PDO::PARAM_INT);
+
+    //execute
+    $statement->execute();
+
+}
+
+/**
+ * Updates a row for a member
+ *
+ * @param $member a Member object
+ */
+function updateMember($f3)
+{
+    //we don't need to update the database for a guest
+    if ($_SESSION['user']->getUsername() == "Guest") return;
+    global $conn;
+
+    $member = $_SESSION['user'];
+
+    //define
+    $sql = "
+    UPDATE triviaMembers 
+    SET totalScore = :score
+    WHERE username = :username";
+
+    $statement = $conn->prepare($sql);
+    $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
+    $statement->bindParam(':score', $member->getScore(), PDO::PARAM_INT);
+    $statement->execute();
+}
+
+/**
+ *
+ *
+ * @return boolean
+ */
+function loggedIn() {
+    return !empty($_SESSION['user']);
 }

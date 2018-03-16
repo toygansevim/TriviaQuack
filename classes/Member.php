@@ -13,7 +13,7 @@
 
 class Member extends Player
 {
-    protected $userName, $email, $dateJoined, $score, $id;
+    protected $email, $dateJoined, $id;
     protected $friends = array();
 
     public function __construct($id, $userName, $email, $dateJoined, $score)

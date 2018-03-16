@@ -55,12 +55,17 @@ $f3->route('GET|POST /users', function ($f3)
  */
 $f3->route('GET|POST /login', function ($f3)
 {
+    require_once 'database/db-functions.php';
+
+    if (loggedIn()) updateMember();
+
     //They submitted
     if(isset($_POST['submit'])) {
 
         //validate it
         require 'model/validateReturningUser.php';
     }
+
     echo Template::instance()->render('pages/login.html');
 });
 
@@ -69,6 +74,10 @@ $f3->route('GET|POST /login', function ($f3)
  */
 $f3->route('GET|POST /signup', function ($f3)
 {
+    require_once 'database/db-functions.php';
+
+    if (loggedIn()) updateMember($f3);
+
     //They submitted
     if(isset($_POST['submit'])) {
 
@@ -84,36 +93,65 @@ $f3->route('GET|POST /home', function ($f3)
 {
     require_once 'database/db-functions.php';
 
+    if (loggedIn()) updateMember($f3);
+    else $f3->reroute('/');
+
     $members = getLeaders();
 
     $f3->set('members', $members);
     $f3->set('title', 'Home Page');
+
+    var_dump($_SESSION['user']);
+
     echo Template::instance()->render('pages/game.html');
-
 });
-/*
+
+$f3->route('GET|POST /guest', function ($f3)
+{
+    require_once 'database/db-functions.php';
+
+    $_SESSION['user'] = retrieveUser("guestAccessKey");
+
+    $f3->reroute('./home');
+});
+
 //this route will be displaying the player with the id
-$f3->route('GET|POST /profiles/@id', function ($f3,$params){
+$f3->route('GET|POST /profile/@username', function ($f3, $params)
+{
 
-    $id = $params['id'];
-
-    $member = getMember($id);
-    $f3->set('member',$member);
+    //THIS PART NEEDS HELP PLEASE MASON BRAIN STORMING REQUIRED
 
 
+    $username = $params['username'];
 
-});*/
-//this route will be displaying the player with the id
-$f3->route('GET|POST /profile', function ($f3,$params){
-//
-//    $id = $params['id'];
-//
-//    $member = getMember($id);
-//    $f3->set('member',$member);
+    $onlineMember = $_SESSION['user'];
+
+    echo "<pre>";
+    var_dump($onlineMember);
+    echo "</pre>";
+
+    $member = retrieveUserProfile($username);
+
+
+    $f3->set('member', $member);
+
+    //set the elements of the page depending on the username, if the username and the online's
+    // match take action as it was their profile
+
+    //we should be able to check if the current and the page viewed are different or same
+    //    $f3->set('score', $onlineMember->getScore());
+
+    //this can be retrieved in the page too
 
     echo Template::instance()->render('pages/profile.html');
 });
 
+
+//this route will be displaying the player with the id
+$f3->route('GET|POST /profile', function ($f3, $params)
+{
+    echo Template::instance()->render('pages/profile.html');
+});
 
 //run fat free
 $f3->run();

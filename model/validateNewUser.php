@@ -1,9 +1,11 @@
 <?php
 /**
- * @author Mason Hernnadez
+ * @author Mason Hernanadez
  * filename: validateNewUser.php
+ * condition: functioning/complete
  *
- * This file validates a user trying to signup fo TriviaQuack
+ * This file validates a user trying to sign-up for TriviaQuack
+ *
  */
 
 //initialize necessary variables
@@ -13,11 +15,13 @@ $email;
 $password;
 $repeatPassword;
 
+
 //call validation fucntions
 validateUsername($username, $errors);
 validateEmail($email, $errors);
 validatePass($password, $errors);
 validateRepeatPass($password, $repeatPassword, $errors);
+
 
 //no errors were developed
 if (empty($errors)) {
@@ -25,11 +29,14 @@ if (empty($errors)) {
     //add member to database using db-functions.addMember()
     addMember($username, $password, $email);
 
+
     //store the user in the session (logged in)
     $_SESSION['user'] = retrieveUser($username);
 
+
     //reroute to home page of game
     $f3->reroute("./home");
+
 
 //They had errors, record the errors and past entries
 } else {
@@ -48,19 +55,25 @@ if (empty($errors)) {
 }
 
 /**
- * Checks username is entered and not taken
+ * Checks that username is entered,
+ * is "clean", and not already taken
  *
- * @param &$username, &$errors
+ * @param $username
+ * @param $errors
  */
 function validateUsername(&$username, &$errors)
 {
     //they entered their username
     if (!empty($_POST['username'])) {
+
+        //clean the data
         $username = htmlspecialchars($_POST['username']);
+
 
         //does the user already exist
         if (doesUserExist($username))
             $errors['username_err'] = "Username already in use";
+
 
     //They never entered their username
     } else {
@@ -96,17 +109,20 @@ function doesUserExist($username)
  */
 function validateEmail(&$email, &$errors)
 {
-    //they entered their email
+    //they have entered their email
     if (!empty($_POST['email'])) {
         $email = htmlspecialchars($_POST['email']);
+
 
         //invalid email format
         if (!filter_var($email, FILTER_VALIDATE_EMAIL))
             $errors['email_err'] = "example@email.com";
 
+
         //does email exist already
         if (doesEmailExist($email))
             $errors['email_err'] = "Email already in use";
+
 
     //they have not entered their email
     } else {
@@ -120,13 +136,13 @@ function validateEmail(&$email, &$errors)
  * in the database
  *
  * @param $email
- * @return boolean does the email exist
+ * @return bool
  */
 function doesEmailExist($email)
 {
     global $conn;
 
-    //Grab any rows holding that email
+    //Grab row based on email
     $sql = "SELECT * FROM triviaMembers WHERE email = :email";
     $statement = $conn->prepare($sql);
     $statement->bindParam(':email', $email, PDO::PARAM_STR);
@@ -149,6 +165,7 @@ function validatePass(&$password, &$errors)
     if (!empty($_POST['pass'])) {
         $password = htmlspecialchars($_POST['pass']);
 
+
     //they have not entered their password
     } else {
         $errors['pass_err'] = "Required field";
@@ -156,18 +173,26 @@ function validatePass(&$password, &$errors)
 }
 
 /**
- * Validates that repeat password was entered, clean,
- * and matches the entered password
+ * Validates that repeat password was entered,
+ * is "clean", and matches the entered password
+ *
+ * @param $password
+ * @param $repeatPassword
+ * @param $errors
  */
 function validateRepeatPass(&$password, &$repeatPassword, &$errors)
 {
     //they entered their repeat password
     if (!empty($_POST['repeat-pass'])) {
+
+        //clean the data
         $repeatPassword = htmlspecialchars($_POST['repeat-pass']);
+
 
         //do the passwords match
         if ($password != $repeatPassword)
             $errors['repeat_pass_err'] = "Passwords do not match";
+
 
     //they did not enter their password
     } else {
