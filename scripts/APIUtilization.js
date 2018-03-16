@@ -11,17 +11,24 @@
 
 //to play the game with 1 question, amount can be set as default final 1, since in every click new question
 var playAGame = 1;
+
 //CATEGORIES FROM THE API
 var codeQuestion = 18, scienceQuestion = 17, artQuestion = 25, historyQuestion = 23, geographyQuestion = 22,
     celebQuestion = 26;
-var codeQuestionCount, scienceQuestionCount, artQuestionCount, historyQuestionCount, geographyQuestionCount,
-    celebQuestionCount;
-var generalCultureQuestion = 9, generalCultureQuestionCount;
-var sportsQuestion = 21, sportsQuestionCount;
-var randomQuestionCount;
-var correctAnswer;
+var generalCultureQuestion = 9, generalCultureQuestionCount = 0;
+var sportsQuestion = 21, sportsQuestionCount = 0;
+var codeQuestionCount = 0, scienceQuestionCount = 0, artQuestionCount = 0, historyQuestionCount = 0,
+    geographyQuestionCount = 0,
+    celebQuestionCount = 0;
+var randomQuestionCount = 0;
+var lastSelected;
+
+var correctAnswer = 0;
 var selected;
+
 var waitAseconds = 1000;
+
+var playerScore = 0, totalPlayedCount = 0, correctAnswerCount = 0;
 
 /**
  * This function will shuffle the given array elements and will return a shuffled array
@@ -37,6 +44,40 @@ function shuffle(arrayList) {
     }
 }
 
+function updateScore() {
+
+    var score = getResults();
+
+    console.log(score);
+
+    $.post("model/userGameUpdate.php", {
+            userscore: score,
+            questionCount: [     //This is the amount of clicks on the card | HOW MANY TIMES USER PLAYED THE HISTORY
+                codeQuestionCount,
+                scienceQuestionCount,
+                artQuestionCount,
+                historyQuestionCount,
+                geographyQuestionCount,
+                celebQuestionCount,
+                sportsQuestionCount,
+                randomQuestionCount,
+                generalCultureQuestionCount
+
+            ],
+            totalplayed: totalPlayedCount,
+            correctanswer: correctAnswerCount
+
+        },
+        function (result) {
+            console.log(result);
+
+            $("#score").html(result);
+
+        }
+    );
+}
+
+
 /**
  * This function is used to pull Json API data from the internet with a given url and parameters.
  * @param amount number of the questions will be displayed
@@ -44,8 +85,11 @@ function shuffle(arrayList) {
  */
 function createQuestion(amount, category) {
 
-    // global difficulty;
 
+    //EVERY QUIZ CREATION WILL INCREMENT THE VALUES OF PLAYING THE GAME
+
+
+    // global difficulty;
     var params = {
         "amount": amount,
         "category": category,
@@ -54,14 +98,14 @@ function createQuestion(amount, category) {
         "difficulty": "easy",
         "type": "multiple"
     };
-
+    //URL API
     var url = 'https://opentdb.com/api.php/';
 
 
     //Get the data from JSON API with parameters.
     $.getJSON(url, params, function (result) {
         var items = result.results;
-
+        //WE CAN SET DATA HERE MASON ??? AFTER EVERY JSON LOAD
 
         //choose all options and arrange them
         $.each(items, function (index, item) {
@@ -74,9 +118,6 @@ function createQuestion(amount, category) {
             var answer2 = $("#answer2");
             var answer3 = $("#answer3");
             var answer4 = $("#answer4");
-
-            //get a random number between 1 - 4
-            // var random = Math.floor(Math.random() * 4 + 1);
 
             //get the data
             var questionData = item.question;
@@ -98,7 +139,6 @@ function createQuestion(amount, category) {
                 //we will push in every element that has an Answer ID !! will increment the position with the loop
                 //also will change the text value of the button to the array position
                 randomCreatedArray.push($("#answer" + i).html(answersDataArray[i - 1]));
-
             }
 
         });
@@ -110,8 +150,9 @@ function createQuestion(amount, category) {
 $(".card").click(function () {
 
     //Where question gets displayed
-    var random;
     var modalBody = $(".answersBody");
+
+    console.log("on card click last selected is = " + lastSelected);
 
     //If it is not showing, THIS IS THE TIME TO SHOW
     if (modalBody.hasClass("d-none")) {
@@ -122,6 +163,7 @@ $(".card").click(function () {
         $(".answersBody").addClass("d-block");
     }
 
+    //Get the card name for game
     var cardName1 = $(this).text().trim();
 
     // COUNT THE AMOUNT OF QUESTION'S CREATED AND WILL CHECK WITH CORRECT ANSWER
@@ -129,43 +171,36 @@ $(".card").click(function () {
     //Depending on the Name of the Tile, pull the JSON file from API
     switch (cardName1) {
 
-        case ("Code"):
-            createQuestion(playAGame, codeQuestion);
-            codeQuestionCount++;
+        case "Code":
+            lastSelected = "codeQuestion";
+            console.log("AT THE END last selected is = " + lastSelected);
+            createCodeQuestion();
             break;
-        case ("Sports"):
-            createQuestion(playAGame, sportsQuestion);
-            sportsQuestionCount++;
+        case "Sports":
+            createSportsQuestion();
             break;
         case "Science":
-            createQuestion(playAGame, scienceQuestion);
-            scienceQuestionCount++;
+            createScienceQuestion();
             break;
         case "Art":
-            createQuestion(playAGame, artQuestion);
-            artQuestionCount++;
+            createArtQuestion();
             break;
         case"History":
-            createQuestion(playAGame, historyQuestion);
-            historyQuestionCount++;
+            createHistoryQuestion();
             break;
         case "General Culture":
-            createQuestion(playAGame, generalCultureQuestion);
-            generalCultureQuestionCount++;
+            lastSelected = "generalCultureQuestion";
+            console.log("AT THE END last selected is = " + lastSelected);
+            createGeneralQuestion();
             break;
         case "Celebrities":
-            createQuestion(playAGame, celebQuestion);
-            celebQuestion++;
+            createCelebQuestion();
             break;
         case "Geography":
-            createQuestion(playAGame, geographyQuestion);
-            geographyQuestionCount++;
-
+            createGeoQuestion();
             break;
         case "Random":
-            random = Math.floor((Math.random() * 21) + 1);
-            createQuestion(playAGame, random); //Generate from an random api number
-            randomQuestionCount++;
+            createRandomQuestion();
             break;
         default:
             break;
@@ -175,82 +210,192 @@ $(".card").click(function () {
 
 //Answer option on selection Is corresponding color depending on the correct answer + user
 $(".answerOption").click(function () {
+//get the button selected
     selected = $(this);
     selected.addClass("bg-warning").delay(1000).removeClass("bg-dark");
 
+    //give some time to show the answer  2000 => 2 seconds
     setTimeout(
         function () {
             //check if the selected one is the correct answer
             if (selected.text() === correctAnswer) {
 
                 selected.addClass("bg-success").removeClass("bg-warning");
-                console.log(selected.siblings());
 
+                selected.siblings().addClass("bg-danger").removeClass("bg-dark");
 
-                selected.siblings().addClass("bg-danger");
-                //Next question should be displayed automatically
-
-                //increment the counter of the player object here
-
+                //increment the  counter of the player object here
+                correctAnswerCount++;
 
                 //increment the amount of played question's here
+                totalPlayedCount++;
 
 
             }
             else {
 
                 //THIS ELSE PART IS OPEN TO CHANGE / I CAN JUST HIGHLIGHT THE CORRECT ANSWER AND BE DONE
-
                 selected.addClass("bg-danger").removeClass("bg-warning");
-
-                console.log("selected" + selected.siblings());
-
-                for (var i = 1; i < selected.siblings().length + 1; i++) {
+                for (var i = 1; i <= 4; i++) {
 
                     if ($("#answer" + i).text() === correctAnswer) {
-                        $("#answer" + i).addClass("bg-success");
-                        $("#answer" + i).siblings().addClass("bg-danger");
-                    }
+                        $("#answer" + i).addClass("bg-success").removeClass("bg-dark");
 
-                    else {
-                        console.log(i + " was that.");
-
-                        $("#answer" + i).addClass("bg-danger");
+                        console.log($("#answer" + i).text() + " Was the correct answer, for curious people...");
                     }
                 }
-                //Add green to the correct answer
 
+                totalPlayedCount++;
 
             }
-
-            // alert(correctAnswer);
-            // alert(selected.id);
         },
         2000);
 
-
-    setTimeout(resetButtonColors, 5000);
+    updateScore();
 
     //move to the next question
 
+    setTimeout(function () {
+        $(".answersBody").addClass("bg-none");
+    }, 3000);
 
+    setTimeout(function () {
+        $(".answersBody").removeClass("bg-none");
+
+
+        //THIS IS WHERE THE MODAL FINDS THE LAST PLAYED QUESTION AND REPLAYS IT
+
+        //COUNTING THE INNER MODAL AMOUNG HAS TO OCCUR HERE
+        updateScore();
+
+        createQuestion(playAGame, lastSelected);
+
+
+        resetButtonColors();
+
+
+    }, 4000);
 });
 
 /**
  * This function will reset the button's for the next question
  */
 function resetButtonColors() {
+    //selected button
     $(".answerOption").addClass("bg-dark");
 
+    //if had color green clear
     if ($(".btn").hasClass("bg-success")) {
         $(".btn").removeClass("bg-success");
-    } else if ($(".btn").hasClass("bg-danger")) {
+    }
+    if ($(".btn").hasClass("bg-danger")) {
+        //clear
         $(".btn").removeClass("bg-danger");
     }
 
 
 }
 
-function correctAnswer() {
+/**
+ * This function will calculate the total
+ * @param correctAnswerCount
+ * @param playerScore
+ * @returns {number|*}
+ */
+function totalScoreCalculation(correctAnswerCount, playerScore) {
 
+    var pointAmount = 100;
+    //how many they played
+    playerScore += correctAnswerCount * pointAmount;
+    return playerScore;
+}
+
+var scored = 0;
+
+function getResults() {
+
+    scored = totalScoreCalculation(correctAnswerCount, playerScore);
+    console.log(scored); // info purpose
+
+
+    return scored;
+
+}
+
+
+/*
+//#####
+//  CREATE A QUESTION BELOW AND ARRANGE BUTTON'S
+//#####
+//      BELOW FUNCTIONS WILL CREATE A QUESTION BASED AND INCREMENT THE CREATED QUESTION BY 1
+ */
+function createCodeQuestion() {
+    resetButtonColors();
+    lastSelected = codeQuestion;
+    codeQuestionCount++;
+    createQuestion(playAGame, codeQuestion);
+}
+
+function createSportsQuestion() {
+    resetButtonColors();
+    lastSelected = sportsQuestion;
+    sportsQuestionCount++;
+   // alert(sportsQuestionCount);
+    createQuestion(playAGame, sportsQuestion);
+}
+
+function createScienceQuestion() {
+    resetButtonColors();
+    lastSelected = scienceQuestion;
+    scienceQuestionCount++;
+    createQuestion(playAGame, lastSelected);
+
+
+}
+
+function createArtQuestion() {
+    resetButtonColors();
+    lastSelected = artQuestion;
+    artQuestionCount++;
+    createQuestion(playAGame, artQuestion);
+
+}
+
+function createHistoryQuestion() {
+    resetButtonColors();
+    lastSelected = historyQuestion;
+    historyQuestionCount++;
+    createQuestion(playAGame, historyQuestion);
+
+}
+
+function createGeneralQuestion() {
+    resetButtonColors();
+    lastSelected = generalCultureQuestion;
+    generalCultureQuestionCount++;
+    createQuestion(playAGame, generalCultureQuestion);
+
+}
+
+function createCelebQuestion() {
+    resetButtonColors();
+    lastSelected = celebQuestion;
+    createQuestion(playAGame, celebQuestion);
+    celebQuestionCount++;
+}
+
+function createGeoQuestion() {
+    resetButtonColors();
+    lastSelected = geographyQuestion;
+    createQuestion(playAGame, geographyQuestion);
+    geographyQuestionCount++;
+
+}
+
+function createRandomQuestion() {
+    var random;
+    resetButtonColors();
+    random = Math.floor(Math.random() * 21 + 1);
+    createQuestion(playAGame, random); //Generate from an random api number
+    randomQuestionCount++;
 }

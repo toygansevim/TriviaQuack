@@ -41,7 +41,8 @@
 
         <!-- Split dropright button -->
         <div class="btn-group">
-            <button class="btn btn-outline-secondary my-2 my-sm-0 text-right" type="dropdown">SETTINGS<i class="fas fa-wrench"></i></button>
+            <button class="btn btn-outline-secondary my-2 my-sm-0 text-right" type="dropdown">SETTINGS<i
+                    class="fas fa-wrench"></i></button>
 
             <!--GEAR  BUTTON THAT DROPSDOWN-->
             <button type="button"
@@ -54,10 +55,8 @@
             <div class="dropdown-menu">
                 <a class="dropdown-item settings" href="#">Change Password</a>
                 <a class="dropdown-item settings" href="#">Edit Profile</a>
-                <!--<a class="dropdown-item settings" href="#">Something else here</a>-->
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item settings" href="pages/logout">Logout</a>
-
             </div>
         </div>
     </div>
@@ -73,12 +72,12 @@
                 <div class="card-header text-center text-uppercase font-weight-bold">Score</div>
                 <div class="card-body shadow-nohover">
                     <h5 class="card-title text-center text-warning">
-                        <img src="./images/duck.png" alt="duck image score" class="duck pr-2">
+                        <img src="../images/duck.png" alt="duck_image_score" class="duck pr-2">
                         <!--GET USER OBJECT SCORE HERE-->
-                        10200 Points
+                        {{@score}}
 
-                        <check if="{{@scored >= '1500'}}">
-                            <img src="./images/duck.png" alt="logo">
+                        <check if="{{@score >= '1500'}}">
+                            <img src="../images/duck.png" alt="logo">
                         </check>
                     </h5>
                 </div>
@@ -108,12 +107,12 @@
                         <script>"use strict";
                         $(".categoriesList").hover(
                             function () {
-                                $(this).addClass("mt-2");
+                                $(this).addClass("mt-1");
                             }, function () {
                                 $(this).removeClass("text-white").addClass("text-success").attr("darker");
                             });
 
-                        $("#scienceList").append().text("DUCK");
+                        // $("#scienceList").append().text("DUCK");
 
                         </script>
                     </ul>

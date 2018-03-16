@@ -95,7 +95,7 @@ category to play the game
                     </div>
                 </div>
                 <div class="card text-white shadow bg-info mb-3 mt-3 ml-3 float-left " data-toggle="modal"
-                     data-target="#celebritiesModal">
+                     data-target="#celebritiesModal" data-backdrop="static" data-keyboard="false">
                     <div class="card-header text-center text-uppercase font-weight-bold">History</div>
                     <div class="card-body shadow-nohover">
                         <h3 class="card-title text-center"><i class="fas h-25 w-25 fa-chess-rook"></i></h3>
@@ -147,16 +147,18 @@ category to play the game
                             </div>
                             <div class="modal-body d-none answersBody" id="">
                                 <div class="row">
-                                    <button class="btn btn-dark btn-block mb-3 answerOption text-left"
+                                    <button class="mr-3 ml-3 btn btn-dark btn-block mb-3 answerOption text-left"
                                             name="answer1"
                                             id="answer1">
                                     </button>
 
-                                    <button class="btn btn-dark btn-block mb-3 answerOption text-left" id="answer2">
+                                    <button class="mr-3 ml-3 btn btn-dark btn-block mb-3 answerOption text-left"
+                                            id="answer2">
                                     </button>
-                                    <button class="btn btn-dark btn-block mb-3 answerOption text-left" id="answer3">
+                                    <button class="mr-3 ml-3 btn btn-dark btn-block mb-3 answerOption text-left"
+                                            id="answer3">
 
-                                        <button class="btn btn-dark btn-block mb-3 answerOption text-left"
+                                        <button class="mr-3 ml-3 btn btn-dark btn-block mb-3 answerOption text-left"
                                                 id="answer4"></button>
                                     </button>
                                 </div>
@@ -164,8 +166,11 @@ category to play the game
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="nextQuestion">Next Question</button>
+                                <h4 id="score" class="mx-auto text-uppercase"></h4>
+                                <!--<button type="button" class="btn btn-secondary" id="update">Update-->
+                                <!--Results-->
+                                <!--</button>-->
+                                <!--<button type="button" class="btn btn-primary" id="nextQuestion">Next Question</button>-->
                             </div>
                         </div>
                     </div>
@@ -176,7 +181,7 @@ category to play the game
         </div>
         <!--Leaderboard-->
         <div class="col-3 bg-primary ">
-            <p class="text-white">LEADERBOARD</p>
+            <p class="text-white ">LEADERBOARD</p>
             <check if="{{@members}}">
 
                 <!--  <ol>
@@ -216,10 +221,10 @@ category to play the game
                                     </true>
                                 </check>
 
-
                             </th>
-                            <td><a href="{{@BASE}}/profile/{{@member['username']}}">{{ @member['username'] }}</a></td>
-                            <td>{{ @member['totalScore'] }}</td>
+                            <td class="text-left mx-auto pl-1"><a href="{{@BASE}}/profile/{{@member['username']}}">{{
+                                @member['username'] }}</a></td>
+                            <td class="text-center mx-auto">{{ @member['totalScore'] }}</td>
                         </tr>
 
                     </repeat>
@@ -245,10 +250,6 @@ END CONTAINER
 
 <!--API USAGE QUESTION LOAD-->
 <script src="./scripts/APIUtilization.js"></script>
-
-<script>"use strict";
-
-</script>
 
 </body>
 </html>

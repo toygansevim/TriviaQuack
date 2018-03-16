@@ -20,12 +20,12 @@ This is the css sheet for the game page.
 
 /*!*Font image size*!*/
 /*.fas {*/
-    /*font-size: x-large;*/
+/*font-size: x-large;*/
 /*}*/
 
 /*.svg.svg-inline--fa.fa-basketball-ball.fa-w-16 {*/
 
-    /*font-size: x-large;*/
+/*font-size: x-large;*/
 /*}*/
 
 /*shadow cards*/
@@ -64,14 +64,31 @@ th {
     text-align: center;
 }
 
-td a{
-    color: white !important;
-    text-decoration: none !important;
+@media (max-width: 992px) {
+    td {
+        padding: 0px !important;
+        letter-spacing: 0px !important;
+        font-size: .5em !important;
 
+    }
+
+    th {
+        font-size: .3em !important;
+        letter-spacing: 0px !important;
+        font-weight: 300 !important;
+
+    }
 }
 
-.medal{
+td a {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.medal {
     height: 30px;
     width: 30px;
 }
+
+
 
