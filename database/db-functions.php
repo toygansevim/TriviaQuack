@@ -126,7 +126,7 @@ function retrieveUser($username)
 
     //store a new member object in session
     $member = new Member($result['id'], $result['username'], $result['email'],
-        $result['joinDate'], $result['totalScore'], $result['categoryCounts']);
+        $result['joinDate'], $result['totalScore'], $result['totalPlayed'], $result['categoryCounts']);
 
 
     return $member;
@@ -170,20 +170,25 @@ function updateMember($f3)
 
     global $conn;
 
+    $member = $_SESSION['user'];
 
-    $f3->set('username', $_SESSION['user']->getUsername());
-    $f3->set('score', $_SESSION['user']->getScore());
-    $f3->set('totalPlayed', $_SESSION['user']->getTotalPlayed());
+    $username = $_SESSION['user']->getUsername();
+    $score = $_SESSION['user']->getScore();
+    $played = $_SESSION['user']->getTotalPlayed();
+
+
+    $f3->set('username', $username);
+    $f3->set('score', $score);
+    $f3->set('totalPlayed', $played);
 
 
     //we don't need to update the database for a guest
     if ($_SESSION['user']->getUsername() == "Guest") return;
 
 
-
-    $member = $_SESSION['user'];
-    updateUserScore();
-    updateTotalPlayed();
+    updateUserScore($member);
+    updateTotalPlayed($member);
+    updateCategoryCounts($member);
 }
 
 /**
@@ -193,7 +198,7 @@ function updateMember($f3)
  * @param $username the user that is playing the game with email - password
  * @param $totalScore Total score they have gained from the rounds
  */
-function updateUserScore($username, $totalScore)
+function updateUserScore($member)
 {
     global $conn;
 
@@ -215,7 +220,7 @@ function updateUserScore($username, $totalScore)
  * @param $username the user that is actively playing
  * @param $totalPlayed amounts of questions played
  */
-function updateTotalPlayed($username, $totalPlayed)
+function updateTotalPlayed($member)
 {
     global $conn;
 
@@ -226,8 +231,33 @@ function updateTotalPlayed($username, $totalPlayed)
     $statement = $conn->prepare($sql);
 
     //bind Param
-    $statement->bindParam(':username', $username, PDO::PARAM_STR);
-    $statement->bindParam(':totalPlayed', $totalPlayed, PDO::PARAM_INT);
+    $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
+    $statement->bindParam(':totalPlayed', $member->getTotalPlayed(), PDO::PARAM_INT);
+
+    //execute
+    $statement->execute();
+}
+
+/**
+ *
+ * Updates the played categories as a string that will be converted with an implode to retrieve
+ * array's individual values
+ * @param $username player
+ * @param $categoryCounts categories choosen in the game
+ */
+function updateCategoryCounts($member)
+{
+    global $conn;
+
+    //define sql
+    $sql = "UPDATE triviaMembers SET categoryCounts = :categoryCounts WHERE username = :username";
+
+    //prepare
+    $statement = $conn->prepare($sql);
+
+    //bind Param
+    $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
+    $statement->bindParam(':categoryCounts', $member->getCategoryCounts(), PDO::PARAM_STR);
 
     //execute
     $statement->execute();
@@ -240,5 +270,5 @@ function updateTotalPlayed($username, $totalPlayed)
  */
 function userExists($username)
 {
-    return retrieveUserProfile($username)!=null;
+    return retrieveUserProfile($username) != null;
 }
