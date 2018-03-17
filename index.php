@@ -57,10 +57,11 @@ $f3->route('GET|POST /login', function ($f3)
 {
     require_once 'database/db-functions.php';
 
-    if (loggedIn()) updateMember();
+    if (loggedIn()) updateMember($f3);
 
     //They submitted
-    if(isset($_POST['submit'])) {
+    if (isset($_POST['submit']))
+    {
 
         //validate it
         require 'model/validateReturningUser.php';
@@ -79,7 +80,8 @@ $f3->route('GET|POST /signup', function ($f3)
     if (loggedIn()) updateMember($f3);
 
     //They submitted
-    if(isset($_POST['submit'])) {
+    if (isset($_POST['submit']))
+    {
 
         //validate the input
         require 'model/validateNewUser.php';
@@ -93,24 +95,36 @@ $f3->route('GET|POST /home', function ($f3)
 {
     require_once 'database/db-functions.php';
 
-    if (loggedIn()) updateMember($f3);
-    else $f3->reroute('/');
+    $member = $_SESSION['user'];
+
+    if (loggedIn())
+    {
+        updateMember($f3);
+
+    } else
+    {
+        $f3->reroute('/');
+    }
+
+
+    //    var_dump($member);
 
     $members = getLeaders();
 
     $f3->set('members', $members);
     $f3->set('title', 'Home Page');
 
-    var_dump($_SESSION['user']);
-
-    echo Template::instance()->render('pages/game.html');
+    echo Template::instance()->render('pages/game.html'); //script lays under this
 });
 
 $f3->route('GET|POST /guest', function ($f3)
 {
     require_once 'database/db-functions.php';
 
+
     $_SESSION['user'] = retrieveUser("guestAccessKey");
+
+    //    serialize($_SESSION['user']);
 
     $f3->reroute('./home');
 });
