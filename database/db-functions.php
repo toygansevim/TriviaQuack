@@ -6,23 +6,23 @@
  * Time: 2:03 AM
  *
  *
-  CREATE TABLE triviaMembers (
-        id int PRIMARY KEY AUTO_INCREMENT,
-        username varchar(30) NOT NULL,
-        password char(40) NOT NULL,
-        email varchar(50) NOT NULL,
-        totalScore int(11) DEFAULT NULL,
-        joinDate date DEFAULT NULL,
-        quackMember bit DEFAULT NULL
-    );
-
-  CREATE TABLE TriviaFriendsList (
-        id INT NOT NULL,
-        fid INT NOT NULL,
-        PRIMARY KEY (id, fid),
-        FOREIGN KEY (id) REFERENCES triviaMembers(id),
-        FOREIGN KEY (fid) REFERENCES triviaMembers(id)
-    );
+ * CREATE TABLE triviaMembers (
+ * id int PRIMARY KEY AUTO_INCREMENT,
+ * username varchar(30) NOT NULL,
+ * password char(40) NOT NULL,
+ * email varchar(50) NOT NULL,
+ * totalScore int(11) DEFAULT NULL,
+ * joinDate date DEFAULT NULL,
+ * quackMember bit DEFAULT NULL
+ * );
+ *
+ * CREATE TABLE TriviaFriendsList (
+ * id INT NOT NULL,
+ * fid INT NOT NULL,
+ * PRIMARY KEY (id, fid),
+ * FOREIGN KEY (id) REFERENCES triviaMembers(id),
+ * FOREIGN KEY (fid) REFERENCES triviaMembers(id)
+ * );
  */
 
 //needed config file
@@ -41,7 +41,8 @@ function connect()
         //return connection
         return $conn;
 
-    } catch (PDOException $ex) {
+    } catch (PDOException $ex)
+    {
         echo "Connection failed" . "<br>";
         echo $ex->getMessage();
         return;
@@ -103,7 +104,8 @@ function retrieveUser($username)
 {
     global $conn;
 
-    if ($username=="guestAccessKey") {
+    if ($username == "guestAccessKey")
+    {
         return new Guest();
     }
 
@@ -120,7 +122,7 @@ function retrieveUser($username)
 
     //store a new member object in session
     $member = new Member($result['id'], $result['username'], $result['email'],
-                         $result['dateJoined'], $result['totalScore']);
+        $result['joinDate'], $result['totalScore']);
 
     //grab friends list
     $sql = "SELECT * FROM TriviaFriendsList WHERE id = :id";
@@ -134,9 +136,11 @@ function retrieveUser($username)
      * to the members friend array
      */
     $friends = [];
-    foreach ($results as $result) {
+    foreach ($results as $result)
+    {
         $frends[] = $result['fid'];
-    } $member->setFriends($friends);
+    }
+    $member->setFriends($friends);
 
     return $member;
 }
@@ -186,12 +190,40 @@ function updateUserScore($username, $totalScore)
 }
 
 /**
+ * This method will update the user's total played question amount overall application
+ * @param $username the user that is actively playing
+ * @param $totalPlayed amounts of questions played
+ */
+function updateTotalPlayed($username, $totalPlayed)
+{
+    global $conn;
+
+    //define sql
+    $sql = "UPDATE triviaMembers SET totalPlayed = :totalPlayed WHERE username = :username";
+
+    //prepare
+    $statement = $conn->prepare($sql);
+
+    //bind Param
+    $statement->bindParam(':username', $username, PDO::PARAM_STR);
+    $statement->bindParam(':totalPlayed', $totalPlayed, PDO::PARAM_INT);
+
+    //execute
+    $statement->execute();
+}
+
+
+/**
  * Updates a row for a member
  *
  * @param $member a Member object
  */
 function updateMember($f3)
 {
+    $f3->set('username', $_SESSION['user']->getUsername());
+    $f3->set('score', $_SESSION['user']->getScore());
+
+
     //we don't need to update the database for a guest
     if ($_SESSION['user']->getUsername() == "Guest") return;
     global $conn;
@@ -208,6 +240,8 @@ function updateMember($f3)
     $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
     $statement->bindParam(':score', $member->getScore(), PDO::PARAM_INT);
     $statement->execute();
+
+
 }
 
 /**
@@ -215,6 +249,7 @@ function updateMember($f3)
  *
  * @return boolean
  */
-function loggedIn() {
+function loggedIn()
+{
     return !empty($_SESSION['user']);
 }
