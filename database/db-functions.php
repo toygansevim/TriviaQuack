@@ -164,6 +164,38 @@ function retrieveUserProfile($username)
 }
 
 /**
+ *
+ *
+ * @return boolean
+ */
+function loggedIn()
+{
+    return !empty($_SESSION['user']);
+}
+
+
+/**
+ * Updates a row for a member
+ *
+ * @param $member a Member object
+ */
+function updateMember($f3)
+{
+
+    $f3->set('username', $_SESSION['user']->getUsername());
+    $f3->set('score', $_SESSION['user']->getScore());
+
+
+    //we don't need to update the database for a guest
+    if ($_SESSION['user']->getUsername() == "Guest") return;
+    global $conn;
+
+    $member = $_SESSION['user'];
+    updateUserScore();
+    updateTotalPlayed();
+}
+
+/**
  * This function will grab the current logged in user and update their score in the database
  *
  *
@@ -175,19 +207,17 @@ function updateUserScore($username, $totalScore)
     global $conn;
 
     //define sql
-    $sql = "UPDATE triviaMembers SET totalScore = :totalScore WHERE username = :username";
+    $sql = "
+    UPDATE triviaMembers 
+    SET totalScore = :score
+    WHERE username = :username";
 
-    //prepare
     $statement = $conn->prepare($sql);
-
-    //bind Param
-    $statement->bindParam(':username', $username, PDO::PARAM_STR);
-    $statement->bindParam(':totalScore', $totalScore, PDO::PARAM_INT);
-
-    //execute
+    $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
+    $statement->bindParam(':score', $member->getScore(), PDO::PARAM_INT);
     $statement->execute();
-
 }
+
 
 /**
  * This method will update the user's total played question amount overall application
@@ -212,44 +242,3 @@ function updateTotalPlayed($username, $totalPlayed)
     $statement->execute();
 }
 
-
-/**
- * Updates a row for a member
- *
- * @param $member a Member object
- */
-function updateMember($f3)
-{
-    $f3->set('username', $_SESSION['user']->getUsername());
-    $f3->set('score', $_SESSION['user']->getScore());
-
-
-    //we don't need to update the database for a guest
-    if ($_SESSION['user']->getUsername() == "Guest") return;
-    global $conn;
-
-    $member = $_SESSION['user'];
-
-    //define
-    $sql = "
-    UPDATE triviaMembers 
-    SET totalScore = :score
-    WHERE username = :username";
-
-    $statement = $conn->prepare($sql);
-    $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
-    $statement->bindParam(':score', $member->getScore(), PDO::PARAM_INT);
-    $statement->execute();
-
-
-}
-
-/**
- *
- *
- * @return boolean
- */
-function loggedIn()
-{
-    return !empty($_SESSION['user']);
-}
