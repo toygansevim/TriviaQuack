@@ -74,7 +74,7 @@ function getLeaders()
  * @param $password
  * @param $email
  */
-function addMember($username, $password, $email)
+function addMember($username, $password, $email, $totalScore, $categoryCounts)
 {
     global $conn;
 
@@ -83,14 +83,18 @@ function addMember($username, $password, $email)
     //define
     $sql = "
     INSERT INTO triviaMembers 
-    (username, password, email, joinDate)
+    (username, password, email, joinDate, totalScore, categoryCounts)
      VALUES
-    (:username, SHA1(:password), :email, :joinDate)";
+    (:username, SHA1(:password), :email, :joinDate, :totalScore, :categoryCounts)";
 
     $statement = $conn->prepare($sql);
     $statement->bindParam(':username', $username, PDO::PARAM_STR);
     $statement->bindParam(':password', $password, PDO::PARAM_STR);
     $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    $statement->bindParam(':totalScore', $totalScore, PDO::PARAM_INT);
+    $statement->bindParam(':categoryCounts', $categoryCounts, PDO::PARAM_INT);
+
+
     $statement->bindParam(':joinDate', $curentDate, PDO::PARAM_STR);
     $statement->execute();
 }
@@ -122,25 +126,8 @@ function retrieveUser($username)
 
     //store a new member object in session
     $member = new Member($result['id'], $result['username'], $result['email'],
-        $result['joinDate'], $result['totalScore']);
+        $result['joinDate'], $result['totalScore'], $result['categoryCounts']);
 
-    //grab friends list
-    $sql = "SELECT * FROM TriviaFriendsList WHERE id = :id";
-    $statement = $conn->prepare($sql);
-    $statement->bindParam(':id', $member->getId(), PDO::PARAM_INT);
-    $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-    /*
-     * add each friend from the friend index
-     * to the members friend array
-     */
-    $friends = [];
-    foreach ($results as $result)
-    {
-        $frends[] = $result['fid'];
-    }
-    $member->setFriends($friends);
 
     return $member;
 }
@@ -173,7 +160,6 @@ function loggedIn()
     return !empty($_SESSION['user']);
 }
 
-
 /**
  * Updates a row for a member
  *
@@ -182,13 +168,18 @@ function loggedIn()
 function updateMember($f3)
 {
 
+    global $conn;
+
+
     $f3->set('username', $_SESSION['user']->getUsername());
     $f3->set('score', $_SESSION['user']->getScore());
+    $f3->set('totalPlayed', $_SESSION['user']->getTotalPlayed());
 
 
     //we don't need to update the database for a guest
     if ($_SESSION['user']->getUsername() == "Guest") return;
-    global $conn;
+
+
 
     $member = $_SESSION['user'];
     updateUserScore();
@@ -242,3 +233,12 @@ function updateTotalPlayed($username, $totalPlayed)
     $statement->execute();
 }
 
+
+/**
+ * @param $username
+ * @return bool does the user exist
+ */
+function userExists($username)
+{
+    return retrieveUserProfile($username)!=null;
+}
