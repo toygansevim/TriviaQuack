@@ -50,9 +50,9 @@ function updateScore() {
 
     console.log(score);
 
-    $.post("model/userGameUpdate.php", {
+    $.post("model/postGameUpdate.php", {
             userscore: score,
-            questionCount: [     //This is the amount of clicks on the card | HOW MANY TIMES USER PLAYED THE HISTORY
+            questioncount: [     //This is the amount of clicks on the card | HOW MANY TIMES USER PLAYED THE HISTORY
                 codeQuestionCount,
                 scienceQuestionCount,
                 artQuestionCount,
@@ -156,7 +156,7 @@ $(".card").click(function () {
 
     //If it is not showing, THIS IS THE TIME TO SHOW
     if (modalBody.hasClass("d-none")) {
-        //remove BS4 class to show
+        //remove BS4 class to showOSHA shipped to submit the the
         $(".answersBody").removeClass("d-none");
 
     } else {
@@ -210,8 +210,16 @@ $(".card").click(function () {
 
 //Answer option on selection Is corresponding color depending on the correct answer + user
 $(".answerOption").click(function () {
+
+
+
+
 //get the button selected
     selected = $(this);
+
+    //unbind the mouse for other clicks
+    //$(".answerOption").unbind();
+
     selected.addClass("bg-warning").delay(1000).removeClass("bg-dark");
 
     //give some time to show the answer  2000 => 2 seconds
@@ -251,8 +259,6 @@ $(".answerOption").click(function () {
         },
         2000);
 
-    updateScore();
-
     //move to the next question
 
     setTimeout(function () {
@@ -275,6 +281,12 @@ $(".answerOption").click(function () {
 
 
     }, 4000);
+
+    // $(".answerOption").bind(function () {
+    //
+    //     alert("binded");
+
+    // });
 });
 
 /**
@@ -302,21 +314,26 @@ function resetButtonColors() {
  * @param playerScore
  * @returns {number|*}
  */
-function totalScoreCalculation(correctAnswerCount, playerScore) {
+function totalScoreCalculation(correctAnswerCount) {
 
     var pointAmount = 100;
     //how many they played
-    playerScore += correctAnswerCount * pointAmount;
+    playerScore = correctAnswerCount * pointAmount;
     return playerScore;
 }
 
 var scored = 0;
 
+
+/**
+ * This method will get the totalScore calculated from the quiz (5 questions / or unless they quit
+ * @returns {number}
+ */
 function getResults() {
 
-    scored = totalScoreCalculation(correctAnswerCount, playerScore);
-    console.log(scored); // info purpose
+    scored = totalScoreCalculation(correctAnswerCount);
 
+    console.log(scored); // info purpose
 
     return scored;
 
@@ -340,7 +357,7 @@ function createSportsQuestion() {
     resetButtonColors();
     lastSelected = sportsQuestion;
     sportsQuestionCount++;
-   // alert(sportsQuestionCount);
+    // alert(sportsQuestionCount);
     createQuestion(playAGame, sportsQuestion);
 }
 

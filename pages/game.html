@@ -24,18 +24,8 @@ category to play the game
 <!--NAVBAR-->
 <nav class="navbar navbar-expand-lg navbar-light text-white">
     <a class="navbar-brand" href="#">Trivia Quack</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
+    <h4>Logged in As: {{@username}} {{@score}}</h4>
 </nav>
 
 <!--<div class="bg"></div>-->
@@ -52,6 +42,7 @@ category to play the game
             <!--SCINCE CARD-->
             <div class="card-deck">
                 <div class="card text-white shadow bg-primary mb-3 mt-3 ml-3 float-left " data-toggle="modal"
+                     data-backdrop="static" data-keyboard="false"
                      data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Science</div>
                     <div class="card-body shadow-nohover mx-auto" id="science-body">
@@ -61,6 +52,7 @@ category to play the game
 
 
                 <div class="card text-white shadow bg-secondary mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-backdrop="static" data-keyboard="false"
                      data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Code</div>
                     <div class="card-body shadow-nohover">
@@ -69,6 +61,7 @@ category to play the game
                     </div>
                 </div>
                 <div class="card text-white shadow bg-success mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-backdrop="static" data-keyboard="false"
                      data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Sports</div>
                     <div class="card-body shadow-nohover">
@@ -81,6 +74,7 @@ category to play the game
             <!--Second ROW OF QUESTIONS-->
             <div class="card-deck">
                 <div class="card text-white shadow bg-danger mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-backdrop="static" data-keyboard="false"
                      data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Art</div>
                     <div class="card-body shadow-nohover">
@@ -88,6 +82,7 @@ category to play the game
                     </div>
                 </div>
                 <div class="card text-white shadow bg-warning mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-backdrop="static" data-keyboard="false"
                      data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Random</div>
                     <div class="card-body shadow-nohover">
@@ -108,6 +103,8 @@ category to play the game
             <!--Third ROW OF QUESTIONS-->
             <div class="card-deck">
                 <div class="card text-warning shadow bg-purple mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-backdrop="static" data-keyboard="false"
+
                      data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Geography</div>
                     <div class="card-body shadow-nohover">
@@ -115,18 +112,18 @@ category to play the game
                     </div>
                 </div>
                 <div class="card text-white shadow   bg-dark mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-backdrop="static" data-keyboard="false"
                      data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">General Culture</div>
                     <div class="card-body shadow-nohover">
                         <h3 class="card-title text-center"><i class="fas  h-25 w-25  fa-globe"></i></h3>
                     </div>
                 </div>
-
-
+                
                 <!--TEST BEGINS FOR MODALS-->
 
-
                 <div class="card text-white shadow bg-pink mb-3 mt-3 ml-3 float-left" data-toggle="modal"
+                     data-backdrop="static" data-keyboard="false"
                      data-target="#celebritiesModal">
                     <div class="card-header text-center text-uppercase font-weight-bold">Celebrities</div>
                     <div class="card-body shadow-nohover">
@@ -250,6 +247,7 @@ END CONTAINER
 
 <!--API USAGE QUESTION LOAD-->
 <script src="./scripts/APIUtilization.js"></script>
+<script src="./scripts/gameDesign.js"></script>
 
 </body>
 </html>

@@ -9,8 +9,7 @@
  *
  */
 
-
-$f3->set('username', $_SESSION['user']->getUsername());
-$f3->set('score', $_SESSION['user']->getScore());
-
-?>
+//
+//$f3->set('username', $_SESSION['user']->getUsername());
+//$f3->set('score', $_SESSION['user']->getScore());
+//
