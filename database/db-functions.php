@@ -26,7 +26,7 @@
  */
 
 //needed config file
-include("/home/mhernand/tqConfig.php");
+include("/home/tsevimgr/config.php");
 
 //connection method
 function connect()
@@ -55,7 +55,7 @@ function getLeaders()
     global $conn;
 
     //define
-    $sql = "SELECT id, username, totalScore FROM triviaMembers ORDER BY totalScore";
+    $sql = "SELECT id, username, totalScore FROM triviaMembers ORDER BY totalScore DESC LIMIT 10";
 
     //prepare
     $statement = $conn->prepare($sql);
