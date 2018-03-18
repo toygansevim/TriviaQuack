@@ -74,7 +74,7 @@
                     <h5 class="card-title text-center text-warning">
                         <img src="../images/duck.png" alt="duck_image_score" class="duck pr-2">
                         <!--GET USER OBJECT SCORE HERE-->
-                        {{@score}}
+                        <!--{{@score}} score-->
 
                         <check if="{{@score >= '1500'}}">
                             <img src="../images/duck.png" alt="logo">
@@ -92,6 +92,12 @@
                 <div class="card-header text-center text-uppercase font-weight-bold">Category Results</div>
                 <div class="card-body shadow-nohover">
                     <ul class="list-group">
+
+                       <!-- <repeat group="{{@categoryCounts}}" key="{{@category}} value={{@count}}">
+                            <li class="list-group item border-left-0 border-right-0 categoriesList">
+                                {{@category}}: {{@count}}</li>
+                        </repeat>-->
+
                         <li class="list-group item border-left-0 border-right-0 categoriesList" id="scienceList">
                             Science:
                         </li>
