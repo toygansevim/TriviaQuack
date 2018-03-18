@@ -8,20 +8,26 @@
 
 $member = retrieveUser($params['username']);
 
-$f3->set('score', $member->getScore());
-//$f3->set('totalPlayed', $member->getTotalPlayed());
+$f3->set('profileScore', $member->getScore());
+$f3->set('profileUsername', $member->getUsername());
+$f3->set('profileTotalPlayed', $member->getTotalPlayed());
 
 $categoryCounts = [];
 
 $memberCounts = $member->getCategoryCounts();
 
 $categories = array(
-    'Science', 'Code', 'Sports', 'Art', 'History',
+    'Science', 'Code', 'Sports', 'Art', 'Random', 'History',
     'Geography', 'General Culture', 'Celebrties'
 );
 
-for ($cat = 0 ; $cat < 8 ; $cat++) {
+for ($cat = 0 ; $cat < 9 ; $cat++) {
     $categoryCounts[$categories[$cat]] = $memberCounts[$cat];
 }
 
-$f3->set('categoryCoutns', $categoryCounts);
+$f3->set('categoryCounts', $categoryCounts);
+
+//$f3->set('categoryCounts', $member->getCategoryCounts());
+
+print_r($categoryCounts);
+print_r($memberCounts);
