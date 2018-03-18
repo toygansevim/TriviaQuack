@@ -74,7 +74,7 @@ function getLeaders()
  * @param $password
  * @param $email
  */
-function addMember($username, $password, $email, $totalScore, $categoryCounts)
+function addMember($username, $password, $email)
 {
     global $conn;
 
@@ -83,16 +83,14 @@ function addMember($username, $password, $email, $totalScore, $categoryCounts)
     //define
     $sql = "
     INSERT INTO triviaMembers 
-    (username, password, email, joinDate, totalScore, categoryCounts)
+    (username, password, email, joinDate)
      VALUES
-    (:username, SHA1(:password), :email, :joinDate, :totalScore, :categoryCounts)";
+    (:username, SHA1(:password), :email, :joinDate)";
 
     $statement = $conn->prepare($sql);
     $statement->bindParam(':username', $username, PDO::PARAM_STR);
     $statement->bindParam(':password', $password, PDO::PARAM_STR);
     $statement->bindParam(':email', $email, PDO::PARAM_STR);
-    $statement->bindParam(':totalScore', $totalScore, PDO::PARAM_INT);
-    $statement->bindParam(':categoryCounts', $categoryCounts, PDO::PARAM_INT);
 
 
     $statement->bindParam(':joinDate', $curentDate, PDO::PARAM_STR);
@@ -126,7 +124,7 @@ function retrieveUser($username)
 
     //store a new member object in session
     $member = new Member($result['id'], $result['username'], $result['email'],
-        $result['joinDate'], $result['totalScore'], $result['totalPlayed'], $result['categoryCounts']);
+        $result['joinDate'], $result['totalScore'], $result['totalPlayed'], explode(",", $result['categoryCounts']));
 
 
     return $member;
@@ -174,12 +172,12 @@ function updateMember($f3)
 
     $username = $_SESSION['user']->getUsername();
     $score = $_SESSION['user']->getScore();
-    $played = $_SESSION['user']->getTotalPlayed();
+    //$played = $_SESSION['user']->getTotalPlayed();
 
 
     $f3->set('username', $username);
     $f3->set('score', $score);
-    $f3->set('totalPlayed', $played);
+   // $f3->set('totalPlayed', $played);
 
 
     //we don't need to update the database for a guest
