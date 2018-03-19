@@ -4,7 +4,8 @@
     profile.html
     this page shows a user's profile
 
---><!doctype html>
+-->
+<!doctype html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -19,118 +20,80 @@
 
     <!--link css-->
     <link rel="stylesheet" href="../styles/home_styles.css">
-    <link rel="stylesheet" href="../styles/game_styles.css">
-    <link rel="stylesheet" href="../styles/profile_styles.css">
+    <!--<link rel="stylesheet" href="../styles/game_styles.css">-->
+    <!--<link rel="stylesheet" href="../styles/profile_styles.css">-->
 </head>
 <body class="bg">
 
 <!--NAVBAR-->
 <nav class="navbar navbar-expand-lg navbar-light text-white">
-
-    <!--ADD HERE-->
-
-    <!--IMAGE AND THE PROFILE NAME-->
-    <div class="col-lg-8 col-md-8 col-sm-6">
-        <img src="http://via.placeholder.com/140x100" alt="logo image" class="float-left">
-        <h4 class="ml-2"></h4>
-        <br>
-    </div>
-
-    <!--SETTINGS BUTTON-->
-    <div class="collapse" id="navbarSupportedContent">
-
-        <!-- Split dropright button -->
-        <div class="btn-group">
-            <button class="btn btn-outline-secondary my-2 my-sm-0 text-right" type="dropdown">SETTINGS<i
-                    class="fas fa-wrench"></i></button>
-
-            <!--GEAR  BUTTON THAT DROPSDOWN-->
-            <button type="button"
-                    class="btn btn-outline-secondary dropdown-toggle float-right dropdown-toggle-split"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-cogs"></i></button>
-            </button>
-
-            <!--DROPDOWN MENU-->
-            <div class="dropdown-menu">
-                <a class="dropdown-item settings" href="#">Change Password</a>
-                <a class="dropdown-item settings" href="#">Edit Profile</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item settings" href="pages/logout">Logout</a>
-            </div>
-        </div>
-    </div>
+    <h6 class="mb-0 w-100 justify-content-left">TriviaQuack</h6>
+    <div class="display-6  w-100 text-right">{{@navStats}}</div>
 </nav>
 
-<!--<div class="bg"></div>-->
-
 <div class="container main-content">
-    <div class="row pt-5 login-row">
-        <!--Second ROW OF QUESTIONS-->
+
+    <div class="row pt-3 login-row display-3">
+        <span>{{@profileUsername}}</span>
+    </div>
+
+    <div class="row pt-1 login-row">
+
+        <!--Holder for bootstrap cards-->
         <div class="card-deck mx-auto">
+
+            <!--Score tile-->
             <div class="card text-white shadow bg-secondary mb-3 mt-3 ml-3 float-left">
-                <div class="card-header text-center text-uppercase font-weight-bold">Score</div>
+
+                <!--Title for tile-->
+                <div class="card-header text-center text-uppercase font-weight-bold">
+                    Score</div>
+
+                <!--Main content for score tile-->
                 <div class="card-body shadow-nohover">
                     <h5 class="card-title text-center text-warning">
-                        <img src="../images/duck.png" alt="duck_image_score" class="duck pr-2">
-                        <!--GET USER OBJECT SCORE HERE-->
-                        <!--{{@score}} score-->
-
-                        <check if="{{@score >= '1500'}}">
-                            <img src="../images/duck.png" alt="logo">
-                        </check>
+                        {{@profileScore}}
                     </h5>
                 </div>
             </div>
+
+
+            <!--Total games played tile-->
             <div class="card text-white shadow bg-secondary mb-3 mt-3 ml-3 float-left">
-                <div class="card-header text-center text-uppercase font-weight-bold">GAMES PLAYED</div>
+
+                <!--Title for tile-->
+                <div class="card-header text-center text-uppercase font-weight-bold">
+                    GAMES PLAYED</div>
+
+                <!--Main content for tile-->
                 <div class="card-body shadow-nohover">
-                    <h5 class="card-title text-center text-warning"><i class="fas h-15 w-25 fa-chess-rook"></i></h5>
+                    <h5 class="card-title text-center text-warning">
+
+                        <!--Tile icon-->
+                        <i class="fas h-15 w-25 fa-chess-rook"></i>
+
+                        <!--Games played-->
+                        {{@profileTotalPlayed}}
+                    </h5>
                 </div>
             </div>
+
+
+            <!--Category counts tile-->
             <div class="card text-white shadow bg-secondary mb-3 mt-3 ml-3 float-left">
+
+                <!--Title for tile-->
                 <div class="card-header text-center text-uppercase font-weight-bold">Category Results</div>
-                <div class="card-body shadow-nohover">
-                    <ul class="list-group">
 
-                       <!-- <repeat group="{{@categoryCounts}}" key="{{@category}} value={{@count}}">
-                            <li class="list-group item border-left-0 border-right-0 categoriesList">
-                                {{@category}}: {{@count}}</li>
-                        </repeat>-->
-
-                        <li class="list-group item border-left-0 border-right-0 categoriesList" id="scienceList">
-                            Science:
-                        </li>
-                        <li class="list-group item border-left-0 border-right-0 categoriesList">History:</li>
-                        <li class="list-group item border-left-0 border-right-0 categoriesList">Art:</li>
-                        <li class="list-group item border-left-0 border-right-0 categoriesList">Sports:</li>
-                        <li class="list-group item border-left-0 border-right-0 categoriesList">Code:</li>
-                        <li class="list-group item border-left-0 border-right-0 categoriesList">Geography:</li>
-                        <li class="list-group item border-left-0 border-right-0 categoriesList">Celebrities:</li>
-                        <li class="list-group item border-left-0 border-right-0 categoriesList">Culture:</li>
-
-                        <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-                        <script>"use strict";
-                        $(".categoriesList").hover(
-                            function () {
-                                $(this).addClass("mt-1");
-                            }, function () {
-                                $(this).removeClass("text-white").addClass("text-success").attr("darker");
-                            });
-
-                        // $("#scienceList").append().text("DUCK");
-
-                        </script>
-                    </ul>
+                <!--Main content for tile-->
+                <div class="card-body shadow-nohover container">
+                    <repeat group="{{@categoryCounts}}" key="{{@category}}" value="{{@count}}">
+                        <div class="row">
+                            <div class="col float-right">{{@category}}: {{@count}}</div>
+                        </div>
+                    </repeat>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-9 mx-auto bg-light">
-            <h3>Achievements / Badges</h3>
-            <ul class="list-group">
-                <li class="list-group-item border-left-0 border-right-0">5 History Games Played *</li>
-                <li class="list-group-item border-left-0 border-right-0">5 Science Computer Played *</li>
-            </ul>
         </div>
     </div>
 </div>

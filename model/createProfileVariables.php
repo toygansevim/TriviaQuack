@@ -26,8 +26,3 @@ for ($cat = 0 ; $cat < 9 ; $cat++) {
 }
 
 $f3->set('categoryCounts', $categoryCounts);
-
-//$f3->set('categoryCounts', $member->getCategoryCounts());
-
-print_r($categoryCounts);
-print_r($memberCounts);
