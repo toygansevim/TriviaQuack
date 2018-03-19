@@ -56,7 +56,7 @@ $f3->route('GET|POST /login', function ($f3)
 $f3->route('GET|POST /signup', function ($f3)
 {
     require_once 'database/db-functions.php';
-    if (loggedIn()) updateMember($f3);
+    //if (loggedIn()) updateMember($f3);
     //They submitted
     if (isset($_POST['submit']))
     {
@@ -72,8 +72,9 @@ $f3->route('GET|POST /home', function ($f3)
     $member = $_SESSION['user'];
     if (loggedIn())
     {
-        $f3->set('username',$member->getUsername());
-        //updateMember($f3);
+        $f3->set('username', $member->getUsername());
+       // $f3->set('total', $member->getTotalPlayed());
+        updateMember($f3);
     } else
     {
         $f3->reroute('/');
@@ -94,18 +95,53 @@ $f3->route('GET|POST /guest', function ($f3)
 $f3->route('GET|POST /profile/@username', function ($f3, $params)
 {
     require_once 'database/db-functions.php';
-    echo $params['username'];
+    //echo $params['username'];
     //is the username an actual profile?
-    if(userExists($params['username'])) {
+    if (userExists($params['username']))
+    {
         //set the variables needed to display the page
         require 'model/createProfileVariables.php';
         echo Template::instance()->render('pages/profile.html');
         //the  username token was not an actual username
-    } else {
+    } else
+    {
         //set need variable to display error
         $f3->set('username', $params['username']);
         echo Template::instance()->render('pages/profileError.html');
     }
+});
+
+
+/**
+ * This rerouting function is just so that user's won't get confused with profile routes
+ */
+$f3->route('GET /profile', function ($f3)
+{
+    if (loggedIn())
+    {
+        $f3->reroute('/home');
+    }
+
+});
+
+
+/**
+ * This route will allow the user the quit the game safely
+ *
+ * and will log them out
+ */
+$f3->route('GET|POST /logout', function ($f3)
+{
+    //If a logged in user
+    if (loggedIn())
+    {
+        session_destroy();
+        session_unset();
+        updateMember($f3);
+    }
+    $f3->reroute('/');
+
+
 });
 //run fat free
 $f3->run();

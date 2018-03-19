@@ -172,21 +172,22 @@ function updateMember($f3)
 
     $username = $_SESSION['user']->getUsername();
     $score = $_SESSION['user']->getScore();
-    //$played = $_SESSION['user']->getTotalPlayed();
 
 
     $f3->set('username', $username);
     $f3->set('score', $score);
-   // $f3->set('totalPlayed', $played);
 
 
     //we don't need to update the database for a guest
-    if ($_SESSION['user']->getUsername() == "Guest") return;
+    if ($_SESSION['user']->getUsername() == "Guest" || $_SESSION['user']->getUsername() == "GUEST")
+        return;
 
-
+    //Database function
     updateUserScore($member);
     updateTotalPlayed($member);
-    updateCategoryCounts($member);
+    //updateCategoryCounts($member);
+
+
 }
 
 /**
@@ -209,6 +210,7 @@ function updateUserScore($member)
     $statement = $conn->prepare($sql);
     $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
     $statement->bindParam(':score', $member->getScore(), PDO::PARAM_INT);
+
     $statement->execute();
 }
 

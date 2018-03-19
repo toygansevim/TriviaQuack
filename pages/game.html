@@ -22,11 +22,27 @@ category to play the game
 <body class="bg">
 
 <!--NAVBAR-->
-<nav class="navbar navbar-expand-lg navbar-light text-white">
+<nav class="navbar navbar-expand-md navbar-light text-white">
     <a class="navbar-brand" href="#">Trivia Quack</a>
 
-    <h4>Logged in As: {{@username}} {{@score}}</h4>
+    <h4 class="float-left">Logged in As: {{@username}} {{@score}}</h4>
+    <h4 class="float-left">TOTAL: {{@total}}</h4>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="form-inline my-2 my-lg-0 text-right">
+            <div class="pl-5 ml-5 float-right">&nbsp;</div>
+            <a href="{{@BASE}}/logout" class="float-right text-uppercase btn btn-outline-primary">QUIT GAME</a>
+
+        </form>
+    </div>
+
 </nav>
+
 
 <!--<div class="bg"></div>-->
 
@@ -119,7 +135,7 @@ category to play the game
                         <h3 class="card-title text-center"><i class="fas  h-25 w-25  fa-globe"></i></h3>
                     </div>
                 </div>
-                
+
                 <!--TEST BEGINS FOR MODALS-->
 
                 <div class="card text-white shadow bg-pink mb-3 mt-3 ml-3 float-left" data-toggle="modal"
@@ -178,7 +194,7 @@ category to play the game
         </div>
         <!--Leaderboard-->
         <div class="col-3 bg-primary ">
-            <p class="text-white ">Other LeaderBoard</p>
+            <p class="text-white text-uppercase">LeaderBoard</p>
             <check if="{{@members}}">
 
                 <!--  <ol>
@@ -197,26 +213,29 @@ category to play the game
                     </tr>
                     </thead>
                     <tbody>
-                    <repeat group="{{ @members }}" value="{{ @member }}">
+                    <repeat group="{{ @members }}" key="{{@rank}}" value="{{ @member }}">
 
                         <tr>
                             <th scope="row">
-                                <check if="{{ @member['id'] == '1'}}">
-                                    <true><img src="././images/gold-medal.png" id="gold-medal" alt="gold medal"
+
+                                <check if="{{@rank}} == 0">
+                                    <true><img src="./images/gold-medal.png" id="gold-medal" alt="gold medal"
                                                class="medal"></true>
 
                                 </check>
-                                <check if="{{ @member['id'] == '2'}}">
-                                    <true><img src="././images/silver-medal.png" id="silver-medal" alt="silver medal"
+                                <check if="{{ @rank}} == 1">
+                                    <true><img src="./images/silver-medal.png" id="silver-medal" alt="silver medal"
                                                class="medal">
                                     </true>
 
                                 </check>
-                                <check if="{{ @member['id'] == '3'}}">
-                                    <true><img src="././images/bronze-medal.png" id="bronze-medal" alt="bronze medal"
+                                <check if="{{ @rank }}== 2">
+                                    <true><img src="./images/bronze-medal.png" id="bronze-medal" alt="bronze medal"
                                                class="medal">
                                     </true>
                                 </check>
+
+                                <check if="{{@rank}} >= 3">#{{@rank + 1}}</check>
 
                             </th>
                             <td class="text-left mx-auto pl-1"><a href="{{@BASE}}/profile/{{@member['username']}}">{{
