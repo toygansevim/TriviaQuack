@@ -140,7 +140,7 @@ $f3->route('GET|POST /logout', function ($f3)
         updateMember($f3);
     }
     $f3->reroute('/');
-
+//logged out
 
 });
 //run fat free

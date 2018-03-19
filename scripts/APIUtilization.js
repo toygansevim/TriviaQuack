@@ -316,7 +316,7 @@ $(".answerOption").click(function () {
             location.reload();
             location.reload();
 
-            //reload the page
+            //reload the page twice
         }
         else {
             //COUNTING THE INNER MODAL AMOUNG HAS TO OCCUR HERE

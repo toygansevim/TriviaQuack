@@ -52,7 +52,7 @@ if (notMember($member))
     $amountSaved = $_SESSION['user']->getTotalPlayed();//retrieve the user played amount
 } else
 {
-    echo "MEMBER ELSE HERE!";
+    echo "MEMBER ELSE HERE!"; // ok
 }
 
 
@@ -102,7 +102,7 @@ if (!empty($score) && is_numeric($score))
 $playedOnce = true;
 
 //UPDATE POSITION OF THE END
-if ($amountTotalPlayed % $gamesPlayed == 0) //Every 5th game //can be changed
+if ($amountTotalPlayed % 4 == 0) //Every 5th game //can be changed
 {
     if ($playedOnce)
     {
@@ -125,6 +125,8 @@ if ($amountTotalPlayed % $gamesPlayed == 0) //Every 5th game //can be changed
             $_SESSION['user']->setCategoryCounts($questionCountString);
 
         }
+
+        echo "HERE IS THE ANSWER ";
     }
 
     $playedOnce = false;
@@ -140,6 +142,7 @@ function setCategoryString()
 
 function notMember($member)
 {
+
     return !$member->getUserName() == "Guest" || !$member->getUserName() == "GUEST";
 }
 
