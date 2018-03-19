@@ -11,6 +11,8 @@
 
 //to play the game with 1 question, amount can be set as default final 1, since in every click new question
 var playAGame = 1;
+//Scored in game session
+var scored = 0;
 
 //CATEGORIES FROM THE API
 var codeQuestion = 18, scienceQuestion = 17, artQuestion = 25, historyQuestion = 23, geographyQuestion = 22,
@@ -23,12 +25,15 @@ var codeQuestionCount = 0, scienceQuestionCount = 0, artQuestionCount = 0, histo
 var randomQuestionCount = 0;
 var lastSelected;
 
+
 var correctAnswer = 0;
 var selected;
-
 var waitAseconds = 1000;
-
+var questionsMaxPlay = 5;
 var playerScore = 0, totalPlayedCount = 0, correctAnswerCount = 0;
+
+//times played
+var count = 0;
 
 /**
  * This function will shuffle the given array elements and will return a shuffled array
@@ -44,28 +49,27 @@ function shuffle(arrayList) {
     }
 }
 
+//THIS IS THE AJAX FUNCTION THAT UPDATES USER OBJECT
 function updateScore() {
 
     var score = getResults();
 
-    console.log(score);
-
     $.post("model/postGameUpdate.php", {
             userscore: score,
             questioncount: [     //This is the amount of clicks on the card | HOW MANY TIMES USER PLAYED THE HISTORY
-                codeQuestionCount,
                 scienceQuestionCount,
+                codeQuestionCount,
+                sportsQuestionCount,
                 artQuestionCount,
+                randomQuestionCount,
                 historyQuestionCount,
                 geographyQuestionCount,
-                celebQuestionCount,
-                sportsQuestionCount,
-                randomQuestionCount,
-                generalCultureQuestionCount
-
+                generalCultureQuestionCount,
+                celebQuestionCount
             ],
             totalplayed: totalPlayedCount,
-            correctanswer: correctAnswerCount
+            correctanswer: correctAnswerCount,
+            count: count
 
         },
         function (result) {
@@ -75,6 +79,35 @@ function updateScore() {
 
         }
     );
+}
+
+
+//DIFFICULTY OPTIONS
+var options = ["easy", "medium", "hard"];
+
+/**
+ * This function sets the difficulty of the question to a different result every time
+ * @param options difficulty options
+ * @returns {*} a difficulty easy, meduim, or hard
+ */
+function setDifficulty(options) {
+
+    var select = Math.floor(Math.random() * 3);
+
+    if (select == 0) {
+        console.log("OPTION IS:   " + options[0]);
+        return options[0];
+    }
+    else if (select == 1) {
+        console.log("OPTION IS:   " + options[1]);
+
+        return options[1];
+    }
+    else {
+        console.log("OPTION IS:   " + options[2]);
+        return options[2];
+    }
+
 }
 
 
@@ -95,7 +128,7 @@ function createQuestion(amount, category) {
         "category": category,
         //Show this to mason
         // "difficulty": !isSet(amount) ? "easy" : amount,
-        "difficulty": "easy",
+        "difficulty": setDifficulty(options),
         "type": "multiple"
     };
     //URL API
@@ -208,11 +241,13 @@ $(".card").click(function () {
 
 });
 
+
 //Answer option on selection Is corresponding color depending on the correct answer + user
 $(".answerOption").click(function () {
 
 
-
+//start counting the round
+    count++;
 
 //get the button selected
     selected = $(this);
@@ -221,6 +256,12 @@ $(".answerOption").click(function () {
     //$(".answerOption").unbind();
 
     selected.addClass("bg-warning").delay(1000).removeClass("bg-dark");
+    //
+    // $(".answerOption").on('click', function () {
+    //     alert("here");
+    //     $(this).bind();
+    //     $(this).siblings().bind();
+    // });
 
     //give some time to show the answer  2000 => 2 seconds
     setTimeout(
@@ -235,16 +276,12 @@ $(".answerOption").click(function () {
                 //increment the  counter of the player object here
                 correctAnswerCount++;
 
-                //increment the amount of played question's here
-                totalPlayedCount++;
-
 
             }
             else {
-
                 //THIS ELSE PART IS OPEN TO CHANGE / I CAN JUST HIGHLIGHT THE CORRECT ANSWER AND BE DONE
                 selected.addClass("bg-danger").removeClass("bg-warning");
-                for (var i = 1; i <= 4; i++) {
+                for (var i = 1; i <= questionsMaxPlay - 1; i++) {
 
                     if ($("#answer" + i).text() === correctAnswer) {
                         $("#answer" + i).addClass("bg-success").removeClass("bg-dark");
@@ -252,42 +289,50 @@ $(".answerOption").click(function () {
                         console.log($("#answer" + i).text() + " Was the correct answer, for curious people...");
                     }
                 }
-
-                totalPlayedCount++;
-
             }
+
+            //increment the amount of played question's here
+            totalPlayedCount++;
         },
-        2000);
+        1000);
 
     //move to the next question
 
     setTimeout(function () {
         $(".answersBody").addClass("bg-none");
-    }, 3000);
+    }, 1600);
 
     setTimeout(function () {
         $(".answersBody").removeClass("bg-none");
 
-
         //THIS IS WHERE THE MODAL FINDS THE LAST PLAYED QUESTION AND REPLAYS IT
 
-        //COUNTING THE INNER MODAL AMOUNG HAS TO OCCUR HERE
-        updateScore();
+
+        if (count % questionsMaxPlay == 0) {
+            updateScore();
+            count = 0;
+
+            //exit out of the modal
+            location.reload();
+            location.reload();
+
+            //reload the page
+        }
+        else {
+            //COUNTING THE INNER MODAL AMOUNG HAS TO OCCUR HERE
+            updateScore();
+        }
 
         createQuestion(playAGame, lastSelected);
-
 
         resetButtonColors();
 
 
-    }, 4000);
+    }, 2300);
 
-    // $(".answerOption").bind(function () {
-    //
-    //     alert("binded");
 
-    // });
 });
+
 
 /**
  * This function will reset the button's for the next question
@@ -321,8 +366,6 @@ function totalScoreCalculation(correctAnswerCount) {
     playerScore = correctAnswerCount * pointAmount;
     return playerScore;
 }
-
-var scored = 0;
 
 
 /**

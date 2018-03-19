@@ -12,7 +12,6 @@ include "../classes/Player.php";
 include "../classes/databaseObject.php";
 session_start();
 
-
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 //$database = new DatabaseObject();
@@ -30,13 +29,14 @@ $f3 = Base::instance();
 $member = $_SESSION['user'];
 
 
+$gamesPlayed = 5;
+
+
+echo "<pre>";
+//var_dump($_POST);
+echo "</pre>";
 echo "<pre>";
 var_dump($member);
-echo "</pre>";
-
-echo "<pre>";
-
-var_dump($_POST);
 echo "</pre>";
 
 
@@ -44,27 +44,32 @@ echo "</pre>";
 $first = true;
 $postCountOccured = 0;
 
-
 $scoreSaved = $_SESSION['user']->getScore();
 
-//retrieve the user's score
-//$score = $_POST['userscore'] + $_SESSION['user']->getScore(); //THIS GET SCORE SHOULD BE ADDED
+//NOT SOMETHING THAT EFFECT
+if (notMember($member))
+{
+    $amountSaved = $_SESSION['user']->getTotalPlayed();//retrieve the user played amount
+} else
+{
+    echo "MEMBER ELSE HERE!";
+}
 
+
+echo "TOTAL PLAYED AT THIS MOMENT IS : " . $amountSaved;
 
 $score = $_POST['userscore']; //THIS GET SCORE SHOULD BE ADDED
 // ONLY ONCE THEREFORE THE MATH BECOMES WRONG. EVEN WITH WRONG ANSWER IT ADDS UP THE OLD VALUE TP
 // THE CURRENT ONE DOWN BELOW AND INCREMENTS IT
 
-
 $amountTotalPlayed = $_POST['totalplayed'];
 
 
-echo "<br><br><pre>";
-var_dump($_POST['questioncount'][0]);
-echo "</pre>";
+//var_dump($questionCountString);
+
 
 $questionsArray = array();
-//
+
 //questioncount:
 //[     //This is the amount of clicks on the card | HOW MANY TIMES USER PLAYED THE HISTORY
 //$codeQuestionCount, $scienceQuestionCount, $artQuestionCount, $historyQuestionCount,
@@ -81,28 +86,66 @@ for ($i = 0; $i < 10; $i++)
     array_push($questionsArray, $_POST['questioncount'][$i]);
 }
 
-echo "<br><br><pre>";
-print_r($questionsArray);
-echo "</pre>";
-
-
-echo $amountTotalPlayed;
-
-
 //check whether numeric or not AND DISPLAY
 if (!empty($score) && is_numeric($score))
 {
-    echo "Score :" . $score;
+    echo "<p class='float-left text-uppercase text-left mr-3'>Score :" . $score . "</p>";
+    echo "<p class='float-right text-right text-success'>" . $_POST['count'] . " / " . " 5 </p>";
+
 } else
 {
-    echo "Score is : 0";
+    echo "<p class='float-left text-uppercase text-left mr-3'>Score is : 0</p>";
+    echo "<p class='float-right text-right text-success'>" . $_POST['count'] . " / " . " 5 </p>";
 
 }
 
-if ($amountTotalPlayed % 5 == 0) //Every 5th game
+$playedOnce = true;
+
+//UPDATE POSITION OF THE END
+if ($amountTotalPlayed % $gamesPlayed == 0) //Every 5th game //can be changed
 {
-    $_SESSION['user']->setScore($score + $scoreSaved);
+    if ($playedOnce)
+    {
+
+        //SCORE
+        $_SESSION['user']->setScore($score + $scoreSaved);
+
+        //TOTAL GAME
+        if (notMember($member))
+        {
+
+            $_SESSION['user']->setTotalPlayed($_SESSION['user']->getTotalPlayed() + 5);
+
+            //CATEGORY COUNTS
+
+            setCategoryString();
+
+            var_dump($questionCountString);
+
+            $_SESSION['user']->setCategoryCounts($questionCountString);
+
+        }
+    }
+
+    $playedOnce = false;
+
+}
+
+function setCategoryString()
+{
+    $questionCountString = implode(',', $_POST['questioncount']);
+
+
+}
+
+function notMember($member)
+{
+    return !$member->getUserName() == "Guest" || !$member->getUserName() == "GUEST";
+}
+
+function isThere($variable)
+{
+    return isset($variable) && !empty($variable);
 }
 
 $f3->set('score', $score);
-$f3->set('toygan', $score);
