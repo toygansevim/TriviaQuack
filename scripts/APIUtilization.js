@@ -131,6 +131,7 @@ function createQuestion(amount, category) {
         "difficulty": setDifficulty(options),
         "type": "multiple"
     };
+
     //URL API
     var url = 'https://opentdb.com/api.php/';
 
@@ -179,8 +180,30 @@ function createQuestion(amount, category) {
 
 }
 
+$(".answerOption").on('click', getQuestion);
+
 //On a Tile click, Depending on the Tile that category of a quesiton will be displayed to the user
-$(".card").click(function () {
+$(".card").on('click', getModalQuestion);
+
+/**
+ * This function will reset the button's for the next question
+ */
+function resetButtonColors() {
+    //selected button
+    $(".answerOption").addClass("bg-dark");
+
+    //if had color green clear
+    if ($(".btn").hasClass("bg-success")) {
+        $(".btn").removeClass("bg-success");
+    }
+    if ($(".btn").hasClass("bg-danger")) {
+        //clear
+        $(".btn").removeClass("bg-danger");
+    }
+
+}
+
+function getModalQuestion() {
 
     //Where question gets displayed
     var modalBody = $(".answersBody");
@@ -238,13 +261,11 @@ $(".card").click(function () {
         default:
             break;
     }
+}
 
-});
+function getQuestion() {
 
-
-//Answer option on selection Is corresponding color depending on the correct answer + user
-$(".answerOption").click(function () {
-
+    // $(".answerOption").off();
 
 //start counting the round
     count++;
@@ -306,8 +327,6 @@ $(".answerOption").click(function () {
         $(".answersBody").removeClass("bg-none");
 
         //THIS IS WHERE THE MODAL FINDS THE LAST PLAYED QUESTION AND REPLAYS IT
-
-
         if (count % questionsMaxPlay == 0) {
             updateScore();
             count = 0;
@@ -323,33 +342,12 @@ $(".answerOption").click(function () {
             updateScore();
         }
 
-        createQuestion(playAGame, lastSelected);
 
+        createQuestion(playAGame, lastSelected);
         resetButtonColors();
 
 
     }, 2300);
-
-
-});
-
-
-/**
- * This function will reset the button's for the next question
- */
-function resetButtonColors() {
-    //selected button
-    $(".answerOption").addClass("bg-dark");
-
-    //if had color green clear
-    if ($(".btn").hasClass("bg-success")) {
-        $(".btn").removeClass("bg-success");
-    }
-    if ($(".btn").hasClass("bg-danger")) {
-        //clear
-        $(".btn").removeClass("bg-danger");
-    }
-
 
 }
 
