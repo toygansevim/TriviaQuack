@@ -26,7 +26,7 @@
         <!--NAVBAR-->
         <div class="row pt-5 login-row">
 
-            <div class="col-lg-3 col-md-5 col-sm-7 col-9   container mt-2">
+            <div class="col-lg-3 col-md-5 col-sm-7 col-9 container mt-2">
                 <div class="row justify-content-center pt-3 pb-4" id="head">
                     <div class="col-3 logo-sm px-0">
                         <img src="images/logo.png" class="img" alt="Trivia Quack">
@@ -40,14 +40,15 @@
                     <!--Username input-->
                     <div class="form-group py-0 mb-1 w-100">
                         <h6 class="mb-0 float-left"><label class="mb-0" for="username">Username</label></h6>
-                        <span class='text-danger float-right'>{{@username_err}}</span>
-                        <input type="text" class="form-control border-0" id="username" name="username" value="{{@username}}">
+                        <span class='text-danger float-right' id="username_err">{{@username_err}}</span>
+                        <input type="text" class="form-control border-0" id="username" name="username"
+                               value="{{@username}}">
                     </div>
 
                     <!--Password input-->
                     <div class="form-group py-0 mb-1 w-100">
                         <h6 class="mb-0 float-left"><label class="mb-0" for="pass">Password</label></h6>
-                        <span class='text-danger float-right'>{{@pass_err}}</span>
+                        <span class='text-danger float-right'id="pass_err">{{@pass_err}}</span>
                         <input type="password" class="form-control border-0" id="pass" name="pass" value="{{@pass}}">
                     </div>
                 </div>
@@ -71,14 +72,17 @@ END CONTAINER
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+<!--<script src="../scripts/validateReturningUser.js"></script>-->
+
+<script src="./scripts/validateReturningUser.js"> </script>
+
 </body>
 </html>

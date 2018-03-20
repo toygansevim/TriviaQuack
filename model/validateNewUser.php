@@ -8,51 +8,83 @@
  *
  */
 
-//initialize necessary variables
-$errors = [];
-$username;
-$email;
-$password;
-$repeatPassword;
+//did the file call come from javaScript or submit
+if (!isset($_POST['fromJS'])) {
 
+    require_once "database/db-functions.php";
+    $conn = connect();
 
-//call validation fucntions
-validateUsername($username, $errors);
-validateEmail($email, $errors);
-validatePass($password, $errors);
-validateRepeatPass($password, $repeatPassword, $errors);
+    validateUsername($username, $errors, $conn);
+    validateEmail($email, $errors, $conn);
+    validatePass($password, $errors);
+    validateRepeatPass($password, $repeatPassword, $errors);
 
+    //no errors were developed
+    if (empty($errors)) {
 
-//no errors were developed
-if (empty($errors)) {
+        //add member to database using db-functions.addMember()
+        addMember($username, $password, $email);
 
-    //add member to database using db-functions.addMember()
-    addMember($username, $password, $email);
+        //store the user in the session (logged in)
+        $_SESSION['user'] = retrieveUser($username);
 
+        //reroute to home page of game
+        $f3->reroute("./home");
 
-    //store the user in the session (logged in)
-    $_SESSION['user'] = retrieveUser($username);
+    //They had errors, record the errors and past entries
+    } else {
 
+        //store past entries in fat free hive for sticky forms
+        $f3->set('username', $username);
+        $f3->set('email', $email);
+        $f3->set('pass', $password);
+        $f3->set('repeat_pass', $repeatPassword);
 
-    //reroute to home page of game
-    $f3->reroute("./home");
+        //store errors in fat free hive for later use
+        $f3->set('username_err', $errors['username_err']);
+        $f3->set('email_err', $errors['email_err']);
+        $f3->set('pass_err', $errors['pass_err']);
+        $f3->set('repeat_pass_err', $errors['repeat_pass_err']);
+    }
 
-
-//They had errors, record the errors and past entries
+//The request came from javascript
 } else {
 
-    //store past entries in fat free hive for sticky forms
-    $f3->set('username', $username);
-    $f3->set('email', $email);
-    $f3->set('pass', $password);
-    $f3->set('repeat_pass', $repeatPassword);
+    require_once "../database/db-functions.php";
+    $conn = connect();
 
-    //store errors in fat free hive for later use
-    $f3->set('username_err', $errors['username_err']);
-    $f3->set('email_err', $errors['email_err']);
-    $f3->set('pass_err', $errors['pass_err']);
-    $f3->set('repeat_pass_err', $errors['repeat_pass_err']);
+    $errors = [];
+    $username = "";
+    $password = "";
+    $savedPassword = "";
+
+    //the request was made for username validation
+    if (isset($_POST['forusername'])) {
+        validateUsername($username, $errors, $conn);
+        echo $errors['username_err'];
+    }
+
+    //the request was made for email validation
+    if (isset($_POST['foremail'])) {
+        validateEmail($email, $errors, $conn);
+        echo $errors['email_err'];
+    }
+
+    //the request was made for password validation
+    if (isset($_POST['forpass'])) {
+        validatePass($password, $errors);
+        echo $errors['pass_err'];
+    }
+
+    //the request was made for repeat-password validation
+    if (isset($_POST['forrepeatpass'])) {
+        validatePass($password, $errors);
+        validateRepeatPass($password, $savedPassword, $errors);
+        echo $errors['repeat_pass_err'];
+    }
 }
+
+
 
 
 /**
@@ -62,7 +94,7 @@ if (empty($errors)) {
  * @param $username
  * @param $errors
  */
-function validateUsername(&$username, &$errors)
+function validateUsername(&$username, &$errors, &$conn)
 {
     //they entered their username
     if (!empty($_POST['username'])) {
@@ -72,7 +104,7 @@ function validateUsername(&$username, &$errors)
 
 
         //does the user already exist
-        if (doesUserExist($username))
+        if (doesUserExist($username, $conn))
             $errors['username_err'] = "Username already in use";
 
 
@@ -89,9 +121,8 @@ function validateUsername(&$username, &$errors)
  * @param &$username
  * @return boolean does the username exist
  */
-function doesUserExist($username)
+function doesUserExist($username, &$conn)
 {
-    global $conn;
 
     //Grab any rows with that username
     $sql = "SELECT * FROM triviaMembers WHERE username = :username";
@@ -110,7 +141,7 @@ function doesUserExist($username)
  * Checks for valid format of email, does
  * not check whether or not the email exists
  */
-function validateEmail(&$email, &$errors)
+function validateEmail(&$email, &$errors, &$conn)
 {
     //they have entered their email
     if (!empty($_POST['email'])) {
@@ -123,7 +154,7 @@ function validateEmail(&$email, &$errors)
 
 
         //does email exist already
-        if (doesEmailExist($email))
+        if (doesEmailExist($email, $conn))
             $errors['email_err'] = "Email already in use";
 
 
@@ -142,10 +173,8 @@ function validateEmail(&$email, &$errors)
  * @param $email
  * @return bool
  */
-function doesEmailExist($email)
+function doesEmailExist($email, &$conn)
 {
-    global $conn;
-
     //Grab row based on email
     $sql = "SELECT * FROM triviaMembers WHERE email = :email";
     $statement = $conn->prepare($sql);
@@ -193,7 +222,6 @@ function validateRepeatPass(&$password, &$repeatPassword, &$errors)
 
         //clean the data
         $repeatPassword = htmlspecialchars($_POST['repeat-pass']);
-
 
         //do the passwords match
         if ($password != $repeatPassword)

@@ -50,6 +50,7 @@ $f3->route('GET|POST /login', function ($f3)
     //They submitted
     if (isset($_POST['submit']))
     {
+        var_dump($_POST);
         //validate it
         require 'model/validateReturningUser.php';
     }
@@ -162,11 +163,6 @@ $f3->route('GET|POST /logout', function ($f3)
     $f3->reroute('/');
     //logged out
 
-});
-
-$f3->set('ONERROR', function ($f3)
-{
-    echo Template::instance()->render('pages/pageError.html');
 });
 
 //run fat free
