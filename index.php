@@ -50,7 +50,6 @@ $f3->route('GET|POST /login', function ($f3)
     //They submitted
     if (isset($_POST['submit']))
     {
-        var_dump($_POST);
         //validate it
         require 'model/validateReturningUser.php';
     }
