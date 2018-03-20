@@ -26,7 +26,7 @@
  */
 
 //needed config file
-include "/home/mhernand/tqConfig.php";
+include "/home/tsevimgr/config.php";
 
 //connect
 $conn = connect();
