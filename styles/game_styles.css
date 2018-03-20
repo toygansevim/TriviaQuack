@@ -46,6 +46,8 @@ This is the css sheet for the game page.
     padding: 0px !important;
 }
 
+
+
 td {
     background-color: rgba(255, 255, 255, 0.2);
 }
@@ -54,7 +56,9 @@ th {
     text-align: center;
 }
 
+/*medi queries for the lower breakpoints*/
 @media (max-width: 768px) {
+    /*data tables*/
     td {
         padding: .15rem !important;
         vertical-align: middle !important;
@@ -68,6 +72,7 @@ th {
         padding: 0px !important;
     }
 
+    /*headers*/
     th {
         padding: .15rem;
         vertical-align: middle;
@@ -79,6 +84,9 @@ th {
     }
 }
 
+/**
+    Middle
+ */
 @media (min-width: 768px) and (max-width: 1200px) {
     td {
         padding: 2px !important;
@@ -109,7 +117,10 @@ td a {
     width: 30px;
 }
 
-#leaderboard{
+/**
+Leader borrd
+ */
+#leaderboard {
     /*background-color: blue;*/
     border-image-repeat: round;
     border-image-source: url(images/star.png);

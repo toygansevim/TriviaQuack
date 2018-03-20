@@ -11,36 +11,39 @@
 
 //to play the game with 1 question, amount can be set as default final 1, since in every click new question
 var playAGame = 1;
-//Scored in game session
-var scored = 0;
 
 //CATEGORIES FROM THE API
-var codeQuestion = 18, scienceQuestion = 17, artQuestion = 25, historyQuestion = 23, geographyQuestion = 22,
-    celebQuestion = 26, generalCultureQuestion = 9, generalCultureQuestionCount = 0, sportsQuestion = 21,
-    sportsQuestionCount = 0;
-var randomOptions = [codeQuestion, scienceQuestion, artQuestion, historyQuestion, geographyQuestion, generalCultureQuestion, geographyQuestion, sportsQuestionCount];
-var codeQuestionCount = 0, scienceQuestionCount = 0, artQuestionCount = 0, historyQuestionCount = 0,
-    geographyQuestionCount = 0,
-    celebQuestionCount = 0;
-var randomQuestionCount = 0;
+var codeQuestion = 18, scienceQuestion = 17, artQuestion = 25,
+    historyQuestion = 23, geographyQuestion = 22, celebQuestion = 26,
+    sportsQuestion = 21, generalCultureQuestion = 9;
+
+//QUESTION COUNTERS
+var codeQuestionCount = 0, scienceQuestionCount = 0, artQuestionCount = 0,
+    historyQuestionCount = 0, geographyQuestionCount = 0, celebQuestionCount = 0,
+    generalCultureQuestionCount = 0, sportsQuestionCount = 0, randomQuestionCount = 0;
+
+
 var lastSelected;
+var randomOptions = [codeQuestion, scienceQuestion, artQuestion, historyQuestion, geographyQuestion, generalCultureQuestion, geographyQuestion, sportsQuestionCount];
 
 //for modal
 var docHeight = $(document).height();
 
-
 var correctAnswer = 0;
 var selected;
-var waitAseconds = 1000;
 var questionsMaxPlay = 5;
+//USER VALUES
 var playerScore = 0, totalPlayedCount = 0, correctAnswerCount = 0;
 
+//Scored in game session
+var scored = 0;
 //times played
 var count = 0;
 
 /**
  * This function will shuffle the given array elements and will return a shuffled array
  * @param arrayList the array that user would like to shuffle
+ *
  */
 function shuffle(arrayList) {
     var j, x, i;
@@ -76,9 +79,6 @@ function updateScore() {
 
         },
         function (result) {
-
-            console.log(result);
-
             $("#score").html(result);
 
         }
@@ -99,16 +99,13 @@ function setDifficulty(options) {
     var select = Math.floor(Math.random() * 3);
 
     if (select == 0) {
-        console.log("OPTION IS:   " + options[0]);
         return options[0];
     }
     else if (select == 1) {
-        console.log("OPTION IS:   " + options[1]);
 
         return options[1];
     }
     else {
-        console.log("OPTION IS:   " + options[2]);
         return options[2];
     }
 
@@ -122,20 +119,15 @@ function setDifficulty(options) {
 function createQuestion(amount, category) {
 
     //EVERY QUIZ CREATION WILL INCREMENT THE VALUES OF PLAYING THE GAME
-
-    // global difficulty;
     var params = {
         "amount": amount,
         "category": category,
-        //Show this to mason
-        // "difficulty": !isSet(amount) ? "easy" : amount,
         "difficulty": setDifficulty(options),
         "type": "multiple"
     };
 
     //URL API
     var url = 'https://opentdb.com/api.php/';
-
 
     //Get the data from JSON API with parameters.
     $.getJSON(url, params, function (result) {
@@ -149,10 +141,6 @@ function createQuestion(amount, category) {
             var randomCreatedArray;
             var answersDataArray;
             var questionName = $("#celebritiesModalLabel");
-            var answer1 = $("#answer1");
-            var answer2 = $("#answer2");
-            var answer3 = $("#answer3");
-            var answer4 = $("#answer4");
 
             //get the data
             var questionData = item.question;
@@ -167,12 +155,9 @@ function createQuestion(amount, category) {
             //set the question H3 to the data from file
             questionName.html(questionData);
 
-            //load the buttons
+            //load the buttons in a loop of old value's array to be passed
             for (var i = 1; i <= answersDataArray.length; i++) {
-                //in this line hopefully I will create What I want
-                //To the random selection occurance array will take the values with .push
-                //we will push in every element that has an Answer ID !! will increment the position with the loop
-                //also will change the text value of the button to the array position
+                //LOAD BUTTON VALUES
                 randomCreatedArray.push($("#answer" + i).html(answersDataArray[i - 1]));
             }
 
@@ -181,6 +166,7 @@ function createQuestion(amount, category) {
 
 }
 
+//ON answer option = button click, get a new question
 $(".answerOption").on('click', getQuestion);
 
 //On a Tile click, Depending on the Tile that category of a quesiton will be displayed to the user
@@ -204,12 +190,13 @@ function resetButtonColors() {
 
 }
 
+/**
+ * This function will fire off a modal with a question pulled from an API
+ */
 function getModalQuestion() {
 
     //Where question gets displayed
     var modalBody = $(".answersBody");
-
-    console.log("on card click last selected is = " + lastSelected);
 
     //If it is not showing, THIS IS THE TIME TO SHOW
     if (modalBody.hasClass("d-none")) {
@@ -230,7 +217,6 @@ function getModalQuestion() {
 
         case "Code":
             lastSelected = "codeQuestion";
-            console.log("AT THE END last selected is = " + lastSelected);
             createCodeQuestion();
             break;
         case "Sports":
@@ -247,7 +233,6 @@ function getModalQuestion() {
             break;
         case "General Culture":
             lastSelected = "generalCultureQuestion";
-            console.log("AT THE END last selected is = " + lastSelected);
             createGeneralQuestion();
             break;
         case "Celebrities":
@@ -301,8 +286,6 @@ function getQuestion() {
 
                     if ($("#answer" + i).text() === correctAnswer) {
                         $("#answer" + i).addClass("bg-success").removeClass("bg-dark");
-
-                        console.log($("#answer" + i).text() + " Was the correct answer, for curious people...");
                     }
                 }
             }
@@ -350,6 +333,9 @@ function getQuestion() {
 
 }
 
+/**
+ * Disable the buttons after click until the next question appears
+ */
 function disableButtons() {
     $("body").append("<div id='overlay'></div>");
 
@@ -385,9 +371,6 @@ function totalScoreCalculation(correctAnswerCount) {
 function getResults() {
 
     scored = totalScoreCalculation(correctAnswerCount);
-
-    console.log(scored); // info purpose
-
     return scored;
 
 }
