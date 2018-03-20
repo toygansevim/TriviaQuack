@@ -24,24 +24,18 @@ $f3->route('GET /', function ($f3)
     $f3->set('colorBG', 'primary');
     echo Template::instance()->render('pages/home.html');
 });
-/**
- * Routes to a simple table of users
- */
-$f3->route('GET|POST /users', function ($f3)
-{
-    require_once 'database/db-functions.php';
-    $members = getLeaders();
-    $f3->set('members', $members);
-    $f3->set('pageTitle', 'DB');
-    echo Template::instance()->render('database/displayDatabase.html');
-});
+
 /**
  * Routes to a login page
  */
 $f3->route('GET|POST /login', function ($f3)
 {
     require_once 'database/db-functions.php';
-    //if (loggedIn()) updateMember($f3);
+
+    if (loggedIn()) {
+        require 'model/setFatFreeVariables.php';
+    }
+
     //They submitted
     if (isset($_POST['submit']))
     {
@@ -56,7 +50,11 @@ $f3->route('GET|POST /login', function ($f3)
 $f3->route('GET|POST /signup', function ($f3)
 {
     require_once 'database/db-functions.php';
-    //if (loggedIn()) updateMember($f3);
+
+    if (loggedIn()) {
+        require 'model/setFatFreeVariables.php';
+    }
+
     //They submitted
     if (isset($_POST['submit']))
     {
@@ -75,8 +73,8 @@ $f3->route('GET|POST /home', function ($f3)
 
     if (loggedIn())
     {
-        //$f3->set('username', $member->getUsername());
-        // $f3->set('total', $member->getTotalPlayed());
+        $f3->set('username', $member->getUsername());
+        $f3->set('total', $member->getTotalPlayed());
         updateMember($f3);
 
     } else
@@ -101,18 +99,24 @@ $f3->route('GET|POST /guest', function ($f3)
 $f3->route('GET|POST /profile/@username', function ($f3, $params)
 {
     require_once 'database/db-functions.php';
+
+    if (loggedIn()) {
+        require 'model/setFatFreeVariables.php';
+    }
+
     //echo $params['username'];
     //is the username an actual profile?
     if (userExists($params['username']))
     {
         //set the variables needed to display the page
+
         require 'model/createProfileVariables.php';
         echo Template::instance()->render('pages/profile.html');
         //the  username token was not an actual username
     } else
     {
         //set need variable to display error
-        $f3->set('username', $params['username']);
+        $f3->set('profileUsername', $params['username']);
         echo Template::instance()->render('pages/profileError.html');
     }
 });

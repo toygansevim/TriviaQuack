@@ -1,0 +1,45 @@
+<!--NAVBAR-->
+<nav class="navbar navbar-expand-lg navbar-light text-dark py-1">
+    <h3 class="font-weight-light mb-0 w-100 justify-content-left">
+        <a class="link-style-none text-dark" href="{{@BASE}}">
+            TriviaQuack
+        </a>
+    </h3>
+
+    <!--logged in?-->
+    <check if="loggedIn()">
+        <true>
+            <h3 class="font-weight-light w-100 text-right">{{@score}} |
+                <a class="link-style-none text-dark" href="{{@BASE}}/profile/{{@username}}">
+                    {{@username}}
+                </a>
+            </h3>
+
+            <!--logout-->
+            <check if="{{@isGuest}}">
+
+                <!--guests quit-->
+                <true>
+                    <a href="{{@BASE}}/logout" class="float-right ml-3 text-uppercase btn btn-outline-dark">
+                        quit
+                    </a>
+                </true>
+
+                <!--members logout-->
+                <false>
+                    <a href="{{@BASE}}/logout" class="clear-text float-right ml-3 text-uppercase btn btn-outline-dark">
+                        logout
+                    </a>
+                </false>
+            </check>
+        </true>
+
+        <!--login-->
+        <false>
+            <a href="{{@BASE}}/login" class="clear-text float-right ml-3 text-uppercase btn btn-outline-dark">
+                login
+            </a>
+        </false>
+
+    </check>
+</nav>

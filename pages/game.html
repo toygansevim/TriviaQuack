@@ -21,28 +21,8 @@ category to play the game
 </head>
 <body class="bg">
 
-<!--NAVBAR-->
-<nav class="navbar navbar-expand-md navbar-light text-white">
-    <a class="navbar-brand" href="#">Trivia Quack</a>
-
-    <h4 class="float-left">Logged in As: {{@username}} {{@score}}</h4>
-
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="form-inline my-2 my-lg-0 text-right">
-            <div class="pl-5 ml-5 float-right">&nbsp;</div>
-            <a href="{{@BASE}}/logout" class="float-right text-uppercase btn btn-outline-primary">QUIT GAME</a>
-
-        </form>
-    </div>
-
-</nav>
-
+<!--included navbar-->
+<include href="pages/navbar.html">
 
 <!--<div class="bg"></div>-->
 

@@ -69,3 +69,11 @@ input#login {
 a#return:hover {
     text-decoration: none !important;
 }
+
+.link-style-none {
+    text-decoration: none !important;
+}
+
+a.clear-text:hover {
+    color: white;
+}

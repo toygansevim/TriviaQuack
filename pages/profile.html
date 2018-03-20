@@ -20,20 +20,15 @@
 
     <!--link css-->
     <link rel="stylesheet" href="../styles/home_styles.css">
-    <!--<link rel="stylesheet" href="../styles/game_styles.css">-->
-    <!--<link rel="stylesheet" href="../styles/profile_styles.css">-->
+
 </head>
 <body class="bg">
 
-<!--NAVBAR-->
-<nav class="navbar navbar-expand-lg navbar-light text-white">
-    <h6 class="mb-0 w-100 justify-content-left">TriviaQuack</h6>
-    <div class="display-6  w-100 text-right">{{@navStats}}</div>
-</nav>
+<include href="pages/navbar.html">
 
 <div class="container main-content">
 
-    <div class="row pt-3 login-row display-3">
+    <div class="row pt-3 login-row display-3 text-white">
         <span>{{@profileUsername}}</span>
     </div>
 
