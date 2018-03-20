@@ -105,10 +105,6 @@ if ($amountTotalPlayed % $gamesPlayed == 0) //Every 5th game //can be changed
         }
 
 
-        //$_SESSION['user']->setCategoryCounts($questionCountString);
-
-        //        var_dump($dbString);
-
         $member->setCategoryCounts($dbString);
 
     }
