@@ -16,13 +16,17 @@ var scored = 0;
 
 //CATEGORIES FROM THE API
 var codeQuestion = 18, scienceQuestion = 17, artQuestion = 25, historyQuestion = 23, geographyQuestion = 22,
-    celebQuestion = 26, generalCultureQuestion = 9, generalCultureQuestionCount = 0, sportsQuestion = 21, sportsQuestionCount = 0;
-
+    celebQuestion = 26, generalCultureQuestion = 9, generalCultureQuestionCount = 0, sportsQuestion = 21,
+    sportsQuestionCount = 0;
+var randomOptions = [codeQuestion, scienceQuestion, artQuestion, historyQuestion, geographyQuestion, generalCultureQuestion, geographyQuestion, sportsQuestionCount];
 var codeQuestionCount = 0, scienceQuestionCount = 0, artQuestionCount = 0, historyQuestionCount = 0,
     geographyQuestionCount = 0,
     celebQuestionCount = 0;
 var randomQuestionCount = 0;
 var lastSelected;
+
+//for modal
+var docHeight = $(document).height();
 
 
 var correctAnswer = 0;
@@ -116,9 +120,7 @@ function setDifficulty(options) {
  */
 function createQuestion(amount, category) {
 
-
     //EVERY QUIZ CREATION WILL INCREMENT THE VALUES OF PLAYING THE GAME
-
 
     // global difficulty;
     var params = {
@@ -261,9 +263,12 @@ function getModalQuestion() {
     }
 }
 
+/**
+ * This function will first lay a div over the option buttons
+ */
 function getQuestion() {
 
-    // $(".answerOption").off();
+    disableButtons();
 
 //start counting the round
     count++;
@@ -271,16 +276,7 @@ function getQuestion() {
 //get the button selected
     selected = $(this);
 
-    //unbind the mouse for other clicks
-    //$(".answerOption").unbind();
-
     selected.addClass("bg-warning").delay(1000).removeClass("bg-dark");
-    //
-    // $(".answerOption").on('click', function () {
-    //     alert("here");
-    //     $(this).bind();
-    //     $(this).siblings().bind();
-    // });
 
     //give some time to show the answer  2000 => 2 seconds
     setTimeout(
@@ -344,9 +340,27 @@ function getQuestion() {
         createQuestion(playAGame, lastSelected);
         resetButtonColors();
 
+        $("#overlay").remove();
 
-    }, 2300);
+    }, 2100);
 
+
+    //exit overlay
+
+}
+
+function disableButtons() {
+    $("body").append("<div id='overlay'></div>");
+
+    $("#overlay")
+        .height(docHeight)
+        .css({
+            'position': 'absolute',
+            'top': 0,
+            'left': 0,
+            'width': '100%',
+            'z-index': 5000
+        });
 }
 
 /**
@@ -363,7 +377,6 @@ function totalScoreCalculation(correctAnswerCount) {
     return playerScore;
 }
 
-
 /**
  * This method will get the totalScore calculated from the quiz (5 questions / or unless they quit
  * @returns {number}
@@ -378,12 +391,14 @@ function getResults() {
 
 }
 
-
 /*
 //#####
 //  CREATE A QUESTION BELOW AND ARRANGE BUTTON'S
 //#####
 //      BELOW FUNCTIONS WILL CREATE A QUESTION BASED AND INCREMENT THE CREATED QUESTION BY 1
+ */
+/**
+ * Code question creation
  */
 function createCodeQuestion() {
     resetButtonColors();
@@ -392,6 +407,9 @@ function createCodeQuestion() {
     createQuestion(playAGame, codeQuestion);
 }
 
+/**
+ * Sports question
+ */
 function createSportsQuestion() {
     resetButtonColors();
     lastSelected = sportsQuestion;
@@ -400,6 +418,9 @@ function createSportsQuestion() {
     createQuestion(playAGame, sportsQuestion);
 }
 
+/**
+ * Science question
+ */
 function createScienceQuestion() {
     resetButtonColors();
     lastSelected = scienceQuestion;
@@ -409,6 +430,9 @@ function createScienceQuestion() {
 
 }
 
+/**
+ * Art question
+ */
 function createArtQuestion() {
     resetButtonColors();
     lastSelected = artQuestion;
@@ -417,6 +441,9 @@ function createArtQuestion() {
 
 }
 
+/**
+ * History Question
+ */
 function createHistoryQuestion() {
     resetButtonColors();
     lastSelected = historyQuestion;
@@ -425,6 +452,9 @@ function createHistoryQuestion() {
 
 }
 
+/**
+ * general question
+ */
 function createGeneralQuestion() {
     resetButtonColors();
     lastSelected = generalCultureQuestion;
@@ -433,6 +463,9 @@ function createGeneralQuestion() {
 
 }
 
+/**
+ * Celeb question
+ */
 function createCelebQuestion() {
     resetButtonColors();
     lastSelected = celebQuestion;
@@ -440,6 +473,9 @@ function createCelebQuestion() {
     celebQuestionCount++;
 }
 
+/**
+ * Geography question
+ */
 function createGeoQuestion() {
     resetButtonColors();
     lastSelected = geographyQuestion;
@@ -448,10 +484,16 @@ function createGeoQuestion() {
 
 }
 
+/**
+ * Random creater option
+ */
 function createRandomQuestion() {
     var random;
+    var pick;
     resetButtonColors();
-    random = Math.floor(Math.random() * 21 + 1);
-    createQuestion(playAGame, random); //Generate from an random api number
+    random = Math.floor(Math.random() * 9);
+    //pick a random option
+    pick = randomOptions[random];
+    createQuestion(playAGame, pick); //Generate from an random api number
     randomQuestionCount++;
 }
