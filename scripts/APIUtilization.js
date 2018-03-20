@@ -135,7 +135,6 @@ function createQuestion(amount, category) {
     //URL API
     var url = 'https://opentdb.com/api.php/';
 
-
     //Get the data from JSON API with parameters.
     $.getJSON(url, params, function (result) {
         var items = result.results;
@@ -267,6 +266,20 @@ function getQuestion() {
 
     // $(".answerOption").off();
 
+    var docHeight = $(document).height();
+
+    $("body").append("<div id='overlay'></div>");
+
+    $("#overlay")
+        .height(docHeight)
+        .css({
+            'position': 'absolute',
+            'top': 0,
+            'left': 0,
+            'width': '100%',
+            'z-index': 5000
+        });
+
 //start counting the round
     count++;
 
@@ -342,11 +355,9 @@ function getQuestion() {
             updateScore();
         }
 
-
         createQuestion(playAGame, lastSelected);
         resetButtonColors();
-
-
+        $("#overlay").remove();
     }, 2300);
 
 }
