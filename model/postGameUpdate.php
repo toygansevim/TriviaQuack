@@ -8,14 +8,15 @@
  */
 
 //needed to be re-included due to ajax access
-require_once "../vendor/autoload.php" ;
+require_once "../vendor/autoload.php";
 require_once "../classes/Player.php";
-require_once "../classes/databaseObject.php";
+require_once "../database/db-functions.php";
+
 
 //needed to be re-started due to ajax access
 session_start();
-//error_reporting(E_ALL);
-//ini_set("display_errors", 1);
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 
 $f3 = Base::instance();
 $member = $_SESSION['user'];
@@ -56,7 +57,8 @@ if (!empty($score) && is_numeric($score))
     echo "<p class='float-left text-uppercase text-left mr-3'>Score :" . $score . "</p>";
     echo "<p class='float-right text-right text-success'>" . $_POST['count'] . " / " . " 5 </p>";
 
-} else {
+} else
+{
 
     echo "<p class='float-left text-uppercase text-left mr-3'>Score is : 0</p>";
     echo "<p class='float-right text-right text-success'>" . $_POST['count'] . " / " . " 5 </p>";
@@ -84,12 +86,15 @@ if ($amountTotalPlayed % $gamesPlayed == 0)
             $sum += (int) $questionsArray[$i];
             $dbString[] = $sum;
         }
+
         //set categories played
         $member->setCategoryCounts($dbString);
 
     }
 }
 
+updateMember($f3);
+//
 /**
  * This function checks the current variable is available to continue
  *

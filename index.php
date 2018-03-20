@@ -12,10 +12,15 @@ ini_set("display_errors", TRUE);
 require_once("vendor/autoload.php");
 require_once("database/db-functions.php");
 //create an instance sof the Base class
-$f3 = Base::instance();
 session_start();
+
+
+$f3 = Base::instance();
+
+
 //connect to database
 $conn = connect();
+
 $f3->set('DEBUG', 3);
 //Define a default route
 $f3->route('GET /', function ($f3)
@@ -37,7 +42,8 @@ $f3->route('GET|POST /login', function ($f3)
 {
     require_once 'database/db-functions.php';
 
-    if (loggedIn()) {
+    if (loggedIn())
+    {
         require 'model/setFatFreeVariables.php';
     }
 
@@ -56,7 +62,8 @@ $f3->route('GET|POST /signup', function ($f3)
 {
     require_once 'database/db-functions.php';
 
-    if (loggedIn()) {
+    if (loggedIn())
+    {
         require 'model/setFatFreeVariables.php';
     }
 
@@ -102,7 +109,8 @@ $f3->route('GET|POST /profile/@username', function ($f3, $params)
 {
     require_once 'database/db-functions.php';
 
-    if (loggedIn()) {
+    if (loggedIn())
+    {
         require 'model/setFatFreeVariables.php';
     }
 
@@ -134,7 +142,6 @@ $f3->route('GET /profile', function ($f3)
         $f3->reroute('/home');
     }
 
-
 });
 
 
@@ -157,7 +164,8 @@ $f3->route('GET|POST /logout', function ($f3)
 
 });
 
-$f3->set('ONERROR',function($f3){
+$f3->set('ONERROR', function ($f3)
+{
     echo Template::instance()->render('pages/pageError.html');
 });
 

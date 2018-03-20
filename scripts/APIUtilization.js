@@ -76,6 +76,7 @@ function updateScore() {
 
         },
         function (result) {
+
             console.log(result);
 
             $("#score").html(result);

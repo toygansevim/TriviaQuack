@@ -28,6 +28,9 @@
 //needed config file
 include "/home/tsevimgr/config.php";
 
+//connect
+$conn = connect();
+
 //connection method
 function connect()
 {
@@ -37,7 +40,6 @@ function connect()
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $conn->setAttribute(PDO::ATTR_PERSISTENT, true);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
         //return connection
         return $conn;
 
@@ -186,21 +188,25 @@ function updateMember($f3)
     $member = $_SESSION['user'];
 
     $username = $_SESSION['user']->getUsername();
-    $score = $_SESSION['user']->getScore();
 
+    $score = $_SESSION['user']->getScore();
 
     //we don't need to update the database for a guest
     if ($_SESSION['user']->getUsername() != "Guest")
     {
         //Database function
         updateUserScore($member);
+
         updateTotalPlayed($member);
+
         updateCategoryCounts($member);
+
     }
 
     //Sets some fat free variables to display after updating
     $f3->set('username', $username);
     $f3->set('score', $score);
+
 
 }
 
@@ -217,12 +223,10 @@ function updateUserScore($member)
     global $conn;
 
     //define sql
-    $sql = "
-    UPDATE triviaMembers 
-    SET totalScore = :score
-    WHERE username = :username";
+    $sql = "UPDATE triviaMembers SET totalScore = :score WHERE username = :username";
 
     $statement = $conn->prepare($sql);
+
     $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
     $statement->bindParam(':score', $member->getScore(), PDO::PARAM_INT);
 

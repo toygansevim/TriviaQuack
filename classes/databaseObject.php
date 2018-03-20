@@ -42,39 +42,39 @@ class DatabaseObject
      *
      * @param $member a Member object
      */
-    function updateMember($f3)
-    {
-
-        //RETRIEVE USER
-        $member = $_SESSION['user'];
-
-
-        //SET THE HIVE OF THE CURRENT LOGGED IN USER
-        $f3->set('username', $member->getUsername());
-        $f3->set('score', $member->getScore());
-
-
-
-        //we don't need to update the database for a guest
-        if ($member->getUsername() == "Guest") return;
-        global $conn;
-
-        //define
-        $sql = "
-            UPDATE triviaMembers
-            SET totalScore = :score
-            WHERE username = :username";
-
-        //        PREPARE
-        $statement = $conn->prepare($sql);
-        //BIND
-
-        $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
-        $statement->bindParam(':score', $member->getScore(), PDO::PARAM_INT);
-        $statement->execute();
-
-
-    }
+//    function updateMember($f3)
+//    {
+//
+//        //RETRIEVE USER
+//        $member = $_SESSION['user'];
+//
+//
+//        //SET THE HIVE OF THE CURRENT LOGGED IN USER
+//        $f3->set('username', $member->getUsername());
+//        $f3->set('score', $member->getScore());
+//
+//
+//
+//        //we don't need to update the database for a guest
+//        if ($member->getUsername() == "Guest") return;
+//        global $conn;
+//
+//        //define
+//        $sql = "
+//            UPDATE triviaMembers
+//            SET totalScore = :score
+//            WHERE username = :username";
+//
+//        //        PREPARE
+//        $statement = $conn->prepare($sql);
+//        //BIND
+//
+//        $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
+//        $statement->bindParam(':score', $member->getScore(), PDO::PARAM_INT);
+//        $statement->execute();
+//
+//
+//    }
 
     /**
      * Is the user logged in or not
