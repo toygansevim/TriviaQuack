@@ -32,7 +32,7 @@ abstract class Player
     /**
      * @return mixed
      */
-    public function getUserName()
+    public function getUsername()
     {
         return $this->_userName;
     }

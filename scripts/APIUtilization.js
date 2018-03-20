@@ -16,9 +16,8 @@ var scored = 0;
 
 //CATEGORIES FROM THE API
 var codeQuestion = 18, scienceQuestion = 17, artQuestion = 25, historyQuestion = 23, geographyQuestion = 22,
-    celebQuestion = 26;
-var generalCultureQuestion = 9, generalCultureQuestionCount = 0;
-var sportsQuestion = 21, sportsQuestionCount = 0;
+    celebQuestion = 26, generalCultureQuestion = 9, generalCultureQuestionCount = 0, sportsQuestion = 21, sportsQuestionCount = 0;
+
 var codeQuestionCount = 0, scienceQuestionCount = 0, artQuestionCount = 0, historyQuestionCount = 0,
     geographyQuestionCount = 0,
     celebQuestionCount = 0;
@@ -110,7 +109,6 @@ function setDifficulty(options) {
 
 }
 
-
 /**
  * This function is used to pull Json API data from the internet with a given url and parameters.
  * @param amount number of the questions will be displayed
@@ -134,6 +132,7 @@ function createQuestion(amount, category) {
 
     //URL API
     var url = 'https://opentdb.com/api.php/';
+
 
     //Get the data from JSON API with parameters.
     $.getJSON(url, params, function (result) {
@@ -266,20 +265,6 @@ function getQuestion() {
 
     // $(".answerOption").off();
 
-    var docHeight = $(document).height();
-
-    $("body").append("<div id='overlay'></div>");
-
-    $("#overlay")
-        .height(docHeight)
-        .css({
-            'position': 'absolute',
-            'top': 0,
-            'left': 0,
-            'width': '100%',
-            'z-index': 5000
-        });
-
 //start counting the round
     count++;
 
@@ -355,9 +340,11 @@ function getQuestion() {
             updateScore();
         }
 
+
         createQuestion(playAGame, lastSelected);
         resetButtonColors();
-        $("#overlay").remove();
+
+
     }, 2300);
 
 }

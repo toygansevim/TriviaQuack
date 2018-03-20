@@ -26,7 +26,7 @@ category to play the game
     <a class="navbar-brand" href="#">Trivia Quack</a>
 
     <h4 class="float-left">Logged in As: {{@username}} {{@score}}</h4>
-    <h4 class="float-left">TOTAL: {{@total}}</h4>
+
 
     <button class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -154,9 +154,7 @@ category to play the game
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h3 class="modal-title question" id="celebritiesModalLabel"></h3>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+
                             </div>
                             <div class="modal-body d-none answersBody" id="">
                                 <div class="row">
@@ -197,12 +195,6 @@ category to play the game
             <p class="text-white text-uppercase">LeaderBoard</p>
             <check if="{{@members}}">
 
-                <!--  <ol>
-                      <repeat group="{{ @members }}" value="{{ @member }}">
-                          <li><a href="{{@BASE}}/summary/{{@member['sid']}}">{{ @member['id'] }}, {{ @member['username'] }}</a></li>
-                      </repeat>
-                  </ol>
-  -->
 
                 <table class="table">
                     <thead class="thead-dark">

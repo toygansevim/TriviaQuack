@@ -66,6 +66,8 @@ $f3->route('GET|POST /signup', function ($f3)
     //route
     echo Template::instance()->render('pages/signup.html');
 });
+
+
 $f3->route('GET|POST /home', function ($f3)
 {
     require_once 'database/db-functions.php';
@@ -85,7 +87,6 @@ $f3->route('GET|POST /home', function ($f3)
 
     $f3->set('members', $members);
     $f3->set('title', 'Home Page');
-
 
 
     echo Template::instance()->render('pages/game.html'); //script lays under this
@@ -127,6 +128,7 @@ $f3->route('GET /profile', function ($f3)
         $f3->reroute('/home');
     }
 
+
 });
 
 
@@ -140,9 +142,9 @@ $f3->route('GET|POST /logout', function ($f3)
     //If a logged in user
     if (loggedIn())
     {
+        updateMember($f3);
         session_destroy();
         session_unset();
-        updateMember($f3);
     }
     $f3->reroute('/');
     //logged out

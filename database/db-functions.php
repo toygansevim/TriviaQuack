@@ -149,7 +149,7 @@ function retrieveUserProfile($username)
 }
 
 /**
- *
+ *  Checks whether there is a person that playing the game in the current session
  *
  * @return boolean
  */
@@ -166,27 +166,24 @@ function loggedIn()
 function updateMember($f3)
 {
 
-    global $conn;
-
     $member = $_SESSION['user'];
 
     $username = $_SESSION['user']->getUsername();
     $score = $_SESSION['user']->getScore();
 
 
+    //we don't need to update the database for a guest
+    if ($_SESSION['user']->getUsername() != "Guest")
+    {
+        //Database function
+        updateUserScore($member);
+        updateTotalPlayed($member);
+        updateCategoryCounts($member);
+    }
+
+    //FOR GAME IS PLAYING TO DISPLAY TO GUESTS
     $f3->set('username', $username);
     $f3->set('score', $score);
-
-
-    //we don't need to update the database for a guest
-    if ($_SESSION['user']->getUsername() == "Guest" || $_SESSION['user']->getUsername() == "GUEST")
-        return;
-
-    //Database function
-    updateUserScore($member);
-    updateTotalPlayed($member);
-    //updateCategoryCounts($member);
-
 
 }
 
@@ -213,7 +210,6 @@ function updateUserScore($member)
 
     $statement->execute();
 }
-
 
 /**
  * This method will update the user's total played question amount overall application
@@ -257,14 +253,15 @@ function updateCategoryCounts($member)
 
     //bind Param
     $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
-    $statement->bindParam(':categoryCounts', $member->getCategoryCounts(), PDO::PARAM_STR);
+    $statement->bindParam(':categoryCounts', implode(",", $member->getCategoryCounts()),
+        PDO::PARAM_STR);
 
     //execute
     $statement->execute();
 }
 
-
 /**
+ * Checks whether the user exists
  * @param $username
  * @return bool does the user exist
  */

@@ -14,61 +14,48 @@ session_start();
 
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
-//$database = new DatabaseObject();
-//$database->connect();
 
 $f3 = Base::instance();
 
-
-//WITH THE OBJECT
-//if ($database->loggedIn())
-//{
-//    $database->updateMember($f3);
-//}
-
 $member = $_SESSION['user'];
-
 
 $gamesPlayed = 5;
 
-
-echo "<pre>";
-//var_dump($_POST);
-echo "</pre>";
-echo "<pre>";
-var_dump($member);
-echo "</pre>";
-
-
-//on first hit get the count
-$first = true;
-$postCountOccured = 0;
-
+//save user score
 $scoreSaved = $_SESSION['user']->getScore();
 
-//NOT SOMETHING THAT EFFECT
-if (notMember($member))
+
+$questionsArray = array();
+
+//DONT UPDATE GUESTS
+if ($member->getUserName() != "Guest")
 {
-    $amountSaved = $_SESSION['user']->getTotalPlayed();//retrieve the user played amount
-} else
-{
-    echo "MEMBER ELSE HERE!"; // ok
+    $amountSaved = $member->getTotalPlayed();//retrieve the user played amount
+    //Transfer all post elements
+
+    $categorySaved = $member->getCategoryCounts();
+
+    //    var_dump($_POST['questioncount']);
+
+    echo "<br>";
+
+    for ($i = 0; $i < 9; $i++)
+    {
+        $questionsArray[] = $_POST['questioncount'][$i];
+    }
+
+    //    var_dump($questionsArray);
 }
 
 
-echo "TOTAL PLAYED AT THIS MOMENT IS : " . $amountSaved;
+//echo "TOTAL PLAYED AT THIS MOMENT IS : " . isThere($amountSaved) ? $amountSaved : " still 0";
 
+//get POST values
+$amountTotalPlayed = $_POST['totalplayed'];
 $score = $_POST['userscore']; //THIS GET SCORE SHOULD BE ADDED
 // ONLY ONCE THEREFORE THE MATH BECOMES WRONG. EVEN WITH WRONG ANSWER IT ADDS UP THE OLD VALUE TP
 // THE CURRENT ONE DOWN BELOW AND INCREMENTS IT
 
-$amountTotalPlayed = $_POST['totalplayed'];
-
-
-//var_dump($questionCountString);
-
-
-$questionsArray = array();
 
 //questioncount:
 //[     //This is the amount of clicks on the card | HOW MANY TIMES USER PLAYED THE HISTORY
@@ -79,12 +66,6 @@ $questionsArray = array();
 //      $randomQuestionCount,
 //      $generalCultureQuestionCount;
 
-
-//Transfer all post elements
-for ($i = 0; $i < 10; $i++)
-{
-    array_push($questionsArray, $_POST['questioncount'][$i]);
-}
 
 //check whether numeric or not AND DISPLAY
 if (!empty($score) && is_numeric($score))
@@ -99,56 +80,56 @@ if (!empty($score) && is_numeric($score))
 
 }
 
-$playedOnce = true;
 
 //UPDATE POSITION OF THE END
-if ($amountTotalPlayed % 4 == 0) //Every 5th game //can be changed
+if ($amountTotalPlayed % $gamesPlayed == 0) //Every 5th game //can be changed
 {
-    if ($playedOnce)
+
+    //SCORE
+    $_SESSION['user']->setScore($score + $scoreSaved);
+
+    //TOTAL GAME
+    if ($member->getUsername() != "Guest")
     {
 
-        //SCORE
-        $_SESSION['user']->setScore($score + $scoreSaved);
+        $_SESSION['user']->setTotalPlayed($_SESSION['user']->getTotalPlayed() + 5);
 
-        //TOTAL GAME
-        if (notMember($member))
+        //CATEGORY COUNTS
+        $dbString = [];
+        $sum;
+        for ($i = 0; $i < 9; $i++)
         {
-
-            $_SESSION['user']->setTotalPlayed($_SESSION['user']->getTotalPlayed() + 5);
-
-            //CATEGORY COUNTS
-
-            setCategoryString();
-
-            var_dump($questionCountString);
-
-            $_SESSION['user']->setCategoryCounts($questionCountString);
-
+            $sum = (int) $categorySaved[$i]; // database
+            $sum += (int) $questionsArray[$i];
+            $dbString[] = $sum;
         }
 
-        echo "HERE IS THE ANSWER ";
+
+        //$_SESSION['user']->setCategoryCounts($questionCountString);
+
+        //        var_dump($dbString);
+
+        $member->setCategoryCounts($dbString);
+
     }
-
-    $playedOnce = false;
-
 }
 
-function setCategoryString()
+//$f3->set('score', $score);
+
+function setCategoryString($questionCountString)
 {
     $questionCountString = implode(',', $_POST['questioncount']);
 
 
+    //return
 }
 
-function notMember($member)
-{
-
-    return !$member->getUserName() == "Guest" || !$member->getUserName() == "GUEST";
-}
-
+/**
+ * This function checks the current variable is available to continue
+ * @param $variable passed in to be validated
+ * @return bool whether it is available or not
+ */
 function isThere($variable)
 {
     return isset($variable) && !empty($variable);
 }
-
-$f3->set('score', $score);
