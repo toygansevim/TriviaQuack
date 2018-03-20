@@ -20,6 +20,11 @@ $f3->set('DEBUG', 3);
 //Define a default route
 $f3->route('GET /', function ($f3)
 {
+    if (loggedIn())
+    {
+        require 'model/setFatFreeVariables.php';
+    }
+
     $f3->set('title', 'Home Page');
     $f3->set('colorBG', 'primary');
     echo Template::instance()->render('pages/home.html');
