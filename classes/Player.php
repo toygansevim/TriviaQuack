@@ -30,6 +30,8 @@ abstract class Player
     //*********************************************
 
     /**
+     * Returns username
+     *
      * @return mixed
      */
     public function getUsername()
@@ -38,6 +40,8 @@ abstract class Player
     }
 
     /**
+     * Sets username
+     *
      * @param mixed $userName
      */
     public function setUserName($userName)
@@ -46,6 +50,8 @@ abstract class Player
     }
 
     /**
+     * Reuturns score
+     *
      * @return mixed
      */
     public function getScore()
@@ -54,6 +60,8 @@ abstract class Player
     }
 
     /**
+     * Sets score
+     *
      * @param mixed $score
      */
     public function setScore($score)

@@ -54,6 +54,7 @@ if (empty($errors)) {
     $f3->set('repeat_pass_err', $errors['repeat_pass_err']);
 }
 
+
 /**
  * Checks that username is entered,
  * is "clean", and not already taken
@@ -81,6 +82,7 @@ function validateUsername(&$username, &$errors)
     }
 }
 
+
 /**
  * Check that username is in database
  *
@@ -102,6 +104,7 @@ function doesUserExist($username)
     //empty, if empty return false
     return !empty($row);
 }
+
 
 /**
  * Checks for valid format of email, does
@@ -130,6 +133,7 @@ function validateEmail(&$email, &$errors)
     }
 }
 
+
 /**
  * Finds out whether or not the email
  * being used to sign up already exists
@@ -153,6 +157,7 @@ function doesEmailExist($email)
     return !empty($row);
 }
 
+
 /**
  * Validates password was entered and "clean"
  *
@@ -171,6 +176,7 @@ function validatePass(&$password, &$errors)
         $errors['pass_err'] = "Required field";
     }
 }
+
 
 /**
  * Validates that repeat password was entered,

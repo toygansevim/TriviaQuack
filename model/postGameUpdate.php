@@ -1,22 +1,23 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: mason
+ * User: Mason Hernandez
+ * Author: Toygan Sevim
  * Date: 3/15/2018
  * Time: 1:08 PM
  */
 
+//needed to be re-included due to ajax access
+require_once "../vendor/autoload.php" ;
+require_once "../classes/Player.php";
+require_once "../classes/databaseObject.php";
 
-require_once("../vendor/autoload.php");
-include "../classes/Player.php";
-include "../classes/databaseObject.php";
+//needed to be re-started due to ajax access
 session_start();
-
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
 
 $f3 = Base::instance();
-
 $member = $_SESSION['user'];
 
 $gamesPlayed = 5;
@@ -24,31 +25,24 @@ $gamesPlayed = 5;
 //save user score
 $scoreSaved = $_SESSION['user']->getScore();
 
-
-$questionsArray = array();
+$questionsArray = [];
 
 //DONT UPDATE GUESTS
 if ($member->getUserName() != "Guest")
 {
-    $amountSaved = $member->getTotalPlayed();//retrieve the user played amount
-    //Transfer all post elements
+    //retrieve the user played amount
+    $amountSaved = $member->getTotalPlayed();
 
+    //Transfer all post elements
     $categorySaved = $member->getCategoryCounts();
 
-    //    var_dump($_POST['questioncount']);
-
-    echo "<br>";
 
     for ($i = 0; $i < 9; $i++)
     {
         $questionsArray[] = $_POST['questioncount'][$i];
     }
 
-    //    var_dump($questionsArray);
 }
-
-
-//echo "TOTAL PLAYED AT THIS MOMENT IS : " . isThere($amountSaved) ? $amountSaved : " still 0";
 
 //get POST values
 $amountTotalPlayed = $_POST['totalplayed'];
@@ -56,36 +50,23 @@ $score = $_POST['userscore']; //THIS GET SCORE SHOULD BE ADDED
 // ONLY ONCE THEREFORE THE MATH BECOMES WRONG. EVEN WITH WRONG ANSWER IT ADDS UP THE OLD VALUE TP
 // THE CURRENT ONE DOWN BELOW AND INCREMENTS IT
 
-
-//questioncount:
-//[     //This is the amount of clicks on the card | HOW MANY TIMES USER PLAYED THE HISTORY
-//$codeQuestionCount, $scienceQuestionCount, $artQuestionCount, $historyQuestionCount,
-//      $geographyQuestionCount,
-//     $celebQuestionCount,
-//      $sportsQuestionCount,
-//      $randomQuestionCount,
-//      $generalCultureQuestionCount;
-
-
 //check whether numeric or not AND DISPLAY
 if (!empty($score) && is_numeric($score))
 {
     echo "<p class='float-left text-uppercase text-left mr-3'>Score :" . $score . "</p>";
     echo "<p class='float-right text-right text-success'>" . $_POST['count'] . " / " . " 5 </p>";
 
-} else
-{
+} else {
+
     echo "<p class='float-left text-uppercase text-left mr-3'>Score is : 0</p>";
     echo "<p class='float-right text-right text-success'>" . $_POST['count'] . " / " . " 5 </p>";
 
 }
 
-
 //UPDATE POSITION OF THE END
-if ($amountTotalPlayed % $gamesPlayed == 0) //Every 5th game //can be changed
+if ($amountTotalPlayed % $gamesPlayed == 0)
 {
-
-    //SCORE
+    //set score of member object
     $_SESSION['user']->setScore($score + $scoreSaved);
 
     //TOTAL GAME
@@ -103,25 +84,15 @@ if ($amountTotalPlayed % $gamesPlayed == 0) //Every 5th game //can be changed
             $sum += (int) $questionsArray[$i];
             $dbString[] = $sum;
         }
-
-
+        //set categories played
         $member->setCategoryCounts($dbString);
 
     }
 }
 
-//$f3->set('score', $score);
-
-function setCategoryString($questionCountString)
-{
-    $questionCountString = implode(',', $_POST['questioncount']);
-
-
-    //return
-}
-
 /**
  * This function checks the current variable is available to continue
+ *
  * @param $variable passed in to be validated
  * @return bool whether it is available or not
  */

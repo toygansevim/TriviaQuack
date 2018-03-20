@@ -9,6 +9,12 @@ require("/home/tsevimgr/config.php");
 
 class DatabaseObject
 {
+
+    /**
+     * This function connects and returns new database object
+     *
+     * @return database object
+     */
     function connect()
     {
         try
@@ -17,12 +23,12 @@ class DatabaseObject
             $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
             $conn->setAttribute(PDO::ATTR_PERSISTENT, true);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            // echo "Connected to database for Trivia Quack with object!";
+
             //return connection
             return $conn;
 
-        } catch (PDOException $ex)
-        {
+        } catch (PDOException $ex) {
+
             echo "Connection failed" . "<br>";
             echo $ex->getMessage();
             return;
@@ -36,39 +42,39 @@ class DatabaseObject
      *
      * @param $member a Member object
      */
-//    function updateMember($f3)
-//    {
-//
-//        //RETRIEVE USER
-//        $member = $_SESSION['user'];
-//
-//
-//        //SET THE HIVE OF THE CURRENT LOGGED IN USER
-//        $f3->set('username', $member->getUsername());
-//        $f3->set('score', $member->getScore());
-//
-//
-//
-//        //we don't need to update the database for a guest
-//        if ($member->getUsername() == "Guest") return;
-//        global $conn;
-//
-//        //define
-//        $sql = "
-//    UPDATE triviaMembers
-//    SET totalScore = :score
-//    WHERE username = :username";
-//
-//        //        PREPARE
-//        $statement = $conn->prepare($sql);
-//        //BIND
-//
-//        $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
-//        $statement->bindParam(':score', $member->getScore(), PDO::PARAM_INT);
-//        $statement->execute();
-//
-//
-//    }
+    function updateMember($f3)
+    {
+
+        //RETRIEVE USER
+        $member = $_SESSION['user'];
+
+
+        //SET THE HIVE OF THE CURRENT LOGGED IN USER
+        $f3->set('username', $member->getUsername());
+        $f3->set('score', $member->getScore());
+
+
+
+        //we don't need to update the database for a guest
+        if ($member->getUsername() == "Guest") return;
+        global $conn;
+
+        //define
+        $sql = "
+            UPDATE triviaMembers
+            SET totalScore = :score
+            WHERE username = :username";
+
+        //        PREPARE
+        $statement = $conn->prepare($sql);
+        //BIND
+
+        $statement->bindParam(':username', $member->getUsername(), PDO::PARAM_STR);
+        $statement->bindParam(':score', $member->getScore(), PDO::PARAM_INT);
+        $statement->execute();
+
+
+    }
 
     /**
      * Is the user logged in or not
@@ -79,6 +85,4 @@ class DatabaseObject
     {
         return !empty($_SESSION['user']);
     }
-
-
 }

@@ -26,7 +26,7 @@
  */
 
 //needed config file
-include("/home/tsevimgr/config.php");
+include "/home/tsevimgr/config.php";
 
 //connection method
 function connect()
@@ -49,7 +49,12 @@ function connect()
     }
 }
 
-//list leaders
+/**
+ * Returns array of top 10 players
+ * for the leaderboard
+ *
+ * @return array
+ */
 function getLeaders()
 {
     //global
@@ -66,6 +71,7 @@ function getLeaders()
 
     return $result;
 }
+
 
 /**
  * Adds a new user to the database
@@ -101,6 +107,11 @@ function addMember($username, $password, $email)
  * Grabs the user from the database based
  * on the username and returns a Member
  * object representation
+ *
+ * Can be passed string: 'guestAccessKey' to
+ * return a Guest player
+ *
+ * @return Player object
  */
 function retrieveUser($username)
 {
@@ -126,11 +137,14 @@ function retrieveUser($username)
     $member = new Member($result['id'], $result['username'], $result['email'],
         $result['joinDate'], $result['totalScore'], $result['totalPlayed'], explode(",", $result['categoryCounts']));
 
-
     return $member;
 }
 
+
 /**
+ * Ultimately used to determine whether a user exists
+ * if return is null, user does not exist
+ *
  * @param $username The user that will be retrieved from the database
  * @return user name to be viewed in the profile page
  */
@@ -148,8 +162,10 @@ function retrieveUserProfile($username)
     return $result['username'];
 }
 
+
 /**
- *  Checks whether there is a person that playing the game in the current session
+ * Checks whether there is a person that playing the game
+ * in the current session
  *
  * @return boolean
  */
@@ -157,6 +173,7 @@ function loggedIn()
 {
     return !empty($_SESSION['user']);
 }
+
 
 /**
  * Updates a row for a member
@@ -181,15 +198,16 @@ function updateMember($f3)
         updateCategoryCounts($member);
     }
 
-    //FOR GAME IS PLAYING TO DISPLAY TO GUESTS
+    //Sets some fat free variables to display after updating
     $f3->set('username', $username);
     $f3->set('score', $score);
 
 }
 
+
 /**
- * This function will grab the current logged in user and update their score in the database
- *
+ * This function will grab the current logged in user
+ * and update their score in the database
  *
  * @param $username the user that is playing the game with email - password
  * @param $totalScore Total score they have gained from the rounds
@@ -211,8 +229,11 @@ function updateUserScore($member)
     $statement->execute();
 }
 
+
 /**
- * This method will update the user's total played question amount overall application
+ * This method will update the user's total played
+ * question amount overall application
+ *
  * @param $username the user that is actively playing
  * @param $totalPlayed amounts of questions played
  */
@@ -234,10 +255,11 @@ function updateTotalPlayed($member)
     $statement->execute();
 }
 
+
 /**
- *
  * Updates the played categories as a string that will be converted with an implode to retrieve
  * array's individual values
+ *
  * @param $username player
  * @param $categoryCounts categories choosen in the game
  */
@@ -260,8 +282,10 @@ function updateCategoryCounts($member)
     $statement->execute();
 }
 
+
 /**
  * Checks whether the user exists
+ *
  * @param $username
  * @return bool does the user exist
  */
