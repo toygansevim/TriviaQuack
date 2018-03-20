@@ -73,10 +73,7 @@ $f3->route('GET|POST /home', function ($f3)
 
     if (loggedIn())
     {
-        $f3->set('username', $member->getUsername());
-        $f3->set('total', $member->getTotalPlayed());
-        updateMember($f3);
-
+        require 'model/setFatFreeVariables.php';
     } else
     {
         $f3->reroute('/');
@@ -154,5 +151,10 @@ $f3->route('GET|POST /logout', function ($f3)
     //logged out
 
 });
+
+$f3->set('ONERROR',function($f3){
+    echo Template::instance()->render('pages/pageError.html');
+});
+
 //run fat free
 $f3->run();
