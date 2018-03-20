@@ -6,7 +6,7 @@
  * while the user is playing the game
  * @type {number}
  * @author Toygan Sevim
- * @version 1.0
+ * @version 1.1
  */
 
 //to play the game with 1 question, amount can be set as default final 1, since in every click new question
