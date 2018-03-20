@@ -26,7 +26,7 @@
  */
 
 //needed config file
-include "/home/tsevimgr/config.php";
+include "/home/mhernand/tqConfig.php";
 
 //connect
 $conn = connect();
@@ -99,7 +99,6 @@ function addMember($username, $password, $email)
     $statement->bindParam(':username', $username, PDO::PARAM_STR);
     $statement->bindParam(':password', $password, PDO::PARAM_STR);
     $statement->bindParam(':email', $email, PDO::PARAM_STR);
-
 
     $statement->bindParam(':joinDate', $curentDate, PDO::PARAM_STR);
     $statement->execute();
