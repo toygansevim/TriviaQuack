@@ -70,25 +70,30 @@ $f3->route('GET|POST /home', function ($f3)
 {
     require_once 'database/db-functions.php';
     $member = $_SESSION['user'];
+
     if (loggedIn())
     {
-        $f3->set('username', $member->getUsername());
-       // $f3->set('total', $member->getTotalPlayed());
+        //$f3->set('username', $member->getUsername());
+        // $f3->set('total', $member->getTotalPlayed());
         updateMember($f3);
+
     } else
     {
         $f3->reroute('/');
     }
     $members = getLeaders();
+
     $f3->set('members', $members);
     $f3->set('title', 'Home Page');
+
+
+
     echo Template::instance()->render('pages/game.html'); //script lays under this
 });
 $f3->route('GET|POST /guest', function ($f3)
 {
     require_once 'database/db-functions.php';
     $_SESSION['user'] = retrieveUser("guestAccessKey");
-    //    serialize($_SESSION['user']);
     $f3->reroute('./home');
 });
 //this route will be displaying the player with the id
@@ -140,7 +145,7 @@ $f3->route('GET|POST /logout', function ($f3)
         updateMember($f3);
     }
     $f3->reroute('/');
-//logged out
+    //logged out
 
 });
 //run fat free
